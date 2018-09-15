@@ -1,0 +1,24 @@
+apply plugin: "cpp"
+apply plugin: 'cpp-unit-test'
+model {
+	flavors {
+        passing
+        failing
+    }
+	platforms {
+        x86 {
+            architecture "x86"
+        }
+    }
+    components {
+        libmodel(NativeLibrarySpec) {
+			targetPlatform "x86"
+		}
+    }
+	toolChains {
+		gcc(Gcc) {
+            // Uncomment to use a GCC install that is not in the PATH
+            // path "/usr/bin/gcc"
+        }
+	}
+}

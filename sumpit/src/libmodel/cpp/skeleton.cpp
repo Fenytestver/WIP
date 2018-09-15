@@ -111,9 +111,9 @@ class SumpPitSensor {
     /** Call at setup phase, once */
     virtual void setup();
   protected:
-    WaterLevelSensor waterLevelSensors[];
+    WaterLevelSensor* waterLevelSensors;
     Pump* pump;
-    LeakSensor* LeakSensors[];
+    LeakSensor* LeakSensors;
 };
 
 

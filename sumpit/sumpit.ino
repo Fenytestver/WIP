@@ -1,6 +1,6 @@
-#include "skeleton.cpp"
+#include "src/libmodel/cpp/skeleton.cpp"
 // some very stupid implementation of the virtuals.
-#include "stubs.cpp"
+#include "src/libmodel/cpp/stubs.cpp"
 //
 //typedef struct {
 //
