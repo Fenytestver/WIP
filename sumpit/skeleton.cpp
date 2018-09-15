@@ -4,6 +4,17 @@
 // include guard
 
 #include "Arduino.h"
+
+////
+// Generic interfaces:
+////
+
+class Updateable {
+  public:
+    /* Called in every loop */
+    virtual void update();
+};
+
 ////
 // Generic outputs:
 ////
@@ -140,20 +151,36 @@ class SumpPitNode {
 };
 
 // Actuator/remote-controller & related
-
+// The main remote node modes
+enum {
+  REM_INITIALIZING, REM_STANDBY, REM_ALARM, REM_SYS_ERROR
+}; // end RemoteNodeModes
+class Snoozable {
+  public:
+    virtual void snooze();
+};
+class SnoozableSiren : Snoozable, Siren {
+  public:
+    virtual void snooze() {
+      snoozedAt = 999; // FIXME: get current time
+    }
+  private:
+    int snoozedAt = 0;
+};
 class RemoteNodeInputs {
   protected:
     Button* snoozeButton;
-    Buzzer* alarm;
-    Siren* siren;
 };
 class RemoteNodeOutputs {
   protected:
     Led* onLed;
     Led* maintenanceLed;
+    Buzzer* buzzer;
+    SnoozableSiren* siren;
 };
 class RemoteNode {
   protected:
+    int mode;
     RemoteNodeInputs* inputs;
     RemoteNodeOutputs* outputs;
 };

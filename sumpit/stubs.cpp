@@ -11,7 +11,7 @@ class StubButton : Button {
   public:
     void press() {
       if (_onPressListener) {
-        _onPressListener.onPress();
+        _onPressListener->onPress();
       }
     }
 };
