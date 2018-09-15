@@ -1,5 +1,12 @@
-apply plugin: "cpp"
+apply plugin: "cpp-library"
 apply plugin: 'cpp-unit-test'
+
+repositories {
+    maven {
+        url = 'https://repo.gradle.org/gradle/libs-snapshots-local/'
+    }
+}
+
 model {
 	flavors {
         passing
