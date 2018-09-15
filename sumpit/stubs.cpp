@@ -1,7 +1,6 @@
 #ifndef stubs_cpp
 #define stubs_cpp
 
-#include "Arduino.h"
 #include "skeleton.cpp"
 
 ///

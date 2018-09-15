@@ -1,9 +1,7 @@
+// include guard
 #ifndef skeleton_cpp
 #define skeleton_cpp
 // TODO(marcell): particle.io std lib?
-// include guard
-
-#include "Arduino.h"
 
 ////
 // Generic interfaces:
@@ -46,7 +44,7 @@ class Buzzer : Siren {
 /** A simple display (i2c, ..). */
 class Display {
   public:
-    virtual void displayMessage(String message);
+    virtual void displayMessage(char*);
     virtual void clear();
 };
 ////
@@ -83,13 +81,13 @@ class VoltageSensor {
 class WaterLevelSensor {
   public:
     /** @return the water level in percentage. */
-    virtual byte measureLevel();
+    virtual short measureLevel();
 };
 
 class LeakSensor {
   public:
     /** gives true if there is a leak. */
-    virtual boolean isLeaking();
+    virtual bool isLeaking();
 };
 ////
 // Complex classes
