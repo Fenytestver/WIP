@@ -12,11 +12,12 @@ class test_engine
       /** Default destructor */
       virtual ~test_engine();
 
+      StubSystemTime* systemTime;
       StubLeakSensor* leakSensor;
       StubWaterLevelSensor* waterLevelSensor;
 
-      RpmSensor *rpmSensor;
-      VoltageSensor* voltageSensor;
+      StubRpmSensor *rpmSensor;
+      StubVoltageSensor* voltageSensor;
       Pump* pump;
       SumpPitSensor* sensor;
       SumpPitInputs* inputs;
@@ -30,6 +31,7 @@ class test_engine
       SumpPitNode* node;
 
       void test_first();
+      void test_pump_failure_at_start();
     protected:
 
     private:

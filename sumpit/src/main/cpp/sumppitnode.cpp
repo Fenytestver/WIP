@@ -75,6 +75,24 @@ void SumpPitNode::updateArmed() {
   } else {
     _alarmReason &= ~SPN_ALARM_LEAK;
   }
+
+  int pumpState = sensor->getPumpState();
+  if (pumpState != SPS_PUMP_NO_ERROR) {
+    // check and update RPM state
+    if ((pumpState & SPS_PUMP_LOW_RPM) != 0) {
+      _alarmReason |= SPN_ALARM_PUMP_RPM_FAILURE;
+    } else {
+      _alarmReason &= ~SPN_ALARM_PUMP_RPM_FAILURE;
+    }
+    // check and update Voltage state
+    if ((pumpState & SPS_PUMP_LOW_VOLTAGE) != 0) {
+      _alarmReason |= SPN_ALARM_PUMP_VOLTAGE_FAILURE;
+    } else {
+      _alarmReason &= ~SPN_ALARM_PUMP_VOLTAGE_FAILURE;
+    }
+  }
+
+  // update public alarm reason
   alarmReason = _alarmReason;
   if (alarmReason != 0) {
     alarm();

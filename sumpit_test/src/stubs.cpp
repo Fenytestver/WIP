@@ -1,3 +1,6 @@
+#include <iostream>
+#include "string.h"
+
 #ifndef stubs_cpp
 #define stubs_cpp
 
@@ -11,7 +14,6 @@
 #include "debug_util.h"
 #include "string.h"
 #include "systemtime.h"
-#include <iostream>
 
 ///
 // Very dumb, non-blocking, checkable implementations.
@@ -132,7 +134,7 @@ class StubRpmSensor : public RpmSensor {
 class StubVoltageSensor : public VoltageSensor{
   public:
     void setVoltage(float _voltage) {
-      std::cout << "Pump voltage set to: " << _voltage << std::endl;
+      std::cout << "Stub voltage set to: " << _voltage << std::endl;
       voltage = _voltage;
     }
     virtual float getVoltage() {
@@ -144,8 +146,8 @@ class StubVoltageSensor : public VoltageSensor{
 
 class StubPump : public Pump {
   public:
-    StubPump(StubRpmSensor* _rpmSensor, StubVoltageSensor* _voltageSensor) :
-      Pump(_rpmSensor, _voltageSensor) {
+    StubPump(SystemTime* _systemTime, StubRpmSensor* _rpmSensor, StubVoltageSensor* _voltageSensor) :
+      Pump(_systemTime, _rpmSensor, _voltageSensor) {
     }
     virtual void turnOn() {
       std::cout << "Pump turned on." << std::endl;
@@ -165,5 +167,19 @@ class StubPump : public Pump {
 };
 
 class StubSystemTime : public SystemTime {
+  public:
+    unsigned long nowMillis() {
+      return now;
+    }
+    void setTime(long _now) {
+      cout << "Set time to " << now << endl;
+      now = _now;
+    }
+    void addTime(unsigned long delta) {
+      now += delta;
+      cout << "Move time by " << delta << " to " << now << endl;
+    }
+  private:
+    long now = 0;
 };
 #endif

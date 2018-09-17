@@ -10,6 +10,6 @@ SystemTime::~SystemTime()
   //dtor
 }
 
-long SystemTime::nowMillis() {
-  return 0;
+unsigned long SystemTime::nowMillis() {
+  return 0L;
 }

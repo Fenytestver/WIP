@@ -11,5 +11,5 @@ WaterLevelSensor::~WaterLevelSensor()
 }
 short WaterLevelSensor::measureLevel()
 {
-
+  return 0;
 }

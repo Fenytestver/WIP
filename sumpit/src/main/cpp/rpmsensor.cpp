@@ -11,5 +11,5 @@ RpmSensor::~RpmSensor()
 }
 int RpmSensor::getRpm()
 {
-
+  return 0;
 }
