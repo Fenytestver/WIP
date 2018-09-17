@@ -11,5 +11,5 @@ LeakSensor::~LeakSensor()
 }
 bool LeakSensor::isLeaking()
 {
-
+  return false;
 }

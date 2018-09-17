@@ -4,13 +4,13 @@
 #include "sumppitnode.h"
 #include "stubs.cpp"
 
-class test_main
+class test_engine
 {
     public:
       /** Default constructor */
-      test_main();
+      test_engine();
       /** Default destructor */
-      virtual ~test_main();
+      virtual ~test_engine();
 
       StubLeakSensor* leakSensor;
       StubWaterLevelSensor* waterLevelSensor;
@@ -28,6 +28,8 @@ class test_main
       StubButton* resetButton;
       StubSiren* siren;
       SumpPitNode* node;
+
+      void test_first();
     protected:
 
     private:

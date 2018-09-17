@@ -10,6 +10,7 @@
 #include "display.h"
 #include "debug_util.h"
 #include "string.h"
+#include <iostream>
 
 ///
 // Very dumb, non-blocking, checkable implementations.
@@ -21,7 +22,7 @@ class StubLed : public Led {
     }
     virtual void setState(bool on) {
       _on = on;
-      //cout << "Led:" << name << " turned " << (on ? "on" : "off");
+      std::cout << "Led:" << name << " turned " << (on ? "on" : "off")<< std::endl;
     }
     bool isOn() {
       return _on;
@@ -35,14 +36,23 @@ class StubSiren : public Siren {
   public:
     /** Turn on the alarm. */
     virtual void on() {
+      sirenOn = true;
     }
     /** Turn off the alarm. */
     virtual void off() {
+      std::cout << "Siren turned off"<<std::endl;
+      sirenOn = false;
     }
+    bool isOn() {
+      return sirenOn;
+    }
+  private:
+    bool sirenOn;
 };
 class StubButton : public Button {
   public:
     void press() {
+      std::cout << "Button" << " pressed."<< std::endl;
       if (_onPressListener) {
         _onPressListener->onPress();
       }
@@ -52,10 +62,12 @@ class StubButton : public Button {
 class StubLeakSensor : public LeakSensor {
   public:
     void setLeaking(bool leaking) {
+      std::cout << "Leak sensor set value to: " << (leaking ? "leaking" : "not leaking") << std::endl;
       _leaking = leaking;
     }
 
     virtual bool isLeaking() {
+      LeakSensor::isLeaking();
       return _leaking;
     }
   private:
@@ -66,6 +78,7 @@ class StubDisplay : public Display {
   public:
     void displayMessage(char* _message)
     {
+      std::cout << "Display:" << message << std::endl;
       message = _message;
     }
 
@@ -91,6 +104,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
 class StubBuzzer : public Buzzer {
   public:
     virtual void beep() {
+      std::cout << "Beep!" << std::endl;
       buzzer++;
     }
     int getBuzzer() {
@@ -104,6 +118,7 @@ class StubBuzzer : public Buzzer {
 class StubRpmSensor : public RpmSensor {
   public:
     void setRpm(int _rpm) {
+      std::cout << "RPM set to: " << _rpm << std::endl;
       rpm = _rpm;
     }
     virtual int getRpm() {
@@ -116,6 +131,7 @@ class StubRpmSensor : public RpmSensor {
 class StubVoltageSensor : public VoltageSensor{
   public:
     void setVoltage(float _voltage) {
+      std::cout << "Pump voltage set to: " << _voltage << std::endl;
       voltage = _voltage;
     }
     virtual float getVoltage() {
@@ -131,9 +147,11 @@ class StubPump : public Pump {
       Pump(_rpmSensor, _voltageSensor) {
     }
     virtual void turnOn() {
+      std::cout << "Pump turned on." << std::endl;
       turnedOn = true;
     }
     virtual void turnOff() {
+      std::cout << "Pump turned off." << std::endl;
       turnedOn = false;
     }
     /** gives the on/off state of the pump, as we requested. */
@@ -144,6 +162,5 @@ class StubPump : public Pump {
   private:
     bool turnedOn = false;
 };
-
 
 #endif

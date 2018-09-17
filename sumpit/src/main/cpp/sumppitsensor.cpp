@@ -6,6 +6,7 @@ SumpPitSensor::SumpPitSensor(WaterLevelSensor* _waterLevelSensors, int _numWater
 {
   //ctor
   waterLevelSensors = _waterLevelSensors;
+  leakSensors = _leakSensors;
   numWaterSensors = _numWaterSensors;
   pump = _pump;
 }
@@ -16,4 +17,16 @@ SumpPitSensor::~SumpPitSensor()
 }
 
 void SumpPitSensor::setup() {
+
 }
+bool SumpPitSensor::isWaterLevelHigh()
+{
+  // FIXME: multiple sensors.
+  return waterLevelSensors->measureLevel() > SPS_WATER_THREASHOLD;
+}
+bool SumpPitSensor::isLeaking()
+{
+  // FIXME: multiple sensors.
+  return leakSensors->isLeaking();
+}
+
