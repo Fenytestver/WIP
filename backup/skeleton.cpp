@@ -1,34 +1,27 @@
 // include guard
 #ifndef skeleton_cpp
 #define skeleton_cpp
-// TODO(marcell): particle.io std lib?
 
 ////
 // Generic interfaces:
 ////
 
-class Updateable {
-  public:
-    /* Called in every loop */
-    virtual void update();
-};
+//class Updateable {
+//  public:
+//    /* Called in every loop */
+//    virtual void update();
+//};
 
 ////
 // Generic outputs:
 ////
-
-/** Just a led */
-class Led {
-  public:
-    virtual void setState(bool on);
-};
 /** The big loud siren */
 class Siren {
   public:
     /** Turn on the alarm. */
-    void on();
+    virtual void on() {}
     /** Turn off the alarm. */
-    void off();
+    virtual void off() {}
 };
 
 /**
@@ -40,7 +33,7 @@ class Buzzer : Siren {
     /** beeps once. */
     virtual void beep();
 };
-
+/// kesz
 /** A simple display (i2c, ..). */
 class Display {
   public:
@@ -94,26 +87,46 @@ class LeakSensor {
 ////
 class Pump {
   public:
+    Pump(RpmSensor* _rpmSensor, VoltageSensor* _voltageSensor) {
+      rpmSensor = _rpmSensor;
+      voltageSensor = _voltageSensor;
+    }
+    virtual void turnOn();
+    virtual void turnOff();
     /** gives the on/off state of the pump, as we requested. */
     virtual bool isTurnedOn();
     /** gives the on/off state of the pump based on it's voltage. */
-    virtual bool isVoltageDetected();
+    virtual bool isVoltageDetected() {
+      return voltageSensor->getVoltage();
+    }
     /** @return returns the RPM of the pump. */
-    virtual int getRpm();
+    virtual int getRpm() {
+      return rpmSensor->getRpm();
+    }
   protected:
-    RpmSensor* rmpSensor;
+    RpmSensor* rpmSensor;
     VoltageSensor* voltageSensor;
 };
 
 /** Sensors on the Sump pit sensor */
 class SumpPitSensor {
   public:
+    /** Ctor. */
+    SumpPitSensor(WaterLevelSensor* _waterLevelSensors, int _numWaterSensors,
+                  LeakSensor* _leakSensors, int _numLeakSensors,
+                  Pump* _pump) {
+      waterLevelSensors = _waterLevelSensors;
+      numWaterSensors = _numWaterSensors;
+      pump = _pump;
+    }
     /** Call at setup phase, once */
-    virtual void setup();
+    virtual void setup() {}
   protected:
     WaterLevelSensor* waterLevelSensors;
+    short numWaterSensors;
+    LeakSensor* leakSensors;
+    int numLeakSensors;
     Pump* pump;
-    LeakSensor* LeakSensors;
 };
 
 
@@ -171,8 +184,8 @@ class RemoteNodeInputs {
 };
 class RemoteNodeOutputs {
   protected:
-    Led* onLed;
-    Led* maintenanceLed;
+   // Led* onLed;
+   // Led* maintenanceLed;
     Buzzer* buzzer;
     SnoozableSiren* siren;
 };
@@ -182,5 +195,18 @@ class RemoteNode {
     RemoteNodeInputs* inputs;
     RemoteNodeOutputs* outputs;
 };
+
+// The main engine.
+class SPSystem {
+  public:
+    SPSystem(SumpPitSensor* _sensor) {
+      sensor = _sensor;
+    }
+    void setup();
+    void loop();
+  private:
+    SumpPitSensor* sensor;
+};
+
 
 #endif // skeleton_cpp
