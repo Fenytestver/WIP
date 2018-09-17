@@ -10,6 +10,7 @@
 #include "display.h"
 #include "debug_util.h"
 #include "string.h"
+#include "systemtime.h"
 #include <iostream>
 
 ///
@@ -163,4 +164,6 @@ class StubPump : public Pump {
     bool turnedOn = false;
 };
 
+class StubSystemTime : public SystemTime {
+};
 #endif

@@ -1,6 +1,6 @@
 /.gradle
 /build/
-
+/obj/
 # Ignore Gradle GUI config
 gradle-app.setting
 

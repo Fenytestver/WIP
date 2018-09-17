@@ -4,7 +4,7 @@
 #include "sumppitinputs.h"
 #include "pump.h"
 #include <iostream>
-
+using namespace std;
 int main()
 {
     std::cout << "Start testing.\n";
@@ -36,7 +36,7 @@ test_engine::test_engine()
 test_engine::~test_engine()
 {}
 
-void assert(bool b, char* msg) {
+void assert(bool b, string msg) {
   if (!b) {
     std::cerr << "Error: " << msg << "\n";
     exit(1);
@@ -45,7 +45,7 @@ void assert(bool b, char* msg) {
   }
 }
 
-void assert(int actual, int expected, char* msg) {
+void assert(int actual, int expected, string msg) {
   if (expected != actual) {
     std::cerr << "Error: " << msg << ", expected:" << expected << ", actual:" << actual << "\n";
     exit(1);
@@ -53,7 +53,7 @@ void assert(int actual, int expected, char* msg) {
     std::cout << "Test: \'" << msg << "\' Successful\n";
   }
 }
-void assertFalse(bool b, char* msg) {
+void assertFalse(bool b, string msg) {
   assert(!b, msg);
 }
 
