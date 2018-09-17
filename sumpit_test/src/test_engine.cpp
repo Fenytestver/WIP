@@ -75,7 +75,11 @@ void test_engine::test_first()
   std::cout << "Set leaking sensor to leaking." << std::endl;
   leakSensor->setLeaking(true);
   node->update();
+  assert(siren->isOn(), "Siren must be on with 2 issues detected.");
   assert(node->getAlarmReason(), SPN_ALARM_HIGH_WATER | SPN_ALARM_LEAK, "Alarm reason should be high water + leak.");
 
-
+  std::cout << "Disarming." << std::endl;
+  node->disarm();
+  assertFalse(siren->isOn(), "Siren must be off after startup");
+  assert(node->getMode(), SPN_DISARMED, "Mode is armed after startup");
 }
