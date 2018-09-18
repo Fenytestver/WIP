@@ -4,6 +4,7 @@
 #include "voltagesensor.h"
 #include "systemtime.h"
 
+//FIXME: remove this.
 #define SPS_PUMP_LOW_VOLTAGE_THREASHOLD 10.0
 
 class Pump
@@ -21,14 +22,14 @@ class Pump
     virtual bool isVoltageDetected();
     /** @return returns the RPM of the pump. */
     virtual int getRpm();
-
-    virtual long getPumpUptime();
+    virtual long getUptime();
   protected:
     SystemTime* systemTime;
     RpmSensor* rpmSensor; //!< Member variable "rpmSensor"
     VoltageSensor* voltageSensor; //!< Member variable "voltageSensor"
 
   private:
+    bool turnedOn;
     unsigned long turnedOnAt;
 };
 

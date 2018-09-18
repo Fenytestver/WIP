@@ -9,7 +9,7 @@ class SystemTime
     SystemTime();
     /** Default destructor */
     virtual ~SystemTime();
-    virtual unsigned long nowMillis();
+    virtual long nowMillis();
 
   protected:
 

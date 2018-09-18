@@ -63,11 +63,13 @@ void SumpPitNode::update()
 }
 
 void SumpPitNode::updateArmed() {
-  int _alarmReason = 0;
-  if (sensor->isWaterLevelHigh()) {
-    _alarmReason |= SPN_ALARM_HIGH_WATER;
+  int _alarmReason = sensor->checkState();
+
+
+  /*if (sensor->isWaterLevelHigh()) {
+    _alarmReason |= SPN_ALARM_WATER_CRITICAL;
   } else {
-    _alarmReason &= ~SPN_ALARM_HIGH_WATER;
+    _alarmReason &= ~SPN_ALARM_WATER_CRITICAL;
   }
 
   if (sensor->isLeaking()) {
@@ -76,13 +78,13 @@ void SumpPitNode::updateArmed() {
     _alarmReason &= ~SPN_ALARM_LEAK;
   }
 
-  int pumpState = sensor->getPumpState();
+  int pumpState = sensor->checkPumpState();
   if (pumpState != SPS_PUMP_NO_ERROR) {
     // check and update RPM state
     if ((pumpState & SPS_PUMP_LOW_RPM) != 0) {
-      _alarmReason |= SPN_ALARM_PUMP_RPM_FAILURE;
+      _alarmReason |= SPN_ALARM_PUMP_RPM_CRITICAL;
     } else {
-      _alarmReason &= ~SPN_ALARM_PUMP_RPM_FAILURE;
+      _alarmReason &= ~SPN_ALARM_PUMP_RPM_CRITICAL;
     }
     // check and update Voltage state
     if ((pumpState & SPS_PUMP_LOW_VOLTAGE) != 0) {
@@ -92,12 +94,23 @@ void SumpPitNode::updateArmed() {
     }
   }
 
+  // TODO: Maybe this is should be somewhere else..
+  // this is an action, inside update. who knows..
   // update public alarm reason
-  alarmReason = _alarmReason;
   if (alarmReason != 0) {
     alarm();
   } else {
     alarmOff();
+  }*/
+  alarmReason = _alarmReason;
+
+  if (isCritical(alarmReason)) {
+    siren->on();
+  } else if (isTechnical(alarmReason)) {
+    // TODO: do we need this?
+    siren->on();
+  } else {
+    siren->off();
   }
 }
 
@@ -108,4 +121,14 @@ void SumpPitNode::alarmOff() {
 int SumpPitNode::getAlarmReason()
 {
   return alarmReason;
+}
+
+bool SumpPitNode::isCritical(int reason)
+{
+  return (reason & SPN_ALERT_ALL_CRITICAL) != SPN_ALERT_NO_ALERT;
+}
+
+bool SumpPitNode::isTechnical(int reason)
+{
+  return (reason & SPN_ALERT_ALL_TECHNICAL) != SPN_ALERT_NO_ALERT;
 }

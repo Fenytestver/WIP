@@ -5,18 +5,13 @@
 #include "siren.h"
 #include "sumppitinputs.h"
 #include "sumppitsensor.h"
+#include "spn_config.h"
 
+using namespace spn;
 // The main system modes
 enum {
   SPN_INITIALIZING, SPN_DISARMED, SPN_ARMED, SPN_MAINTENANCE, SPN_SYS_ERROR
 }; // end SumpPitNodeModes
-
-#define SPN_ALARM_NO (0)
-#define SPN_ALARM_LEAK (1<<0)
-#define SPN_ALARM_PUMP_RPM_FAILURE (1<<1)
-#define SPN_ALARM_PUMP_VOLTAGE_FAILURE (1<<2)
-#define SPN_ALARM_HIGH_WATER (1<<3)
-#define SPN_ALARM_SYSTEM_ERROR (1<<4)
 
 class SumpPitNode
 {
@@ -30,8 +25,7 @@ class SumpPitNode
     virtual ~SumpPitNode();
     virtual void setup();
     /**
-      Update the system state.
-      Assuming sensor readings are done, or are instant.
+      Update the system state. Not taking any actions.
       */
     virtual void update();
 
@@ -49,6 +43,8 @@ class SumpPitNode
   private: // methods
     void updateArmed();
     void alarmOff();
+    bool isCritical(int reason);
+    bool isTechnical(int reason);
 
   protected:
     Siren* siren;

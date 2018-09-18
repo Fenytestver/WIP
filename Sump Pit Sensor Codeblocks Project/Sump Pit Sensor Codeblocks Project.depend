@@ -67,23 +67,24 @@
 
 1537150534 c:\etc\sumpit\sumpit\src\main\cpp\waterlevelsensor.h
 
-1537171605 source:c:\etc\sumpit\sumpit\src\main\cpp\pump.cpp
+1537245392 source:c:\etc\sumpit\sumpit\src\main\cpp\pump.cpp
 	"pump.h"
 
-1537171602 c:\etc\sumpit\sumpit\src\main\cpp\pump.h
+1537245392 c:\etc\sumpit\sumpit\src\main\cpp\pump.h
 	"rpmsensor.h"
 	"voltagesensor.h"
 	"systemtime.h"
 
-1537170961 source:c:\etc\sumpit\sumpit\src\main\cpp\sumppitsensor.cpp
+1537253363 source:c:\etc\sumpit\sumpit\src\main\cpp\sumppitsensor.cpp
 	"sumppitsensor.h"
 
-1537155675 c:\etc\sumpit\sumpit\src\main\cpp\sumppitsensor.h
+1537253045 c:\etc\sumpit\sumpit\src\main\cpp\sumppitsensor.h
 	"waterlevelsensor.h"
 	"pump.h"
 	"leaksensor.h"
+	"spn_config.h"
 
-1537171549 source:c:\etc\sumpit\sumpit_test\src\stubs.cpp
+1537253759 source:c:\etc\sumpit\sumpit_test\src\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -103,14 +104,15 @@
 1537150534 c:\etc\sumpit\sumpit\src\main\cpp\sumppitinputs.h
 	"button.h"
 
-1537170843 source:c:\etc\sumpit\sumpit\src\main\cpp\sumppitnode.cpp
+1537253003 source:c:\etc\sumpit\sumpit\src\main\cpp\sumppitnode.cpp
 	"sumppitnode.h"
 
-1537152512 c:\etc\sumpit\sumpit\src\main\cpp\sumppitnode.h
+1537250373 c:\etc\sumpit\sumpit\src\main\cpp\sumppitnode.h
 	"display.h"
 	"siren.h"
 	"sumppitinputs.h"
 	"sumppitsensor.h"
+	"spn_config.h"
 
 1537169100 c:\etc\sumpit\sumpit_test\src\debug_util.h
 	<iostream>
@@ -120,7 +122,7 @@
 
 1537150534 c:\etc\sumpit\sumpit\src\main\cpp\spnsystem.h
 
-1537171384 source:c:\etc\sumpit\sumpit_test\src\test_engine.cpp
+1537253682 source:c:\etc\sumpit\sumpit_test\src\test_engine.cpp
 	"test_engine.h"
 	"led.h"
 	"sumppitsensor.h"
@@ -129,8 +131,13 @@
 	"debug_util.h"
 	<iostream>
 
-1537171477 source:c:\etc\sumpit\sumpit\src\main\cpp\systemtime.cpp
+1537239976 source:c:\etc\sumpit\sumpit\src\main\cpp\systemtime.cpp
 	"systemtime.h"
 
-1537171472 c:\etc\sumpit\sumpit\src\main\cpp\systemtime.h
+1537239981 c:\etc\sumpit\sumpit\src\main\cpp\systemtime.h
+
+1537248753 c:\etc\sumpit\sumpit\src\main\cpp\spn_config.h
+
+1537247130 source:c:\etc\sumpit\sumpit\src\main\cpp\spn_config.cpp
+	"spn_config.h"
 

@@ -3,15 +3,9 @@
 #include "waterlevelsensor.h"
 #include "pump.h"
 #include "leaksensor.h"
+#include "spn_config.h"
 
-#define SPS_PUMP_NO_ERROR (0)
-#define SPS_PUMP_LOW_VOLTAGE (1<<0)
-#define SPS_PUMP_LOW_RPM (1<<1)
-
-// give a little time after a turn on to spin up the pump
-#define SPS_PUMP_SPINUP_TIME 10000
-// below this, rpm considered low
-#define SPS_PUMP_LOW_RPM_THRESHOLD 400
+using namespace spn;
 
 class SumpPitSensor
 {
@@ -27,8 +21,13 @@ class SumpPitSensor
     virtual void setup();
     virtual bool isWaterLevelHigh();
     virtual bool isLeaking();
+    virtual int checkState();
+  protected:
     /** Will return SPS_PUMP state bit-mask, where 0 is no error */
-    virtual int getPumpState();
+    virtual int checkPumpState();
+    virtual int checkWaterLevelState();
+    virtual int checkLeakState();
+    virtual void updatePump();
 
   protected:
     WaterLevelSensor* waterLevelSensors;

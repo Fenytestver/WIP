@@ -6,6 +6,8 @@ Pump::Pump(SystemTime* _systemTime, RpmSensor* _rpmSensor, VoltageSensor* _volta
   systemTime = _systemTime;
   rpmSensor = _rpmSensor;
   voltageSensor = _voltageSensor;
+  turnedOnAt = 0L;
+  turnedOn = false;
 }
 
 Pump::~Pump()
@@ -14,17 +16,23 @@ Pump::~Pump()
 }
 void Pump::turnOn()
 {
-  turnedOnAt = systemTime->nowMillis();
+  if (!turnedOn) {
+    turnedOn = true;
+    turnedOnAt = systemTime->nowMillis();
+  }
 }
 
 void Pump::turnOff()
 {
-  turnedOnAt = 0;
+  if (turnedOn) {
+    turnedOn = false;
+    turnedOnAt = 0L;
+  }
 }
 
 bool Pump::isTurnedOn()
 {
-  return turnedOnAt != 0;
+  return turnedOn;
 }
 
 int Pump::getRpm()
@@ -36,10 +44,10 @@ bool Pump::isVoltageDetected()
   return voltageSensor->getVoltage() > SPS_PUMP_LOW_VOLTAGE_THREASHOLD;
 }
 
-long Pump::getPumpUptime()
+long Pump::getUptime()
 {
   if (!isTurnedOn()) {
-    return 0;
+    return 0L;
   } else {
     return systemTime->nowMillis() - turnedOnAt;
   }

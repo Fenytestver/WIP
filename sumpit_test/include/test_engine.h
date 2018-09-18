@@ -32,6 +32,7 @@ class test_engine
 
       void test_first();
       void test_pump_failure_at_start();
+      void test_pump_turn_on_off();
     protected:
 
     private:

@@ -1,0 +1,66 @@
+#ifndef SPNCONFIG_H
+#define SPNCONFIG_H
+
+// below this, rpm considered low
+// FIXME: don't use this, there are other levels.
+#define SPS_PUMP_LOW_RPM_THRESHOLD 400
+// FIXME: we need real numbers.
+
+// Number of pumps
+#define SPN_PUMP_COUNT 2
+// give a little time after a turn on to spin up the pump
+#define SPS_PUMP_SPINUP_TIME 10000L
+// Pump uptime that triggers technical alert. No alert below this.
+#define SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL 30000
+// Pump uptime that triggers critical alert. Technical alert below this.
+#define SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL 40000
+// The usual RPM of the pump motor
+#define SPN_PUMP_STD_RPM 400
+// Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).
+// Normal below this.
+#define SPN_PUMP_RPM_DEVI_TECHNICAL 40
+// Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).
+// Technical alert below this.
+#define SPN_PUMP_RPM_DEVI_CRITICAL 70
+// Water levels
+// Pump turns off when reached
+#define SPN_WATER_LOW 10
+// Pump should turn on at this level
+#define SPN_WATER_HIGH 20
+// Critical water level.
+#define SPN_WATER_CRITICAL 80
+
+// Magic, do not touch.
+// Alert levels
+#define SPN_ALERT_NO_ALERT 0
+#define SPN_ALERT_TECHNICAL 1
+#define SPN_ALERT_CRITICAL 2
+
+// Node related
+#define SPN_ALARM_NO_ALARM (0)
+#define SPN_ALARM_LEAK (1<<0)
+#define SPN_ALARM_PUMP_RPM_TECHNICAL (1<<1)
+#define SPN_ALARM_PUMP_RPM_CRITICAL (1<<2)
+#define SPN_ALARM_PUMP_VOLTAGE_CRITICAL (1<<3)
+#define SPN_ALARM_PUMP_CYCLE_TECHNICAL (1<<4)
+#define SPN_ALARM_PUMP_CYCLE_CRITICAL (1<<5)
+#define SPN_ALARM_WATER_CRITICAL (1<<6)
+#define SPN_ALARM_SYSTEM_ERROR (1<<7)
+// all technical alerts
+#define SPN_ALERT_ALL_TECHNICAL \
+  (SPN_ALARM_PUMP_RPM_TECHNICAL \
+   | SPN_ALARM_PUMP_CYCLE_TECHNICAL)
+
+// all critical alerts
+#define SPN_ALERT_ALL_CRITICAL \
+  (SPN_ALARM_LEAK | SPN_ALARM_PUMP_RPM_CRITICAL \
+   | SPN_ALARM_PUMP_VOLTAGE_CRITICAL \
+   | SPN_ALARM_PUMP_CYCLE_CRITICAL \
+   | SPN_ALARM_WATER_CRITICAL)
+
+namespace spn {
+  int abs(int a);
+  void sb(int& flag, int mask, bool condition);
+}
+
+#endif // SPNCONFIG_H
