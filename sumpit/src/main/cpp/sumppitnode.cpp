@@ -104,6 +104,8 @@ void SumpPitNode::updateArmed() {
   }*/
   alarmReason = _alarmReason;
 
+  sensor->updatePump();
+
   if (isCritical(alarmReason)) {
     siren->on();
   } else if (isTechnical(alarmReason)) {

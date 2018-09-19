@@ -22,12 +22,12 @@ class SumpPitSensor
     virtual bool isWaterLevelHigh();
     virtual bool isLeaking();
     virtual int checkState();
+    virtual void updatePump();
   protected:
     /** Will return SPS_PUMP state bit-mask, where 0 is no error */
     virtual int checkPumpState();
     virtual int checkWaterLevelState();
     virtual int checkLeakState();
-    virtual void updatePump();
 
   protected:
     WaterLevelSensor* waterLevelSensors;

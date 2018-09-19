@@ -100,6 +100,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
     }
     void setLevel(short _level) {
       level = _level;
+      cout << "Set water level to " << level << endl;
     }
   private:
     short level = 0;
