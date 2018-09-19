@@ -11,5 +11,5 @@ VoltageSensor::~VoltageSensor()
 }
 float VoltageSensor::getVoltage()
 {
-
+  return 0;
 }

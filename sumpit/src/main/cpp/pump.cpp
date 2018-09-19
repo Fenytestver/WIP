@@ -1,10 +1,13 @@
 #include "pump.h"
 
-Pump::Pump(RpmSensor* _rpmSensor, VoltageSensor* _voltageSensor)
+Pump::Pump(SystemTime* _systemTime, RpmSensor* _rpmSensor, VoltageSensor* _voltageSensor)
 {
   //ctor
+  systemTime = _systemTime;
   rpmSensor = _rpmSensor;
   voltageSensor = _voltageSensor;
+  turnedOnAt = 0L;
+  turnedOn = false;
 }
 
 Pump::~Pump()
@@ -13,17 +16,23 @@ Pump::~Pump()
 }
 void Pump::turnOn()
 {
-
+  if (!turnedOn) {
+    turnedOn = true;
+    turnedOnAt = systemTime->nowMillis();
+  }
 }
 
 void Pump::turnOff()
 {
-
+  if (turnedOn) {
+    turnedOn = false;
+    turnedOnAt = 0L;
+  }
 }
 
 bool Pump::isTurnedOn()
 {
-  return false;
+  return turnedOn;
 }
 
 int Pump::getRpm()
@@ -32,5 +41,14 @@ int Pump::getRpm()
 }
 bool Pump::isVoltageDetected()
 {
-  return voltageSensor->getVoltage();
+  return voltageSensor->getVoltage() > SPS_PUMP_LOW_VOLTAGE_THREASHOLD;
+}
+
+long Pump::getUptime()
+{
+  if (!isTurnedOn()) {
+    return 0L;
+  } else {
+    return systemTime->nowMillis() - turnedOnAt;
+  }
 }

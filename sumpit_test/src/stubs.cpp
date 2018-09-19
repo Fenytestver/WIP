@@ -1,3 +1,6 @@
+#include <iostream>
+#include "string.h"
+
 #ifndef stubs_cpp
 #define stubs_cpp
 
@@ -10,7 +13,7 @@
 #include "display.h"
 #include "debug_util.h"
 #include "string.h"
-#include <iostream>
+#include "systemtime.h"
 
 ///
 // Very dumb, non-blocking, checkable implementations.
@@ -22,7 +25,7 @@ class StubLed : public Led {
     }
     virtual void setState(bool on) {
       _on = on;
-      std::cout << "Led:" << name << " turned " << (on ? "on" : "off")<< std::endl;
+      cout << "Led:" << name << " turned " << (on ? "on" : "off")<< endl;
     }
     bool isOn() {
       return _on;
@@ -40,7 +43,7 @@ class StubSiren : public Siren {
     }
     /** Turn off the alarm. */
     virtual void off() {
-      std::cout << "Siren turned off"<<std::endl;
+      cout << "Siren turned off"<<endl;
       sirenOn = false;
     }
     bool isOn() {
@@ -52,7 +55,7 @@ class StubSiren : public Siren {
 class StubButton : public Button {
   public:
     void press() {
-      std::cout << "Button" << " pressed."<< std::endl;
+      cout << "Button" << " pressed."<< endl;
       if (_onPressListener) {
         _onPressListener->onPress();
       }
@@ -62,7 +65,7 @@ class StubButton : public Button {
 class StubLeakSensor : public LeakSensor {
   public:
     void setLeaking(bool leaking) {
-      std::cout << "Leak sensor set value to: " << (leaking ? "leaking" : "not leaking") << std::endl;
+      cout << "Leak sensor set value to: " << (leaking ? "leaking" : "not leaking") << endl;
       _leaking = leaking;
     }
 
@@ -78,7 +81,7 @@ class StubDisplay : public Display {
   public:
     void displayMessage(char* _message)
     {
-      std::cout << "Display:" << message << std::endl;
+      cout << "Display:" << message << endl;
       message = _message;
     }
 
@@ -97,6 +100,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
     }
     void setLevel(short _level) {
       level = _level;
+      cout << "Set water level to " << level << endl;
     }
   private:
     short level = 0;
@@ -104,7 +108,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
 class StubBuzzer : public Buzzer {
   public:
     virtual void beep() {
-      std::cout << "Beep!" << std::endl;
+      cout << "Beep!" << endl;
       buzzer++;
     }
     int getBuzzer() {
@@ -118,7 +122,7 @@ class StubBuzzer : public Buzzer {
 class StubRpmSensor : public RpmSensor {
   public:
     void setRpm(int _rpm) {
-      std::cout << "RPM set to: " << _rpm << std::endl;
+      cout << "RPM set to: " << _rpm << endl;
       rpm = _rpm;
     }
     virtual int getRpm() {
@@ -131,7 +135,7 @@ class StubRpmSensor : public RpmSensor {
 class StubVoltageSensor : public VoltageSensor{
   public:
     void setVoltage(float _voltage) {
-      std::cout << "Pump voltage set to: " << _voltage << std::endl;
+      cout << "Stub voltage set to: " << _voltage << endl;
       voltage = _voltage;
     }
     virtual float getVoltage() {
@@ -143,15 +147,15 @@ class StubVoltageSensor : public VoltageSensor{
 
 class StubPump : public Pump {
   public:
-    StubPump(StubRpmSensor* _rpmSensor, StubVoltageSensor* _voltageSensor) :
-      Pump(_rpmSensor, _voltageSensor) {
+    StubPump(SystemTime* _systemTime, StubRpmSensor* _rpmSensor, StubVoltageSensor* _voltageSensor) :
+      Pump(_systemTime, _rpmSensor, _voltageSensor) {
     }
     virtual void turnOn() {
-      std::cout << "Pump turned on." << std::endl;
+      cout << "Pump turned on." << endl;
       turnedOn = true;
     }
     virtual void turnOff() {
-      std::cout << "Pump turned off." << std::endl;
+      cout << "Pump turned off." << endl;
       turnedOn = false;
     }
     /** gives the on/off state of the pump, as we requested. */
@@ -163,4 +167,25 @@ class StubPump : public Pump {
     bool turnedOn = false;
 };
 
+class StubSystemTime : public SystemTime {
+
+  public:
+
+    StubSystemTime() {
+      now = 0L;
+    }
+    long nowMillis() {
+      return now;
+    }
+    void setTime(long _now) {
+      cout << "Set time to " << now << endl;
+      now = _now;
+    }
+    void addTime(long delta) {
+      now += delta;
+      cout << "Move time by " << delta << " to " << now << endl;
+    }
+  private:
+    long now = 0;
+};
 #endif
