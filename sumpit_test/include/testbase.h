@@ -5,6 +5,7 @@
 #include "sumppitnode.h"
 #include "stubs.cpp"
 #include "debug_util.h"
+#include "multipump.h"
 // TODO: rename this to functional test base.
 class TestBase
 {
@@ -18,7 +19,7 @@ class TestBase
 
     StubRpmSensor *rpmSensor;
     StubVoltageSensor* voltageSensor;
-    Pump* pump;
+    MultiPump* pump;
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
 

@@ -1,7 +1,7 @@
 #ifndef SUMPPITSENSOR_H
 #define SUMPPITSENSOR_H
 #include "waterlevelsensor.h"
-#include "pump.h"
+#include "multipump.h"
 #include "leaksensor.h"
 #include "spn_config.h"
 
@@ -13,7 +13,7 @@ class SumpPitSensor
     /** Default constructor */
     SumpPitSensor(WaterLevelSensor* _waterLevelSensors, int _numWaterSensors,
                   LeakSensor* _leakSensors, int _numLeakSensors,
-                  Pump* _pump);
+                  MultiPump* _pump);
     /** Default destructor */
     virtual ~SumpPitSensor();
 
@@ -34,7 +34,7 @@ class SumpPitSensor
     short numWaterSensors;
     LeakSensor* leakSensors;
     int numLeakSensors;
-    Pump* pump;
+    MultiPump* pump;
 
   private:
     // FIXME: 70? Hard coded!

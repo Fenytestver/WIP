@@ -40,8 +40,11 @@ void TestBase::create()
   // time should not be 0, that would be a problem.
   systemTime->setTime(1L);
 
-  pump = new Pump(systemTime, rpmSensor, voltageSensor);
-
+  Pump* p1 = new Pump(systemTime, rpmSensor, voltageSensor);
+  Pump* p2 = new Pump(systemTime, rpmSensor, voltageSensor);
+  pump = new MultiPump();
+  pump->addPump(p1);
+  pump->addPump(p2);
   StubButton* disarmButton = new StubButton();
   StubButton* maintenanceButton = new StubButton();
   StubButton* armResetButton = new StubButton();
