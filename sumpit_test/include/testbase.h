@@ -20,6 +20,8 @@ class TestBase
     StubRpmSensor *rpmSensor;
     StubVoltageSensor* voltageSensor;
     MultiPump* pump;
+    Pump* p1;
+    Pump* p2;
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
 
