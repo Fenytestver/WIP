@@ -1,7 +1,7 @@
 #ifndef WATERLEVELSENSOR_H
 #define WATERLEVELSENSOR_H
 
-
+#define SPN_WATER_LEVEL_UNKNOWN 0
 class WaterLevelSensor
 {
   public:
