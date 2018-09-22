@@ -2,7 +2,7 @@
 
 SumpPitSensor::SumpPitSensor(WaterLevelSensor* _waterLevelSensors, int _numWaterSensors,
                   LeakSensor* _leakSensors, int _numLeakSensors,
-                  Pump* _pump)
+                  MultiPump* _pump)
 {
   //ctor
   waterLevelSensors = _waterLevelSensors;

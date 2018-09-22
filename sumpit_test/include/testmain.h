@@ -8,6 +8,7 @@
 #include "test_pump_functional.h"
 #include "test_pump_unit.h"
 #include "test_pump_failure_functional.h"
+#include "test_multipump_unit.h"
 
 class TestMain
 {
