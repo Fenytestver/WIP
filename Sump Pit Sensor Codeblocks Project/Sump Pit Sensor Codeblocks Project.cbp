@@ -22,6 +22,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../impl_sensornode/src/impl_sensornode.ino" />
 		<Unit filename="../sumpit/src/main/cpp/button.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/button.h" />
 		<Unit filename="../sumpit/src/main/cpp/buzzer.cpp" />
@@ -60,6 +61,7 @@
 		<Unit filename="../sumpit/src/main/cpp/waterlevelsensor.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/waterlevelsensor.h" />
 		<Unit filename="../sumpit_test/include/test_multipump_unit.h" />
+		<Unit filename="../sumpit_test/include/test_multiwater_sensor.h" />
 		<Unit filename="../sumpit_test/include/test_normaloperation.h" />
 		<Unit filename="../sumpit_test/include/test_pump_failure_functional.h" />
 		<Unit filename="../sumpit_test/include/test_pump_functional.h" />
@@ -70,6 +72,7 @@
 		<Unit filename="../sumpit_test/src/debug_util.h" />
 		<Unit filename="../sumpit_test/src/stubs.cpp" />
 		<Unit filename="../sumpit_test/src/test_multipump_unit.cpp" />
+		<Unit filename="../sumpit_test/src/test_multiwater_sensor.cpp" />
 		<Unit filename="../sumpit_test/src/test_normaloperation.cpp" />
 		<Unit filename="../sumpit_test/src/test_pump_failure_functional.cpp" />
 		<Unit filename="../sumpit_test/src/test_pump_functional.cpp" />
