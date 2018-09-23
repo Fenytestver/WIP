@@ -1,11 +1,6 @@
 #ifndef SPNCONFIG_H
 #define SPNCONFIG_H
 
-// below this, rpm considered low
-// FIXME: don't use this, there are other levels.
-#define SPS_PUMP_LOW_RPM_THRESHOLD 400
-// FIXME: we need real numbers.
-
 // Number of pumps
 #define SPN_PUMP_COUNT 2
 // give a little time after a turn on to spin up the pump
@@ -22,6 +17,9 @@
 // Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).
 // Technical alert below this.
 #define SPN_PUMP_RPM_DEVI_CRITICAL 70
+// Voltage threshold
+#define SPN_PUMP_LOW_VOLTAGE_THRESHOLD 10.0
+
 // Water levels
 // Pump turns off when reached
 #define SPN_WATER_LOW 10

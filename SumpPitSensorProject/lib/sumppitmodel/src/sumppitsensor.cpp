@@ -19,14 +19,10 @@ SumpPitSensor::~SumpPitSensor()
 void SumpPitSensor::setup() {
 
 }
-bool SumpPitSensor::isWaterLevelHigh()
-{
-  // FIXME: multiple sensors.
-  return waterLevelSensors->measureLevel() > SPS_WATER_THREASHOLD;
-}
+
 bool SumpPitSensor::isLeaking()
 {
-  // FIXME: multiple sensors.
+  // FIXME: multiple leak sensors.
   return leakSensors->isLeaking();
 }
 int SumpPitSensor::checkState()
@@ -77,10 +73,8 @@ void SumpPitSensor::updatePump()
 {
   int waterLevel = waterLevelSensors->measureLevel();
   if (waterLevel >= SPN_WATER_CRITICAL) {
-    // TODO: simple/turbo mode
-    pump->turnOn();
+    pump->turbo();
   } else if (waterLevel >= SPN_WATER_HIGH) {
-    // TODO: simple/turbo mode
     pump->turnOn();
   } else if (waterLevel <= SPN_WATER_LOW) {
     pump->turnOff();

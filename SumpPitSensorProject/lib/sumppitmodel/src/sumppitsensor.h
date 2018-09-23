@@ -19,7 +19,6 @@ class SumpPitSensor
 
     /** Call at setup phase, once */
     virtual void setup();
-    virtual bool isWaterLevelHigh();
     virtual bool isLeaking();
     virtual int checkState();
     virtual void updatePump();
@@ -37,8 +36,7 @@ class SumpPitSensor
     MultiPump* pump;
 
   private:
-    // FIXME: 70? Hard coded!
-    const int SPS_WATER_THREASHOLD = 70;
+
 };
 
 #endif // SUMPPITSENSOR_H

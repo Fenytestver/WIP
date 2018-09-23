@@ -54,7 +54,6 @@ void TestBase::create()
   maintenanceButton = new StubButton();
   armResetButton = new StubButton();
 
-  // FIXME: only one water level and one leak..
   sensor = new SumpPitSensor(multiWaterSensor, 1, leakSensor, 1, pump);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);
   siren = new StubSiren();
@@ -79,8 +78,6 @@ void TestBase::destroy()
   delete subPump1;
   delete subPump2;
 
-  // FIXME: only one water level and one leak..
-
   */
   delete node;
   delete sensor;
@@ -93,7 +90,7 @@ void TestBase::destroy()
   delete waterLevelSensor1;
   delete waterLevelSensor2;
   //delete systemTime;
-  // FIXME: delete members.
+  // FIXME: delete (free) members.
   //delete subPump1;
   //delete subPump2;
   //delete pump;

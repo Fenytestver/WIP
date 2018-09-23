@@ -3,9 +3,7 @@
 #include "rpmsensor.h"
 #include "voltagesensor.h"
 #include "systemtime.h"
-
-//FIXME: remove this.
-#define SPS_PUMP_LOW_VOLTAGE_THREASHOLD 10.0
+#include "spn_config.h"
 
 class Pump
 {

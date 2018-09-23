@@ -64,48 +64,11 @@ void SumpPitNode::update()
 
 void SumpPitNode::updateArmed() {
   int _alarmReason = sensor->checkState();
-
-
-  /*if (sensor->isWaterLevelHigh()) {
-    _alarmReason |= SPN_ALARM_WATER_CRITICAL;
-  } else {
-    _alarmReason &= ~SPN_ALARM_WATER_CRITICAL;
-  }
-
-  if (sensor->isLeaking()) {
-    _alarmReason |= SPN_ALARM_LEAK;
-  } else {
-    _alarmReason &= ~SPN_ALARM_LEAK;
-  }
-
-  int pumpState = sensor->checkPumpState();
-  if (pumpState != SPS_PUMP_NO_ERROR) {
-    // check and update RPM state
-    if ((pumpState & SPS_PUMP_LOW_RPM) != 0) {
-      _alarmReason |= SPN_ALARM_PUMP_RPM_CRITICAL;
-    } else {
-      _alarmReason &= ~SPN_ALARM_PUMP_RPM_CRITICAL;
-    }
-    // check and update Voltage state
-    if ((pumpState & SPS_PUMP_LOW_VOLTAGE) != 0) {
-      _alarmReason |= SPN_ALARM_PUMP_VOLTAGE_FAILURE;
-    } else {
-      _alarmReason &= ~SPN_ALARM_PUMP_VOLTAGE_FAILURE;
-    }
-  }
-
-  // TODO: Maybe this is should be somewhere else..
-  // this is an action, inside update. who knows..
-  // update public alarm reason
-  if (alarmReason != 0) {
-    alarm();
-  } else {
-    alarmOff();
-  }*/
   alarmReason = _alarmReason;
 
   sensor->updatePump();
 
+  // check system status
   if (isCritical(alarmReason)) {
     siren->on();
   } else if (isTechnical(alarmReason)) {

@@ -42,7 +42,7 @@ int Pump::getRpm()
 }
 bool Pump::isVoltageDetected()
 {
-  return voltageSensor->getVoltage() > SPS_PUMP_LOW_VOLTAGE_THREASHOLD;
+  return voltageSensor->getVoltage() > SPN_PUMP_LOW_VOLTAGE_THRESHOLD;
 }
 
 long Pump::getUptime()
