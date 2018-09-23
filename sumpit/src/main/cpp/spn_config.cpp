@@ -1,6 +1,6 @@
 #include "spn_config.h"
 
-int spn::abs(int a) {
+int spn::abso(int a) {
   return a >= 0 ? a : -1*a;
 }
 
