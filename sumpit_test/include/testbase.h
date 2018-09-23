@@ -18,7 +18,8 @@ class TestBase
     StubLeakSensor* leakSensor;
 
     MultiWaterSensor* multiWaterSensor;
-    StubWaterLevelSensor* waterLevelSensor;
+    StubWaterLevelSensor* waterLevelSensor1;
+    StubWaterLevelSensor* waterLevelSensor2;
 
     StubRpmSensor *rpmSensor;
     StubVoltageSensor* voltageSensor;
@@ -30,9 +31,10 @@ class TestBase
 
     StubDisplay* display;
 
-    StubButton* armButton;
+    StubButton* disarmButton;
     StubButton* maintenanceButton;
-    StubButton* resetButton;
+    StubButton* armResetButton;
+
     StubSiren* siren;
     SumpPitNode* node;
 

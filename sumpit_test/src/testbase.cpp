@@ -34,8 +34,10 @@ void TestBase::create()
 {
   leakSensor = new StubLeakSensor();
   multiWaterSensor = new MultiWaterSensor();
-  waterLevelSensor = new StubWaterLevelSensor();
-  multiWaterSensor->addSensor(waterLevelSensor);
+  waterLevelSensor1 = new StubWaterLevelSensor();
+  waterLevelSensor2 = new StubWaterLevelSensor();
+  multiWaterSensor->addSensor(waterLevelSensor1);
+  multiWaterSensor->addSensor(waterLevelSensor2);
   rpmSensor = new StubRpmSensor();
   voltageSensor = new StubVoltageSensor();
   systemTime = new StubSystemTime();
@@ -48,22 +50,54 @@ void TestBase::create()
   pump->addPump(subPump1);
   pump->addPump(subPump2);
 
-  StubButton* disarmButton = new StubButton();
-  StubButton* maintenanceButton = new StubButton();
-  StubButton* armResetButton = new StubButton();
+  disarmButton = new StubButton();
+  maintenanceButton = new StubButton();
+  armResetButton = new StubButton();
 
   // FIXME: only one water level and one leak..
   sensor = new SumpPitSensor(multiWaterSensor, 1, leakSensor, 1, pump);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);
   siren = new StubSiren();
   display = new StubDisplay();
-  inputs = new SumpPitInputs(armButton, maintenanceButton, resetButton);
   node = new SumpPitNode(siren, display, sensor, inputs);
 }
 
 void TestBase::destroy()
 {
-  // TODO: destroy?
+  /*delete leakSensor;
+  delete multiWaterSensor;
+  delete waterLevelSensor1;
+  delete waterLevelSensor2;
+
+  delete rpmSensor;
+  delete voltageSensor;
+  delete systemTime;
+
+  delete systemTime;
+
+  delete pump;
+  delete subPump1;
+  delete subPump2;
+
+  // FIXME: only one water level and one leak..
+
+  */
+  delete node;
+  delete sensor;
+  delete inputs;
+  delete display;
+  delete siren;
+  delete disarmButton;
+  delete maintenanceButton;
+  delete armResetButton;
+  delete waterLevelSensor1;
+  delete waterLevelSensor2;
+  //delete systemTime;
+  // FIXME: delete members.
+  //delete subPump1;
+  //delete subPump2;
+  //delete pump;
+
 }
 
 

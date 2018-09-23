@@ -4,6 +4,7 @@ MultiWaterSensor::MultiWaterSensor()
   :WaterLevelSensor()
 {
   //ctor
+  numSensors = 0;
 }
 
 MultiWaterSensor::~MultiWaterSensor()
