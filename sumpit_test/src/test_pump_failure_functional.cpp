@@ -14,7 +14,7 @@ test_pump_failure_functional::~test_pump_failure_functional()
 void test_pump_failure_functional::test() {
   systemTime->setTime(1);
   node->setup();
-  waterLevelSensor->setLevel(SPN_WATER_CRITICAL);
+  waterLevelSensor1->setLevel(SPN_WATER_CRITICAL);
   node->update();
   assert(pump->isTurnedOn(), "Pump must be running");
   assert(siren->isOn(), "Siren must turn on at this water level.");
