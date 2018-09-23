@@ -2,6 +2,13 @@
 
 ## Overview
 
+## Project structure
+
+SumpPitSensorProject	// project root
+	lib					// libraries
+		sumppitmodel	// main business logic implementation
+	src					// main, runnable files
+	test				// test code
 ## Links
 http://particle.io - Particle.io
 

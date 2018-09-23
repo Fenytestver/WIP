@@ -59,7 +59,7 @@
    | SPN_ALARM_WATER_CRITICAL)
 
 namespace spn {
-  int abs(int a);
+  int abso(int a);
   void sb(int& flag, int mask, bool condition);
 }
 

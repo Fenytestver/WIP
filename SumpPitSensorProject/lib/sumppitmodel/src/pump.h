@@ -31,7 +31,6 @@ class Pump
   private:
     bool turnedOn;
     unsigned long turnedOnAt;
-    virtual Pump* clone();
 };
 
 #endif // PUMP_H

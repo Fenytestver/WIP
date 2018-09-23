@@ -44,7 +44,7 @@ int SumpPitSensor::checkPumpState()
   int uptime = pump->getUptime();
   if (uptime > SPS_PUMP_SPINUP_TIME) {
     int rpm = pump->getRpm();
-    int deviation = abs(rpm - SPN_PUMP_STD_RPM);
+    int deviation = abso(rpm - SPN_PUMP_STD_RPM);
     // rpm deviation check
     sb(flags, SPN_ALARM_PUMP_RPM_TECHNICAL,
        deviation > SPN_PUMP_RPM_DEVI_TECHNICAL);

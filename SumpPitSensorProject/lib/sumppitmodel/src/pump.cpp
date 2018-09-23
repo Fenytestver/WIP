@@ -15,10 +15,6 @@ Pump::~Pump()
   //dtor
 }
 
-Pump* Pump::clone() {
-  throw 666;
-}
-
 void Pump::turnOn()
 {
   if (!turnedOn) {

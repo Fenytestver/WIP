@@ -1,6 +1,8 @@
-#include "src/main/cpp/skeleton.cpp"
+#include "src/main/cpp/sumppitnode.h"
+#include "src/main/cpp/led.h"
+#include "src/main/cpp/leaksensor.h"
+
 // some very stupid implementation of the virtuals.
-#include "src/main/cpp/stubs.cpp"
 //
 //typedef struct {
 //
@@ -9,6 +11,20 @@
 //// Address
 //typedef struct {
 //} Address;
+
+class StubLeakSensor : public LeakSensor {
+  public:
+    void setLeaking(bool leaking) {
+      _leaking = leaking;
+    }
+
+    virtual bool isLeaking() {
+      LeakSensor::isLeaking();
+      return _leaking;
+    }
+  private:
+    bool _leaking = false;
+};
 
 class ArduinoLed : Led {
   public:
@@ -29,7 +45,7 @@ class ArduinoLed : Led {
 };
 
 StubLeakSensor leakSensor;
-ArduinoLed led(13); // 13 is the arduino default led.
+ArduinoLed led(D7); // 13 is the arduino default led.
 
 void setup() {
   Serial.begin(115200);
