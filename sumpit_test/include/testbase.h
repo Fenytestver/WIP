@@ -6,6 +6,7 @@
 #include "stubs.cpp"
 #include "debug_util.h"
 #include "multipump.h"
+#include "multiwatersensor.h"
 // TODO: rename this to functional test base.
 class TestBase
 {
@@ -15,6 +16,8 @@ class TestBase
 
     StubSystemTime* systemTime;
     StubLeakSensor* leakSensor;
+
+    MultiWaterSensor* multiWaterSensor;
     StubWaterLevelSensor* waterLevelSensor;
 
     StubRpmSensor *rpmSensor;

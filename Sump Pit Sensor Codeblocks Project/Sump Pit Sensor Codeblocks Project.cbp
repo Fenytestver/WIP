@@ -13,6 +13,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="sumpit/src/main/cpp" />
+					<Add directory="sumpit_test/include" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -29,6 +32,10 @@
 		<Unit filename="../sumpit/src/main/cpp/leaksensor.h" />
 		<Unit filename="../sumpit/src/main/cpp/led.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/led.h" />
+		<Unit filename="../sumpit/src/main/cpp/multipump.cpp" />
+		<Unit filename="../sumpit/src/main/cpp/multipump.h" />
+		<Unit filename="../sumpit/src/main/cpp/multiwatersensor.cpp" />
+		<Unit filename="../sumpit/src/main/cpp/multiwatersensor.h" />
 		<Unit filename="../sumpit/src/main/cpp/onbuttonpresslistener.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/onbuttonpresslistener.h" />
 		<Unit filename="../sumpit/src/main/cpp/pump.cpp" />
@@ -37,6 +44,7 @@
 		<Unit filename="../sumpit/src/main/cpp/rpmsensor.h" />
 		<Unit filename="../sumpit/src/main/cpp/siren.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/siren.h" />
+		<Unit filename="../sumpit/src/main/cpp/spn_config.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/spnsystem.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/spnsystem.h" />
 		<Unit filename="../sumpit/src/main/cpp/sumppitinputs.cpp" />
@@ -51,10 +59,23 @@
 		<Unit filename="../sumpit/src/main/cpp/voltagesensor.h" />
 		<Unit filename="../sumpit/src/main/cpp/waterlevelsensor.cpp" />
 		<Unit filename="../sumpit/src/main/cpp/waterlevelsensor.h" />
-		<Unit filename="../sumpit_test/include/test_engine.h" />
+		<Unit filename="../sumpit_test/include/test_multipump_unit.h" />
+		<Unit filename="../sumpit_test/include/test_normaloperation.h" />
+		<Unit filename="../sumpit_test/include/test_pump_failure_functional.h" />
+		<Unit filename="../sumpit_test/include/test_pump_functional.h" />
+		<Unit filename="../sumpit_test/include/test_pump_unit.h" />
+		<Unit filename="../sumpit_test/include/testbase.h" />
+		<Unit filename="../sumpit_test/include/testmain.h" />
+		<Unit filename="../sumpit_test/src/debug_util.cpp" />
 		<Unit filename="../sumpit_test/src/debug_util.h" />
 		<Unit filename="../sumpit_test/src/stubs.cpp" />
-		<Unit filename="../sumpit_test/src/test_engine.cpp" />
+		<Unit filename="../sumpit_test/src/test_multipump_unit.cpp" />
+		<Unit filename="../sumpit_test/src/test_normaloperation.cpp" />
+		<Unit filename="../sumpit_test/src/test_pump_failure_functional.cpp" />
+		<Unit filename="../sumpit_test/src/test_pump_functional.cpp" />
+		<Unit filename="../sumpit_test/src/test_pump_unit.cpp" />
+		<Unit filename="../sumpit_test/src/testbase.cpp" />
+		<Unit filename="../sumpit_test/src/testmain.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

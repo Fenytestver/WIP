@@ -33,7 +33,9 @@ bool TestBase::run()
 void TestBase::create()
 {
   leakSensor = new StubLeakSensor();
+  multiWaterSensor = new MultiWaterSensor();
   waterLevelSensor = new StubWaterLevelSensor();
+  multiWaterSensor->addSensor(waterLevelSensor);
   rpmSensor = new StubRpmSensor();
   voltageSensor = new StubVoltageSensor();
   systemTime = new StubSystemTime();
@@ -51,7 +53,7 @@ void TestBase::create()
   StubButton* armResetButton = new StubButton();
 
   // FIXME: only one water level and one leak..
-  sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, pump);
+  sensor = new SumpPitSensor(multiWaterSensor, 1, leakSensor, 1, pump);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);
   siren = new StubSiren();
   display = new StubDisplay();
