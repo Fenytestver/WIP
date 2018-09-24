@@ -5,11 +5,13 @@ MultiPump::MultiPump()
 {
   //ctor
   mode = SPN_MULTIPUMP_OFF;
+  pumps = new Pump*[SPN_PUMP_COUNT];
 }
 
 MultiPump::~MultiPump()
 {
   //dtor
+  delete pumps;
 }
 
 void MultiPump::turnOn()
@@ -67,6 +69,10 @@ void MultiPump::turbo()
 void MultiPump::setMode(short _mode)
 {
   mode = _mode;
+  if (pumpCount == 0) {
+    // should not happen.
+    return;
+  }
   switch (mode) {
   case SPN_MULTIPUMP_OFF:
     for (short i=0; i<pumpCount; ++i) {

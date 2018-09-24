@@ -25,7 +25,7 @@ class StubLed : public Led {
     }
     virtual void setState(bool on) {
       _on = on;
-      cout << "Led:" << name << " turned " << (on ? "on" : "off")<< endl;
+      SPN_DBG_STUB << "Led:" << name << " turned " << (on ? "on" : "off")<< endl;
     }
     bool isOn() {
       return _on;
@@ -43,7 +43,7 @@ class StubSiren : public Siren {
     }
     /** Turn off the alarm. */
     virtual void off() {
-      cout << "Siren turned off"<<endl;
+      SPN_DBG_STUB << "Siren turned off"<<endl;
       sirenOn = false;
     }
     bool isOn() {
@@ -55,7 +55,7 @@ class StubSiren : public Siren {
 class StubButton : public Button {
   public:
     void press() {
-      cout << "Button" << " pressed."<< endl;
+      SPN_DBG_STUB << "Button" << " pressed."<< endl;
       if (_onPressListener) {
         _onPressListener->onPress();
       }
@@ -65,7 +65,7 @@ class StubButton : public Button {
 class StubLeakSensor : public LeakSensor {
   public:
     void setLeaking(bool leaking) {
-      cout << "Leak sensor set value to: " << (leaking ? "leaking" : "not leaking") << endl;
+      SPN_DBG_STUB << "Leak sensor set value to: " << (leaking ? "leaking" : "not leaking") << endl;
       _leaking = leaking;
     }
 
@@ -81,7 +81,7 @@ class StubDisplay : public Display {
   public:
     void displayMessage(char* _message)
     {
-      cout << "Display:" << message << endl;
+      SPN_DBG_STUB << "Display:" << message << endl;
       message = _message;
     }
 
@@ -100,7 +100,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
     }
     void setLevel(short _level) {
       level = _level;
-      cout << "Set water level to " << level << endl;
+      SPN_DBG_STUB << "Set water level to " << level << endl;
     }
   private:
     short level = 0;
@@ -108,7 +108,7 @@ class StubWaterLevelSensor : public WaterLevelSensor {
 class StubBuzzer : public Buzzer {
   public:
     virtual void beep() {
-      cout << "Beep!" << endl;
+      SPN_DBG_STUB << "Beep!" << endl;
       buzzer++;
     }
     int getBuzzer() {
@@ -122,7 +122,7 @@ class StubBuzzer : public Buzzer {
 class StubRpmSensor : public RpmSensor {
   public:
     void setRpm(int _rpm) {
-      cout << "RPM set to: " << _rpm << endl;
+      SPN_DBG_STUB << "RPM set to: " << _rpm << endl;
       rpm = _rpm;
     }
     virtual int getRpm() {
@@ -135,7 +135,7 @@ class StubRpmSensor : public RpmSensor {
 class StubVoltageSensor : public VoltageSensor{
   public:
     void setVoltage(float _voltage) {
-      cout << "Stub voltage set to: " << _voltage << endl;
+      SPN_DBG_STUB << "Stub voltage set to: " << _voltage << endl;
       voltage = _voltage;
     }
     virtual float getVoltage() {
@@ -151,11 +151,11 @@ class StubPump : public Pump {
       Pump(_systemTime, _rpmSensor, _voltageSensor) {
     }
     virtual void turnOn() {
-      cout << "Pump turned on." << endl;
+      SPN_DBG_STUB << "Pump turned on." << endl;
       turnedOn = true;
     }
     virtual void turnOff() {
-      cout << "Pump turned off." << endl;
+      SPN_DBG_STUB << "Pump turned off." << endl;
       turnedOn = false;
     }
     /** gives the on/off state of the pump, as we requested. */
@@ -178,12 +178,12 @@ class StubSystemTime : public SystemTime {
       return now;
     }
     void setTime(long _now) {
-      cout << "Set time to " << now << endl;
+      SPN_DBG_STUB << "Set time to " << now << endl;
       now = _now;
     }
     void addTime(long delta) {
       now += delta;
-      cout << "Move time by " << delta << " to " << now << endl;
+      SPN_DBG_STUB << "Move time by " << delta << " to " << now << endl;
     }
   private:
     long now = 0;

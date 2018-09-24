@@ -1,10 +1,10 @@
 #ifndef TEST_MULTIWATER_SENSOR_H
 #define TEST_MULTIWATER_SENSOR_H
-#include "testbase.h"
+#include "functionaltestbase.h"
 #include "stubs.cpp"
 #include "multiwatersensor.h"
 
-class test_multiwater_sensor : public TestBase
+class test_multiwater_sensor : public FunctionalTestBase
 {
   public:
     test_multiwater_sensor();

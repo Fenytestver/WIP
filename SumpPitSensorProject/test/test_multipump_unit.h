@@ -1,6 +1,7 @@
 #ifndef TEST_MULTIPUMP_UNIT_H
 #define TEST_MULTIPUMP_UNIT_H
 #include "testbase.h"
+#include "stubs.cpp"
 
 class test_multipump_unit : public TestBase
 {

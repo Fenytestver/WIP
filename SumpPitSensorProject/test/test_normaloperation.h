@@ -1,9 +1,9 @@
 #include <iostream>
 #ifndef TEST_NORMALOPERATION_H
 #define TEST_NORMALOPERATION_H
-#include "testbase.h"
+#include "functionaltestbase.h"
 
-class test_normaloperation : public TestBase
+class test_normaloperation : public FunctionalTestBase
 {
   public:
     test_normaloperation();

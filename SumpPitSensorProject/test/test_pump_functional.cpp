@@ -1,7 +1,7 @@
 #include "test_pump_functional.h"
 
 test_pump_functional::test_pump_functional()
-  : TestBase("Pump functions")
+  : FunctionalTestBase("Pump functions")
 {
   //ctor
 }
@@ -13,7 +13,7 @@ test_pump_functional::~test_pump_functional()
 
 void test_pump_functional::test()
 {
-node->setup();
+  node->setup();
   waterLevelSensor1->setLevel(SPN_WATER_LOW - 1);
 
   node->update();

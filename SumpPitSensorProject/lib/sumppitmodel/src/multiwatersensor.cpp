@@ -5,11 +5,13 @@ MultiWaterSensor::MultiWaterSensor()
 {
   //ctor
   numSensors = 0;
+  sensors = new WaterLevelSensor*[SPN_MULTWATER_MAX_SENSORS];
 }
 
 MultiWaterSensor::~MultiWaterSensor()
 {
   //dtor
+  delete sensors;
 }
 
 void MultiWaterSensor::addSensor(WaterLevelSensor* _sensor)

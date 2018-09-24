@@ -1,7 +1,7 @@
 #include "test_pump_failure_functional.h"
 
 test_pump_failure_functional::test_pump_failure_functional()
-  : TestBase("Pump fails to start scenario")
+  : FunctionalTestBase("Pump fails to start scenario")
 {
   //ctor
 }

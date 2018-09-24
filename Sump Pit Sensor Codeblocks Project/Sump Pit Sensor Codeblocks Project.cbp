@@ -60,13 +60,13 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/voltagesensor.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/waterlevelsensor.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/waterlevelsensor.h" />
-		<Unit filename="../SumpPitSensorProject/lib/sumppitparticle/src/sumppitparticle.cpp" />
-		<Unit filename="../SumpPitSensorProject/lib/sumppitparticle/src/sumppitparticle.h" />
 		<Unit filename="../SumpPitSensorProject/src/SumpPitSensorNode.ino" />
 		<Unit filename="../SumpPitSensorProject/src/project.cpp" />
 		<Unit filename="../SumpPitSensorProject/src/project.h" />
 		<Unit filename="../SumpPitSensorProject/test/debug_util.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/debug_util.h" />
+		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.cpp" />
+		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.h" />
 		<Unit filename="../SumpPitSensorProject/test/stubs.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.h" />

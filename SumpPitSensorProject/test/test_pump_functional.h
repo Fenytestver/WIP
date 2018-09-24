@@ -1,8 +1,8 @@
 #ifndef TEST_PUMP_FUNCTIONAL_H
 #define TEST_PUMP_FUNCTIONAL_H
-#include "testbase.h"
+#include "functionaltestbase.h"
 
-class test_pump_functional : public TestBase
+class test_pump_functional : public FunctionalTestBase
 {
   public:
     test_pump_functional();

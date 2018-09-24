@@ -28,7 +28,7 @@ class MultiPump : public Pump
   protected:
 
   private:
-    Pump* pumps[SPN_MULTIPUMP_MAX_PUMPS];
+    Pump** pumps;
     short currentPump;
     short pumpCount;
     short mode;

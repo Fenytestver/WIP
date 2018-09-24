@@ -1,7 +1,7 @@
 #include "test_multiwater_sensor.h"
 
 test_multiwater_sensor::test_multiwater_sensor()
-  : TestBase("Multiwater sensor unit test")
+  : FunctionalTestBase("Multiwater sensor unit test")
 {
   //ctor
 }

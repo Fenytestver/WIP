@@ -1,7 +1,7 @@
 #include "test_normaloperation.h"
 
 test_normaloperation::test_normaloperation() :
-  TestBase("Normal operation")
+  FunctionalTestBase("Normal operation")
 {
   //ctor
 }
@@ -15,7 +15,6 @@ void test_normaloperation::test()
   assertFalse(siren->isOn(), "Siren must be off after startup");
 
   // simulate 80% water level.
-  std::cout << "Set water level to SPN_WATER_HIGH" << std::endl;
   waterLevelSensor1->setLevel(SPN_WATER_HIGH);
   node->update();
   assert(pump->isTurnedOn(), "Pump must turn on at this water level.");

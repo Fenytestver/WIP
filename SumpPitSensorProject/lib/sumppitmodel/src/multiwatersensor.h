@@ -15,7 +15,7 @@ class MultiWaterSensor : public WaterLevelSensor
     virtual short measureLevel();
 
   protected:
-    WaterLevelSensor* sensors[SPN_MULTWATER_MAX_SENSORS];
+    WaterLevelSensor** sensors;
     int numSensors;
 
   private:
