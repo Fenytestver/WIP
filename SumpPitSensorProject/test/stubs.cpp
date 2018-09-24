@@ -39,6 +39,7 @@ class StubSiren : public Siren {
   public:
     /** Turn on the alarm. */
     virtual void on() {
+      SPN_DBG_STUB << "Siren turned on"<<endl;
       sirenOn = true;
     }
     /** Turn off the alarm. */
