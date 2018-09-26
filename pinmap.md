@@ -43,7 +43,7 @@ MCP23017 - i2c (SDA,SCL)
 Required:
 2x leak: 1 digital
 2x voltage: 1x analog
-2x rpm: 1x analog
+2x rpm: 1x digital
 2x distance: ultrasonic:trig/echo (interrupt); lidar:rx(local pin)/tx (interrupt)
 3x button: digital
 
