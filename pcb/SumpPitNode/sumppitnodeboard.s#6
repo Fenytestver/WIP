@@ -6983,8 +6983,8 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <instances>
 <instance part="ELECTRON" gate="G$1" x="-58.42" y="71.12"/>
 <instance part="DISPLAY" gate="G$1" x="-20.32" y="63.5" rot="MR0"/>
-<instance part="DISTANCE_1" gate="J_ULTRASONIC" x="5.08" y="38.1"/>
-<instance part="DISTANCE_2" gate="J_ULTRASONIC" x="30.48" y="38.1"/>
+<instance part="DISTANCE_1" gate="J_ULTRASONIC" x="-12.7" y="35.56"/>
+<instance part="DISTANCE_2" gate="J_ULTRASONIC" x="-33.02" y="12.7"/>
 <instance part="LEAK_1" gate="G$1" x="22.86" y="71.12"/>
 <instance part="LEAK_2" gate="G$1" x="38.1" y="71.12"/>
 <instance part="VOLTAGE_1" gate="G$1" x="22.86" y="58.42"/>
@@ -6994,8 +6994,8 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <instance part="LED_YELLOW" gate="G$1" x="-96.52" y="55.88" rot="R270"/>
 <instance part="LED_GREEN" gate="G$1" x="-96.52" y="48.26" rot="R270"/>
 <instance part="LED_RED" gate="G$1" x="-96.52" y="63.5" rot="R270"/>
-<instance part="LS1" gate="G$1" x="-40.64" y="30.48"/>
-<instance part="ALARM" gate="G$1" x="-15.24" y="15.24"/>
+<instance part="LS1" gate="G$1" x="38.1" y="12.7"/>
+<instance part="ALARM" gate="G$1" x="-81.28" y="33.02"/>
 <instance part="BTN_1" gate="G$1" x="-93.98" y="20.32"/>
 <instance part="BTN_2" gate="G$1" x="-93.98" y="12.7"/>
 <instance part="BTN_3" gate="G$1" x="-93.98" y="5.08"/>
