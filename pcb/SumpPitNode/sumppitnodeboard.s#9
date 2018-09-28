@@ -6956,7 +6956,7 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 </class>
 </classes>
 <parts>
-<part name="U$1" library="Particle" deviceset="ELECTRON" device="DUALROW"/>
+<part name="ELECTRON" library="Particle" deviceset="ELECTRON" device="DUALROW"/>
 <part name="DISPLAY" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="I2C_STANDARD" device="" package3d_urn="urn:adsk.eagle:package:38085/1"/>
 <part name="DISTANCE_1" library="Ultrasonic Sensor HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="DISTANCE_2" library="Ultrasonic Sensor HC-SR04" deviceset="HC-SR04" device=""/>
@@ -6981,27 +6981,69 @@ SparkFun BigTime Watch Kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
 <plain>
 </plain>
 <instances>
-<instance part="U$1" gate="G$1" x="-88.9" y="71.12"/>
-<instance part="DISPLAY" gate="G$1" x="2.54" y="68.58"/>
-<instance part="DISTANCE_1" gate="J_ULTRASONIC" x="5.08" y="38.1"/>
-<instance part="DISTANCE_2" gate="J_ULTRASONIC" x="30.48" y="38.1"/>
+<instance part="ELECTRON" gate="G$1" x="-58.42" y="71.12"/>
+<instance part="DISPLAY" gate="G$1" x="-20.32" y="63.5" rot="MR0"/>
+<instance part="DISTANCE_1" gate="J_ULTRASONIC" x="-12.7" y="35.56"/>
+<instance part="DISTANCE_2" gate="J_ULTRASONIC" x="-33.02" y="12.7"/>
 <instance part="LEAK_1" gate="G$1" x="22.86" y="71.12"/>
 <instance part="LEAK_2" gate="G$1" x="38.1" y="71.12"/>
 <instance part="VOLTAGE_1" gate="G$1" x="22.86" y="58.42"/>
 <instance part="VOLTAGE_2" gate="G$1" x="38.1" y="58.42"/>
 <instance part="RPM_1" gate="J$1" x="43.18" y="43.18"/>
 <instance part="RPM_2" gate="J$1" x="43.18" y="27.94"/>
-<instance part="LED_YELLOW" gate="G$1" x="-40.64" y="71.12" rot="R90"/>
-<instance part="LED_GREEN" gate="G$1" x="-40.64" y="60.96" rot="R90"/>
-<instance part="LED_RED" gate="G$1" x="-40.64" y="50.8" rot="R90"/>
-<instance part="LS1" gate="G$1" x="-40.64" y="30.48"/>
-<instance part="ALARM" gate="G$1" x="-15.24" y="15.24"/>
+<instance part="LED_YELLOW" gate="G$1" x="-96.52" y="55.88" rot="R270"/>
+<instance part="LED_GREEN" gate="G$1" x="-96.52" y="48.26" rot="R270"/>
+<instance part="LED_RED" gate="G$1" x="-96.52" y="63.5" rot="R270"/>
+<instance part="LS1" gate="G$1" x="38.1" y="12.7"/>
+<instance part="ALARM" gate="G$1" x="-81.28" y="33.02"/>
 <instance part="BTN_1" gate="G$1" x="-93.98" y="20.32"/>
 <instance part="BTN_2" gate="G$1" x="-93.98" y="12.7"/>
 <instance part="BTN_3" gate="G$1" x="-93.98" y="5.08"/>
-<instance part="LIPO" gate="G$1" x="-50.8" y="91.44"/>
+<instance part="LIPO" gate="G$1" x="-22.86" y="86.36" rot="MR0"/>
 </instances>
 <busses>
+<bus name="B$1">
+<segment>
+<wire x1="-93.98" y1="48.26" x2="-68.58" y2="48.26" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$2">
+<segment>
+<wire x1="-93.98" y1="55.88" x2="-93.98" y2="50.8" width="0.762" layer="92"/>
+<wire x1="-93.98" y1="50.8" x2="-68.58" y2="50.8" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$3">
+<segment>
+<wire x1="-93.98" y1="63.5" x2="-93.98" y2="53.34" width="0.762" layer="92"/>
+<wire x1="-93.98" y1="53.34" x2="-68.58" y2="53.34" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$4">
+<segment>
+<wire x1="-101.6" y1="63.5" x2="-101.6" y2="55.88" width="0.762" layer="92"/>
+<wire x1="-101.6" y1="55.88" x2="-101.6" y2="48.26" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$5">
+<segment>
+<wire x1="-45.72" y1="63.5" x2="-33.02" y2="63.5" width="0.762" layer="92"/>
+<wire x1="-33.02" y1="63.5" x2="-33.02" y2="66.04" width="0.762" layer="92"/>
+<wire x1="-33.02" y1="66.04" x2="-27.94" y2="66.04" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$6">
+<segment>
+<wire x1="-45.72" y1="66.04" x2="-35.56" y2="66.04" width="0.762" layer="92"/>
+<wire x1="-35.56" y1="66.04" x2="-35.56" y2="68.58" width="0.762" layer="92"/>
+<wire x1="-35.56" y1="68.58" x2="-27.94" y2="68.58" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$7">
+<segment>
+<wire x1="-30.48" y1="86.36" x2="-45.72" y2="86.36" width="0.762" layer="92"/>
+</segment>
+</bus>
 </busses>
 <nets>
 </nets>
