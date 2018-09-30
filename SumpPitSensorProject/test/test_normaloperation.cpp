@@ -15,7 +15,7 @@ void test_normaloperation::test()
   assertFalse(siren->isOn(), "Siren must be off after startup");
 
   // simulate 80% water level.
-  waterLevelSensor1->setLevel(SPN_WATER_HIGH);
+  waterLevelSensor->setLevel(SPN_WATER_HIGH);
   node->update();
   assert(pump->isTurnedOn(), "Pump must turn on at this water level.");
 
@@ -26,7 +26,7 @@ void test_normaloperation::test()
   assert(node->getAlarmReason(), SPN_ALARM_LEAK, "Alarm reason should be leak.");
 
   leakSensor->setLeaking(false);
-  waterLevelSensor1->setLevel(SPN_WATER_LOW - 1);
+  waterLevelSensor->setLevel(SPN_WATER_LOW - 1);
   node->update();
   assertFalse(siren->isOn(), "Siren should be off");
   assertFalse(pump->isTurnedOn(), "Pump should turn off at low water.");

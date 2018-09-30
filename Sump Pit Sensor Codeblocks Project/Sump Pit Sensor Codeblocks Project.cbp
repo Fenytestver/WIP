@@ -34,8 +34,6 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/led.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multipump.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multipump.h" />
-		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multiwatersensor.cpp" />
-		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multiwatersensor.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/onbuttonpresslistener.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/onbuttonpresslistener.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/pump.cpp" />
@@ -70,8 +68,6 @@
 		<Unit filename="../SumpPitSensorProject/test/stubs.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.h" />
-		<Unit filename="../SumpPitSensorProject/test/test_multiwater_sensor.cpp" />
-		<Unit filename="../SumpPitSensorProject/test/test_multiwater_sensor.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_normaloperation.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_normaloperation.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_functional.cpp" />

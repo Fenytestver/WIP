@@ -13,8 +13,7 @@ test_pump_failure_functional::~test_pump_failure_functional()
 
 void test_pump_failure_functional::test() {
   node->setup();
-  waterLevelSensor1->setLevel(SPN_WATER_CRITICAL);
-  waterLevelSensor2->setLevel(SPN_WATER_CRITICAL);
+  waterLevelSensor->setLevel(SPN_WATER_CRITICAL);
   node->update();
   assert(pump->isTurnedOn(), "Pump must be running");
   assert(subPump1->isTurnedOn(), "SubPump1 must be running");
