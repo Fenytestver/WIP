@@ -25,8 +25,9 @@ void test_pump_failure_functional::test() {
   rpmSensor->setRpm(SPN_PUMP_STD_RPM - SPN_PUMP_RPM_DEVI_CRITICAL - 1);
   node->update();
 
+  assert(shutoffValve->isActive(), "Shut off valve should be active at critical water level.");
   // timeout not reached, should not be a problem.
-  assert(node->getAlarmReason() & SPN_ALARM_WATER_CRITICAL,
+  assert((node->getAlarmReason() & SPN_ALARM_WATER_CRITICAL) != 0,
          "High water alarm must be on at critical water level.");
   assertFalse((node->getAlarmReason() & (SPN_ALARM_PUMP_RPM_CRITICAL
                                    | SPN_ALARM_PUMP_VOLTAGE_CRITICAL)) != 0,

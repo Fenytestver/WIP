@@ -14,6 +14,8 @@ void test_normaloperation::test()
   assert(node->getMode(), SPN_ARMED, "Mode is armed after startup");
   assertFalse(siren->isOn(), "Siren must be off after startup");
 
+  assertFalse(shutoffValve->isActive(), "Shut off valve should be inactive at startup.");
+
   // simulate 80% water level.
   waterLevelSensor->setLevel(SPN_WATER_HIGH);
   node->update();
@@ -34,4 +36,5 @@ void test_normaloperation::test()
   node->disarm();
   assertFalse(siren->isOn(), "Siren must be off after startup");
   assert(node->getMode(), SPN_DISARMED, "Mode is armed after startup");
+  assertFalse(shutoffValve->isActive(), "Shut off valve should be inactive at disarm.");
 }
