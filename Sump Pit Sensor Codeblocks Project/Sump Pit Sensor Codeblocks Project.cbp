@@ -16,6 +16,7 @@
 					<Add directory="sumpit/src/main/cpp" />
 					<Add directory="sumpit_test/include" />
 					<Add directory="include" />
+					<Add directory="SumpPitSensorProject/lib/sumppitmodel/src/" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -40,6 +41,8 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/pump.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/rpmsensor.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/rpmsensor.h" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/shutoffvalve.cpp" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/shutoffvalve.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/siren.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/siren.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spn_config.cpp" />
