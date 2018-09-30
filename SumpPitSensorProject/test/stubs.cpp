@@ -14,6 +14,7 @@
 #include "debug_util.h"
 #include "string.h"
 #include "systemtime.h"
+#include "shutoffvalve.h"
 
 ///
 // Very dumb, non-blocking, checkable implementations.
@@ -188,5 +189,29 @@ class StubSystemTime : public SystemTime {
     }
   private:
     long now = 0;
+};
+
+class StubShutoffValve : public ShutoffValve {
+  public:
+    StubShutoffValve() : ShutoffValve() {
+      active = false;
+    }
+    void activate() {
+      if (!isActive()) {
+        active = false;
+        SPN_DBG_STUB << "Shut off valve activated";
+      }
+    }
+    void deactivate() {
+      if (isActive()) {
+        active = false;
+        SPN_DBG_STUB << "Shut off valve deactivated";
+      }
+    }
+    virtual bool isActive() {
+      return active;
+    }
+  private:
+    bool active = false;
 };
 #endif

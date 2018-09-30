@@ -6,6 +6,7 @@
 #include "sumppitinputs.h"
 #include "sumppitsensor.h"
 #include "spn_config.h"
+#include "shutoffvalve.h"
 
 using namespace spn;
 // The main system modes
@@ -20,7 +21,8 @@ class SumpPitNode
     SumpPitNode(Siren* _siren,
     Display* _display,
     SumpPitSensor* _sensor,
-    SumpPitInputs* _inputs);
+    SumpPitInputs* _inputs,
+    ShutoffValve* _shutoffValve);
     /** Default destructor */
     virtual ~SumpPitNode();
     virtual void setup();
@@ -51,6 +53,7 @@ class SumpPitNode
     Display* display;
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
+    ShutoffValve* shutoffValve;
   private: // variables
     int mode;
     int alarmReason;

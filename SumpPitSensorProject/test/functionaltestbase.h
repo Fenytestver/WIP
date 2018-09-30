@@ -28,6 +28,7 @@ class FunctionalTestBase : public TestBase
     Pump* subPump2;
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
+    StubShutoffValve* shutoffValve;
 
     StubDisplay* display;
 

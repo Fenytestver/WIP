@@ -3,13 +3,15 @@
 SumpPitNode::SumpPitNode(Siren* _siren,
     Display* _display,
     SumpPitSensor* _sensor,
-    SumpPitInputs* _inputs)
+    SumpPitInputs* _inputs,
+    ShutoffValve* _shutoffValve)
 {
   //ctor
   siren = _siren;
   display = _display;
   sensor = _sensor;
   inputs = _inputs;
+  shutoffValve = _shutoffValve;
 
   mode = SPN_INITIALIZING;
 }
