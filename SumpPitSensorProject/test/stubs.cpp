@@ -199,13 +199,13 @@ class StubShutoffValve : public ShutoffValve {
     void activate() {
       if (!isActive()) {
         active = true;
-        SPN_DBG_STUB << "Shut off valve activated";
+        SPN_DBG_STUB << "Shut off valve activated" << endl;
       }
     }
     void deactivate() {
       if (isActive()) {
         active = false;
-        SPN_DBG_STUB << "Shut off valve deactivated";
+        SPN_DBG_STUB << "Shut off valve deactivated" << endl;
       }
     }
     virtual bool isActive() {
