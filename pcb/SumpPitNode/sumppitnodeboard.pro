@@ -2,12 +2,12 @@ EAGLE AutoRouter Statistics:
 
 Job           : c:/etc/sumpit/pcb/SumpPitNode/sumppitnodeboard.brd
 
-Start at      : 00:12:23 (9/30/2018)
-End at        : 00:12:27 (9/30/2018)
+Start at      : 19:16:20 (9/30/2018)
+End at        : 19:16:23 (9/30/2018)
 Elapsed time  : 00:00:01
 
-Signals       :    37   RoutingGrid: 25 mil  Layers: 2
-Connections   :   130   predefined:  31 ( 0 Vias )
+Signals       :    40   RoutingGrid: 25 mil  Layers: 2
+Connections   :   143   predefined:  33 ( 0 Vias )
 
 Router memory :   55176
 
@@ -18,8 +18,8 @@ Number of Ripups  :         0         0         0         0         0         0
 max. Level        :         0         0         0         0         0         0
 max. Total        :         0         0         0         0         0         0
 
-Routed            :        55        99        99        99        99        99
-Vias              :         0        69        15        10         7         8
-Resolution        :    66.2 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :        58       110       110       110       110       110
+Vias              :         0        74        20        14        12        10
+Resolution        :    63.6 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
 Final             : 100.0% finished
