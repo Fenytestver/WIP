@@ -65,8 +65,7 @@ void SumpPitNode::update()
 }
 
 void SumpPitNode::updateArmed() {
-  int _alarmReason = sensor->checkState();
-  alarmReason = _alarmReason;
+  alarmReason = sensor->checkState();
 
   sensor->updatePump();
 
@@ -85,6 +84,7 @@ void SumpPitNode::updateArmed() {
   } else {
     siren->off();
   }
+
 }
 
 void SumpPitNode::alarmOff() {

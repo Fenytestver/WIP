@@ -269,10 +269,10 @@
 1537737860 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitinputs.h
 	"button.h"
 
-1538290889 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.cpp
+1538463918 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.cpp
 	"sumppitnode.h"
 
-1538290621 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.h
+1538364409 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.h
 	"display.h"
 	"siren.h"
 	"sumppitinputs.h"
@@ -306,7 +306,7 @@
 1537753015 c:\etc\sumpit\sumppitsensorproject\test\debug_util.h
 	<iostream>
 
-1538291022 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
+1538457095 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -331,7 +331,7 @@
 1537753015 c:\etc\sumpit\sumppitsensorproject\test\testbase.h
 	"debug_util.h"
 
-1538364409 c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
+1538457095 c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -354,20 +354,20 @@
 	"stubs.cpp"
 	"multiwatersensor.h"
 
-1538288850 source:c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.cpp
+1538364409 source:c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.cpp
 	"test_normaloperation.h"
 
 1537753015 c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.h
 	<iostream>
 	"functionaltestbase.h"
 
-1538290950 source:c:\etc\sumpit\sumppitsensorproject\test\test_pump_failure_functional.cpp
+1538364409 source:c:\etc\sumpit\sumppitsensorproject\test\test_pump_failure_functional.cpp
 	"test_pump_failure_functional.h"
 
 1537753015 c:\etc\sumpit\sumppitsensorproject\test\test_pump_failure_functional.h
 	"functionaltestbase.h"
 
-1538288850 source:c:\etc\sumpit\sumppitsensorproject\test\test_pump_functional.cpp
+1538364409 source:c:\etc\sumpit\sumppitsensorproject\test\test_pump_functional.cpp
 	"test_pump_functional.h"
 
 1537753015 c:\etc\sumpit\sumppitsensorproject\test\test_pump_functional.h
@@ -382,10 +382,11 @@
 1537753015 source:c:\etc\sumpit\sumppitsensorproject\test\testbase.cpp
 	"testbase.h"
 
-1538288850 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
+1538465378 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
 	"testmain.h"
+	"localview.h"
 
-1538288850 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
+1538464211 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
 	<iostream>
 	"testbase.h"
 	"test_normaloperation.h"
@@ -403,11 +404,21 @@
 	"waterlevelsensor.h"
 	"testbase.h"
 
-1538290621 source:c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.cpp
+1538364409 source:c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.cpp
 	"functionaltestbase.h"
 
-1538289960 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\shutoffvalve.cpp
+1538364409 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\shutoffvalve.cpp
 	"shutoffvalve.h"
 
-1538289946 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\shutoffvalve.h
+1538364409 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\shutoffvalve.h
+
+1538457150 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.cpp
+	"normaloperationview.h"
+
+1538464951 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.h
+
+1538465358 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
+	"localview.h"
+
+1538465537 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.h
 

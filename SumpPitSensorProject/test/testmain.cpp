@@ -1,8 +1,27 @@
 #include "testmain.h"
+#include "localview.h"
 
 int main() {
   TestMain* testMain = new TestMain();
   testMain->run();
+
+  cout << endl;
+  printf(SPN_DISPLAY_WELCOME);
+  cout << endl << "01234567890123456789" << endl << endl;
+  printf(SPN_DISPLAY_NORMAL, 112, 47, "ON", "1124", "OFF", "---");
+  cout << endl << "01234567890123456789" << endl << endl;
+  printf(SPN_DISPLAY_MAINTENANCE, 112, 47, "ON", "1124", "OFF", "---");
+  cout << endl << "01234567890123456789" << endl << endl;
+  printf(SPN_DISPLAY_MAINTENANCE_REMINDER);
+  cout << endl << "01234567890123456789" << endl << endl;
+  printf(SPN_DISPLAY_OFF);
+  cout << endl << "01234567890123456789" << endl << endl;
+  printf(SPN_DISPLAY_WARNING, "CRITICAL alert", 666, "Water intrusion", "Hold RED BUTTON", "for 30sec to DISARM.");
+  cout << endl << "01234567890123456789" << endl << endl;
+}
+void TestMain::disp(string str)
+{
+
 }
 
 TestMain::TestMain()

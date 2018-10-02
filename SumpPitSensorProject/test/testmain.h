@@ -27,6 +27,8 @@ class TestMain
 
     int success;
     int fail;
+
+    void disp(string str);
 };
 
 #endif // TESTMAIN_H
