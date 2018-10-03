@@ -9,6 +9,7 @@
 #include "test_pump_unit.h"
 #include "test_pump_failure_functional.h"
 #include "test_multipump_unit.h"
+#include "test_display_demo.h"
 
 class TestMain
 {
@@ -27,8 +28,6 @@ class TestMain
 
     int success;
     int fail;
-
-    void disp(string str);
 };
 
 #endif // TESTMAIN_H

@@ -382,11 +382,11 @@
 1537753015 source:c:\etc\sumpit\sumppitsensorproject\test\testbase.cpp
 	"testbase.h"
 
-1538465378 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
+1538538771 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
 	"testmain.h"
 	"localview.h"
 
-1538464211 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
+1538538533 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
 	<iostream>
 	"testbase.h"
 	"test_normaloperation.h"
@@ -394,6 +394,7 @@
 	"test_pump_unit.h"
 	"test_pump_failure_functional.h"
 	"test_multipump_unit.h"
+	"test_display_demo.h"
 
 1538364409 c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.h
 	"sumppitinputs.h"
@@ -417,8 +418,17 @@
 
 1538464951 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.h
 
-1538465358 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
+1538465568 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
 	"localview.h"
 
-1538465537 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.h
+1538465568 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.h
+
+1538538958 source:c:\etc\sumpit\sumppitsensorproject\test\test_display_demo.cpp
+	"test_display_demo.h"
+
+1538539039 c:\etc\sumpit\sumppitsensorproject\test\test_display_demo.h
+	<iostream>
+	"testbase.h"
+	"localview.h"
+	"debug_util.h"
 

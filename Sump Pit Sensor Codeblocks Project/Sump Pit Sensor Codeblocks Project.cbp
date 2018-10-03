@@ -17,6 +17,7 @@
 					<Add directory="sumpit_test/include" />
 					<Add directory="include" />
 					<Add directory="SumpPitSensorProject/lib/sumppitmodel/src/" />
+					<Add directory="SumpPitSensorProject/test" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -33,6 +34,8 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/leaksensor.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/led.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/led.h" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/localview.cpp" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/localview.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multipump.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/multipump.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/onbuttonpresslistener.cpp" />
@@ -69,6 +72,8 @@
 		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.h" />
 		<Unit filename="../SumpPitSensorProject/test/stubs.cpp" />
+		<Unit filename="../SumpPitSensorProject/test/test_display_demo.cpp" />
+		<Unit filename="../SumpPitSensorProject/test/test_display_demo.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_normaloperation.cpp" />
