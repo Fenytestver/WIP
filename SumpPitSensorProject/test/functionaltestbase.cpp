@@ -17,13 +17,13 @@ void FunctionalTestBase::create()
   leakSensor = new StubLeakSensor();
   waterLevelSensor = new StubWaterLevelSensor();
   rpmSensor = new StubRpmSensor();
-  voltageSensor = new StubVoltageSensor();
+  voltageSensor1 = new StubVoltageSensor();
+  voltageSensor2 = new StubVoltageSensor();
   systemTime = new StubSystemTime();
   // time should not be 0, that would be a problem.
   systemTime->setTime(1L);
-
-  subPump1 = new Pump(systemTime, rpmSensor, voltageSensor);
-  subPump2 = new Pump(systemTime, rpmSensor, voltageSensor);
+  subPump1 = new Pump(systemTime, rpmSensor, voltageSensor1);
+  subPump2 = new Pump(systemTime, rpmSensor, voltageSensor2);
   pump = new MultiPump();
   pump->addPump(subPump1);
   pump->addPump(subPump2);

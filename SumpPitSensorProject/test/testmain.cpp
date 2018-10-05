@@ -31,10 +31,9 @@ void TestMain::run()
 void TestMain::runFunctionalTests()
 {
   start(new test_normaloperation());
-  start(new test_pump_functional());
   start(new test_pump_failure_functional());
   // LCD display samples
-  start(new test_display_demo());
+ // start(new test_display_demo());
 }
 
 void TestMain::runSmallTests()

@@ -8,32 +8,19 @@
 #define SPN_MULTIPUMP_ON 1
 #define SPN_MULTIPUMP_TURBO 2
 
-class MultiPump : public Pump
+class MultiPump
 {
   public:
     MultiPump();
     virtual ~MultiPump();
-
-    virtual void turnOn();
-    virtual void turnOff();
-    /** gives the on/off state of the pump, as we requested. */
-    virtual bool isTurnedOn();
-    /** gives the on/off state of the pump based on it's voltage. */
-    virtual bool isVoltageDetected();
-    /** @return returns the RPM of the pump. */
-    virtual int getRpm();
-    virtual long getUptime();
-    virtual void turbo();
     virtual void addPump(Pump* pump);
+    int update();
+    int checkState();
   protected:
 
   private:
     Pump** pumps;
-    short currentPump;
     short pumpCount;
-    short mode;
-
-    void setMode(short _mode);
 };
 
 #endif // MULTIPUMP_H

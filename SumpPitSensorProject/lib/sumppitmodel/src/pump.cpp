@@ -15,15 +15,20 @@ Pump::~Pump()
   //dtor
 }
 
-void Pump::turnOn()
+bool Pump::isTurnedOn()
+{
+  return turnedOn;
+}
+void Pump::setTurnedOn()
 {
   if (!turnedOn) {
     turnedOn = true;
     turnedOnAt = systemTime->nowMillis();
   }
+
 }
 
-void Pump::turnOff()
+void Pump::setTurnedOff()
 {
   if (turnedOn) {
     turnedOn = false;
@@ -31,18 +36,43 @@ void Pump::turnOff()
   }
 }
 
-bool Pump::isTurnedOn()
+void Pump::update()
 {
-  return turnedOn;
+  // TODO: constant;
+  if (voltageSensor->getVoltage() > 0.1f) {
+    setTurnedOn();
+  } else {
+    setTurnedOff();
+  }
+}
+int Pump::checkState()
+{
+  if (!isTurnedOn()) {
+    return SPN_ALARM_NO_ALARM;
+  }
+
+  int flags = SPN_ALARM_NO_ALARM;
+  int uptime = getUptime();
+  if (uptime > SPS_PUMP_SPINUP_TIME) {
+    int rpm = getRpm();
+    int deviation = abso(rpm - SPN_PUMP_STD_RPM);
+    // rpm deviation check
+    sb(flags, SPN_ALARM_PUMP_RPM_TECHNICAL,
+       deviation > SPN_PUMP_RPM_DEVI_TECHNICAL);
+    sb(flags, SPN_ALARM_PUMP_RPM_CRITICAL,
+       deviation > SPN_PUMP_RPM_DEVI_CRITICAL);
+    // uptime check
+    sb(flags, SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL,
+       uptime > SPN_ALARM_PUMP_CYCLE_TECHNICAL);
+    sb(flags, SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL,
+       uptime > SPN_ALARM_PUMP_CYCLE_CRITICAL);
+  }
+  return flags;
 }
 
 int Pump::getRpm()
 {
   return rpmSensor->getRpm();
-}
-bool Pump::isVoltageDetected()
-{
-  return voltageSensor->getVoltage() > SPN_PUMP_LOW_VOLTAGE_THRESHOLD;
 }
 
 long Pump::getUptime()

@@ -19,3 +19,14 @@ void spn::assert(long actual, long expected, string msg) {
 void spn::assertFalse(bool b, string msg) {
   assert(!b, msg);
 }
+
+void spn::assertAllFlags(int value, int mask, string msg) {
+  if (value & mask != mask) {
+    bitset<8> valBits(value);
+    bitset<8> maskBits(mask);
+    SPN_DBG_FAIL << "Fail: " << msg << ", expected:" << maskBits << ", actual:" << valBits << "\n";
+    throw 100;
+  } else {
+    SPN_DBG_SUCCESS << "Ok: \'" << msg << "\'\n";
+  }
+}

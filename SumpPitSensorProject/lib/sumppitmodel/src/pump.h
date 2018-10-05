@@ -5,6 +5,8 @@
 #include "systemtime.h"
 #include "spn_config.h"
 
+using namespace spn;
+
 class Pump
 {
   public:
@@ -12,20 +14,21 @@ class Pump
     Pump(SystemTime* _systemTime, RpmSensor* _rpmSensor, VoltageSensor* _voltageSensor);
     /** Default destructor */
     virtual ~Pump();
-    virtual void turnOn();
-    virtual void turnOff();
-    /** gives the on/off state of the pump, as we requested. */
+    /** gives the on/off state of the pump based on the voltage. */
     virtual bool isTurnedOn();
-    /** gives the on/off state of the pump based on it's voltage. */
-    virtual bool isVoltageDetected();
     /** @return returns the RPM of the pump. */
     virtual int getRpm();
     virtual long getUptime();
+    virtual int checkState();
+
+    /** Updates the internal state. */
+    virtual void update();
   protected:
     SystemTime* systemTime;
     RpmSensor* rpmSensor; //!< Member variable "rpmSensor"
     VoltageSensor* voltageSensor; //!< Member variable "voltageSensor"
-
+    virtual void setTurnedOn();
+    virtual void setTurnedOff();
   private:
     bool turnedOn;
     unsigned long turnedOnAt;

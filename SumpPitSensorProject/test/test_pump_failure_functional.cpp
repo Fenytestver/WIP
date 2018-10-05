@@ -14,13 +14,12 @@ test_pump_failure_functional::~test_pump_failure_functional()
 void test_pump_failure_functional::test() {
   node->setup();
   waterLevelSensor->setLevel(SPN_WATER_CRITICAL);
+  voltageSensor1->setVoltage(12.0);
+  voltageSensor2->setVoltage(12.0);
   node->update();
-  assert(pump->isTurnedOn(), "Pump must be running");
   assert(subPump1->isTurnedOn(), "SubPump1 must be running");
   assert(subPump2->isTurnedOn(), "SubPump2 must be running");
   assert(siren->isOn(), "Siren must turn on at this water level.");
-  // set very low voltage, rpm
-  voltageSensor->setVoltage(0.1);
   // set a just critical rpm.
   rpmSensor->setRpm(SPN_PUMP_STD_RPM - SPN_PUMP_RPM_DEVI_CRITICAL - 1);
   node->update();
@@ -36,12 +35,11 @@ void test_pump_failure_functional::test() {
   systemTime->addTime(SPS_PUMP_SPINUP_TIME * 2);
   node->update();
 
-  assert(subPump1->isTurnedOn(), "SubPump1 must be on at critical water level");
-  assert(subPump2->isTurnedOn(), "SubPump2 must be on at critical water level");
-  assert(pump->getUptime() >= SPS_PUMP_SPINUP_TIME, "SPS_PUMP_SPINUP_TIME time passed");
+  assert(subPump1->getUptime() >= SPS_PUMP_SPINUP_TIME, "P1 SPS_PUMP_SPINUP_TIME time passed");
+  assert(subPump2->getUptime() >= SPS_PUMP_SPINUP_TIME, "P2 SPS_PUMP_SPINUP_TIME time passed");
   // We may BTW assume if pump has no voltage will not have rpm.
-  assert((node->getAlarmReason() & (SPN_ALARM_WATER_CRITICAL
+  assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_CRITICAL
                                    | SPN_ALARM_PUMP_RPM_CRITICAL
-                                   | SPN_ALARM_PUMP_VOLTAGE_CRITICAL)) != 0,
+                                   | SPN_ALARM_LEAK, // FIXME: NOT WORKING
          "Motor failed to start with multiple problems.");
 }

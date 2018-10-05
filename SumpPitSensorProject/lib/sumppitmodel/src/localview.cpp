@@ -11,6 +11,6 @@ LocalView::~LocalView()
 }
 char* LocalView::render()
 {
-
+  return "";
 }
 

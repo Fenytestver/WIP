@@ -134,8 +134,11 @@ class StubRpmSensor : public RpmSensor {
     int rpm;
 };
 
-class StubVoltageSensor : public VoltageSensor{
+class StubVoltageSensor : public VoltageSensor {
   public:
+    StubVoltageSensor() : VoltageSensor() {
+      voltage = 0;
+    }
     void setVoltage(float _voltage) {
       SPN_DBG_STUB << "Stub voltage set to: " << _voltage << endl;
       voltage = _voltage;
