@@ -34,7 +34,7 @@ class SumpPitSensor
     LeakSensor* leakSensors;
     int numLeakSensors;
     MultiPump* pump;
-
+    int expectedPumpState;
   private:
 
 };

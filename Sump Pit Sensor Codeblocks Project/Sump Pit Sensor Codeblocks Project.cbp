@@ -80,8 +80,6 @@
 		<Unit filename="../SumpPitSensorProject/test/test_normaloperation.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_functional.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_functional.h" />
-		<Unit filename="../SumpPitSensorProject/test/test_pump_functional.cpp" />
-		<Unit filename="../SumpPitSensorProject/test/test_pump_functional.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_unit.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_unit.h" />
 		<Unit filename="../SumpPitSensorProject/test/testbase.cpp" />
