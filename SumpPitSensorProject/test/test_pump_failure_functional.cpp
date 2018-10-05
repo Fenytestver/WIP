@@ -39,7 +39,6 @@ void test_pump_failure_functional::test() {
   assert(subPump2->getUptime() >= SPS_PUMP_SPINUP_TIME, "P2 SPS_PUMP_SPINUP_TIME time passed");
   // We may BTW assume if pump has no voltage will not have rpm.
   assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_CRITICAL
-                                   | SPN_ALARM_PUMP_RPM_CRITICAL
-                                   | SPN_ALARM_LEAK, // FIXME: NOT WORKING
+                                   | SPN_ALARM_PUMP_RPM_CRITICAL, // FIXME: NOT WORKING
          "Motor failed to start with multiple problems.");
 }

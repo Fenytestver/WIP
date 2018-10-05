@@ -21,10 +21,10 @@ void spn::assertFalse(bool b, string msg) {
 }
 
 void spn::assertAllFlags(int value, int mask, string msg) {
-  if (value & mask != mask) {
+  if ((value & mask) != mask) {
     bitset<8> valBits(value);
     bitset<8> maskBits(mask);
-    SPN_DBG_FAIL << "Fail: " << msg << ", expected:" << maskBits << ", actual:" << valBits << "\n";
+    SPN_DBG_FAIL << "Fail: " << msg << ", minimum:" << maskBits << ", actual:" << valBits << "\n";
     throw 100;
   } else {
     SPN_DBG_SUCCESS << "Ok: \'" << msg << "\'\n";
