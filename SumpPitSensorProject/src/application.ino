@@ -1,0 +1,50 @@
+#include "impl.ino"
+
+#define PLATFORM_ELECTRON 1
+#define PLATFORM PLATFORM_ELECTRON
+
+#if PLATFORM == PLATFORM_ELECTRON
+
+#define PIN_LED_GREEN B0
+#define PIN_LED_YELLOW B1
+#define PIN_LED_RED B2
+#define PIN_LEAK_1 C5
+#define PIN_LEAK_2 C4
+
+
+#endif
+
+RealSystemTime systemTime;
+RealLeakSensor leakSensor1(PIN_LEAK_1);
+RealLeakSensor leakSensor2(PIN_LEAK_2);
+HardwarePinLed ledGreen(PIN_LED_GREEN);
+HardwarePinLed ledYellow(PIN_LED_YELLOW);
+HardwarePinLed ledRed(PIN_LED_RED);
+/*
+ * Project SumpPitSensorProject
+ * Description:
+ * Author:
+ * Date:
+ */
+
+// setup() runs once, when the device is first turned on.
+void setup() {
+  // Put initialization like pinMode and begin functions here.
+  Serial.begin(112500);
+  ledGreen.setup();
+  ledYellow.setup();
+  ledRed.setup();
+  leakSensor1.setup();
+  leakSensor2.setup();
+}
+
+// loop() runs over and over again, as quickly as it can execute.
+void loop() {
+  // The core of your code will likely live here.
+  bool leak = leakSensor1.isLeaking();
+  Serial.print("Is leaking = ");
+  Serial.println(leak);
+
+  // wait a bit because, why not?
+  delay(1000);
+}

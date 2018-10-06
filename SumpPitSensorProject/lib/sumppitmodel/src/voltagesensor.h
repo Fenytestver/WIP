@@ -11,6 +11,8 @@ class VoltageSensor
     virtual ~VoltageSensor();
     /** returns the measured voltage */
     virtual float getVoltage();
+    /** Call at setup phase. */
+    virtual void setup();
   protected:
 
   private:
