@@ -117,6 +117,31 @@ class RealSiren : public Buzzer {
     int pin;
 };
 
+class RealShutoffValve : public ShutoffValve {
+  public:
+    RealShutoffValve(int _pin) : ShutoffValve() {
+      pin = _pin;
+      active = false;
+    }
+
+    void setup() {
+      pinMode(pin, OUTPUT);
+    }
+    void activate() {
+      digitalWrite(pin, HIGH);
+    }
+    void deactivate() {
+      digitalWrite(pin, LOW);
+    }
+    bool isActive() {
+      return active;
+    }
+
+  private:
+    int pin;
+    bool active;
+};
+
 class RealBuzzer : public RealSiren {
   public:
     RealBuzzer(int _pin) : RealSiren(_pin) {
