@@ -25470,9 +25470,9 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <net name="N$14" class="0">
 <segment>
 <pinref part="DISPLAY" gate="G$1" pin="2"/>
-<wire x1="-12.7" y1="50.8" x2="25.4" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="-12.7" y1="50.8" x2="-12.7" y2="40.64" width="0.1524" layer="91"/>
-<wire x1="-12.7" y1="40.64" x2="45.72" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="50.8" x2="25.4" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="50.8" x2="12.7" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="40.64" x2="45.72" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="40.64" x2="45.72" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="43.18" x2="45.72" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="45.72" y1="88.9" x2="-12.7" y2="88.9" width="0.1524" layer="91"/>

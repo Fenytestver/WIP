@@ -16,7 +16,7 @@
 #define PIN_BUTTON_3 B4
 #define PIN_BUZZER D2
 #define PIN_SIREN B3
-#define PIN_SHUTOFF_VALVE D6 // TODO: Ask how does it work.
+
 #endif
 
 RealSiren siren(PIN_SIREN);
@@ -30,7 +30,7 @@ HardwarePinLed ledRed(PIN_LED_RED);
 RealButton button1(&systemTime, PIN_BUTTON_1);
 RealButton button2(&systemTime, PIN_BUTTON_2);
 RealButton button3(&systemTime, PIN_BUTTON_3);
-RealShutoffValve ShutoffValve()
+RealShutoffValve shutoffValve();
 
 class OnArmPress : public OnButtonPressListener {
   public:

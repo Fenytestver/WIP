@@ -25162,6 +25162,9 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <part name="VCC_12V4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_1" device=""/>
 <part name="GND22" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND23" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="R12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1" value="470"/>
+<part name="R13" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1" value="470"/>
+<part name="GND24" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -25234,6 +25237,9 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <instance part="VCC_12V4" gate="G$2" x="-144.78" y="15.24"/>
 <instance part="GND22" gate="1" x="50.8" y="88.9"/>
 <instance part="GND23" gate="1" x="50.8" y="76.2"/>
+<instance part="R12" gate="G$1" x="0" y="15.24"/>
+<instance part="R13" gate="G$1" x="0" y="22.86"/>
+<instance part="GND24" gate="1" x="0" y="33.02" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -25396,6 +25402,13 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <pinref part="GND23" gate="1" pin="GND"/>
 <pinref part="LEAK_2" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="R13" gate="G$1" pin="2"/>
+<wire x1="5.08" y1="22.86" x2="5.08" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="5.08" y1="27.94" x2="0" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="0" y1="27.94" x2="0" y2="30.48" width="0.1524" layer="91"/>
+<pinref part="GND24" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="N$2" class="0">
 <segment>
@@ -25492,17 +25505,6 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <wire x1="-22.86" y1="81.28" x2="-12.7" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="88.9" x2="-12.7" y2="81.28" width="0.1524" layer="91"/>
 <label x="20.32" y="91.44" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$13" class="0">
-<segment>
-<pinref part="DISTANCE_1" gate="J_ULTRASONIC" pin="ECHO"/>
-<wire x1="15.24" y1="15.24" x2="-7.62" y2="15.24" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="15.24" x2="-7.62" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="33.02" x2="-17.78" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="-17.78" y1="33.02" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="ELECTRON" gate="G$1" pin="C2"/>
-<wire x1="-22.86" y1="43.18" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -25809,6 +25811,26 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <pinref part="LEAK_2" gate="G$1" pin="1"/>
 <wire x1="43.18" y1="83.82" x2="50.8" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="83.82" x2="50.8" y2="81.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="DISTANCE_1" gate="J_ULTRASONIC" pin="ECHO"/>
+<pinref part="R12" gate="G$1" pin="2"/>
+<wire x1="15.24" y1="15.24" x2="5.08" y2="15.24" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$28" class="0">
+<segment>
+<pinref part="R12" gate="G$1" pin="1"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<wire x1="-5.08" y1="15.24" x2="-5.08" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="22.86" x2="-5.08" y2="33.02" width="0.1524" layer="91"/>
+<junction x="-5.08" y="22.86"/>
+<wire x1="-5.08" y1="33.02" x2="-17.78" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="33.02" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="ELECTRON" gate="G$1" pin="C2"/>
+<wire x1="-22.86" y1="43.18" x2="-17.78" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

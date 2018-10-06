@@ -8,6 +8,9 @@
 #include "HC_SR04.h"
 #include "waterlevelsensor.h"
 #include "buzzer.h"
+#include "application.h"
+
+#define PUB_SHUTOFF_STATE "shutoff-valve-state"
 
 class UltrasonicWaterLevelSensor : public WaterLevelSensor {
   public:
@@ -119,19 +122,22 @@ class RealSiren : public Buzzer {
 
 class RealShutoffValve : public ShutoffValve {
   public:
-    RealShutoffValve(int _pin) : ShutoffValve() {
-      pin = _pin;
+    RealShutoffValve() : ShutoffValve() {
       active = false;
     }
 
     void setup() {
-      pinMode(pin, OUTPUT);
+      //Particle.subscribe(PUB_SHUTOFF_STATE, &RealShutoffValve::myHandler);
     }
     void activate() {
-      digitalWrite(pin, HIGH);
+      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "true", PRIVATE | WITH_ACK)) {
+        active = true;
+      }
     }
     void deactivate() {
-      digitalWrite(pin, LOW);
+      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "false", PRIVATE | WITH_ACK)) {
+        active = false;
+      }
     }
     bool isActive() {
       return active;
