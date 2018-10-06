@@ -16,7 +16,11 @@
 #define PIN_BUTTON_3 B4
 #define PIN_BUZZER D2
 #define PIN_SIREN B3
-
+#define PIN_WATERLEVEL_TRIG C3
+#define PIN_WATERLEVEL_ECHO C2
+// minimum measurable water disatance (inches)
+#define WATER_DIST_MIN 4
+#define WATER_DIST_MAX 78
 #endif
 
 RealSiren siren(PIN_SIREN);
@@ -31,6 +35,8 @@ RealButton button1(&systemTime, PIN_BUTTON_1);
 RealButton button2(&systemTime, PIN_BUTTON_2);
 RealButton button3(&systemTime, PIN_BUTTON_3);
 RealShutoffValve shutoffValve();
+UltrasonicWaterLevelSensor waterLevelSensor(
+  PIN_WATERLEVEL_TRIG, PIN_WATERLEVEL_ECHO, WATER_DIST_MIN, WATER_DIST_MAX);
 
 class OnArmPress : public OnButtonPressListener {
   public:
