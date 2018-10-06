@@ -66,11 +66,12 @@ class RealLeakSensor : public LeakSensor {
       pin = _pin;
     }
     void setup() {
-      pinMode(pin, INPUT);
+      pinMode(pin, INPUT_PULLUP);
     }
     bool isLeaking() {
       LeakSensor::isLeaking();
-      return digitalRead(pin);
+      // PULLUP is enabled, pulled low when water detected
+      return digitalRead(pin) == LOW;
     }
   private:
     int pin;
