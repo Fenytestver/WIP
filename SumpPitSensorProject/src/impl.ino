@@ -7,6 +7,7 @@
 #include "sumppitsensor.h"
 #include "HC_SR04.h"
 #include "waterlevelsensor.h"
+#include "buzzer.h"
 
 class UltrasonicWaterLevelSensor : public WaterLevelSensor {
   public:
@@ -77,7 +78,7 @@ class RealLeakSensor : public LeakSensor {
     int pin;
 };
 
-class HardwarePinLed : Led {
+class HardwarePinLed : public Led {
   public:
     HardwarePinLed(int pin) {
       _pin = pin;
@@ -95,6 +96,34 @@ class HardwarePinLed : Led {
     int _pin;
 };
 
+class RealSiren : public Buzzer {
+  public:
+    RealSiren(int _pin) : Buzzer() {
+      pin = _pin;
+    }
+
+    void setup() {
+      pinMode(pin, OUTPUT);
+    }
+
+    void on() {
+      digitalWrite(pin, HIGH);
+    }
+
+    void off() {
+      digitalWrite(pin, LOW);
+    }
+  private:
+    int pin;
+};
+
+class RealBuzzer : public RealSiren {
+  public:
+    RealBuzzer(int _pin) : RealSiren(_pin) {
+
+    }
+};
+
 class RealSystemTime : public SystemTime {
   public:
     RealSystemTime() : SystemTime() {}
@@ -106,12 +135,18 @@ class RealSystemTime : public SystemTime {
 
 class RealButton : public Button {
   public:
-    RealButton(int _pin) : Button() {
+    RealButton(SystemTime* _systemTime, int _pin) : Button(_systemTime) {
       pin = _pin;
     }
     void setup() {
       pinMode(pin, INPUT_PULLUP);
     }
+
+    void update() {
+      bool pressed = digitalRead(pin) == LOW;
+      setPressed(pressed);
+    }
+
   private:
     int pin;
 };

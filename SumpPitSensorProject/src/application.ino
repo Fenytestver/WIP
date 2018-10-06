@@ -10,8 +10,10 @@
 #define PIN_LED_RED B2
 #define PIN_LEAK_1 C5
 #define PIN_LEAK_2 C4
-
-
+// TODO: rename butons.
+#define PIN_BUTTON_1 A0
+#define PIN_BUTTON_2 B5
+#define PIN_BUTTON_3 B4
 #endif
 
 RealSystemTime systemTime;
@@ -20,6 +22,38 @@ RealLeakSensor leakSensor2(PIN_LEAK_2);
 HardwarePinLed ledGreen(PIN_LED_GREEN);
 HardwarePinLed ledYellow(PIN_LED_YELLOW);
 HardwarePinLed ledRed(PIN_LED_RED);
+RealButton button1(&systemTime, PIN_BUTTON_1);
+RealButton button2(&systemTime, PIN_BUTTON_2);
+RealButton button3(&systemTime, PIN_BUTTON_3);
+
+class OnArmPress : public OnButtonPressListener {
+  public:
+    void onPress() {
+
+    }
+} armPressListener;
+
+class OnDisarmPress : public OnButtonPressListener {
+  public:
+    void onPress() {
+
+    }
+} armDisarmListener;
+
+class OnMaintenancePress : public OnButtonPressListener {
+  public:
+    void onPress() {
+
+    }
+} armMainrenanceListener;
+
+class OnAnyPress : public OnButtonPressListener {
+  public:
+    void onPress() {
+
+    }
+} beepPressListener;
+
 /*
  * Project SumpPitSensorProject
  * Description:
@@ -34,12 +68,21 @@ void setup() {
   ledGreen.setup();
   ledYellow.setup();
   ledRed.setup();
-  leakSensor1.setup();
-  leakSensor2.setup();
+  button1.setup();
+  button2.setup();
+  button3.setup();
+  // TODO: Move this to node.
+  // set up buttons
+  button1.setOnButtonLongPressListener(&armPressListener);
 }
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
+  button1.update();
+  button2.update();
+  button3.update();
+
+
   // The core of your code will likely live here.
   bool leak = leakSensor1.isLeaking();
   Serial.print("Is leaking = ");

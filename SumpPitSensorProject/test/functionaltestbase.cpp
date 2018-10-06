@@ -28,9 +28,9 @@ void FunctionalTestBase::create()
   pump->addPump(subPump1);
   pump->addPump(subPump2);
 
-  disarmButton = new StubButton();
-  maintenanceButton = new StubButton();
-  armResetButton = new StubButton();
+  disarmButton = new StubButton(systemTime);
+  maintenanceButton = new StubButton(systemTime);
+  armResetButton = new StubButton(systemTime);
 
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, pump);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);

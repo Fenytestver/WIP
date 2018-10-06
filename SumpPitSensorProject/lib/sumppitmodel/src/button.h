@@ -1,23 +1,36 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 #include "onbuttonpresslistener.h"
+#include "systemtime.h"
+
+#define SPN_BUTTON_LONG_PRESS_TIME 30000
 
 class Button
 {
   public:
     /** Default constructor */
-    Button();
+    Button(SystemTime* _systemTime);
     /** Default destructor */
     virtual ~Button();
 
-    void setOnButtonPressListener(OnButtonPressListener* onPressListener) {
-      _onPressListener = onPressListener;
+    void setOnButtonPressListener(OnButtonPressListener* _onPressListener) {
+      onPressListener = _onPressListener;
     }
 
-  protected:
-    OnButtonPressListener* _onPressListener;
+    void setOnButtonLongPressListener(OnButtonPressListener* _onLongPressListener) {
+      onLongPressListener = _onLongPressListener;
+    }
 
+    virtual void press();
+  protected:
+    OnButtonPressListener* onPressListener;
+    OnButtonPressListener* onLongPressListener;
+    void setPressed(bool _pressed);
   private:
+    bool pressed;
+    long pressedAt;
+    bool longPressHandled;
+    SystemTime* systemTime;
 };
 
 #endif // BUTTON_H
