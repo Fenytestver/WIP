@@ -1,4 +1,5 @@
 #ifdef DEBUG
+#include <bitset>
 #include <iostream>
 #endif // DEBUG
 
@@ -36,6 +37,7 @@ class Pump
   private:
     bool turnedOn;
     unsigned long turnedOnAt;
+    int lastState;
 };
 
 #endif // PUMP_H

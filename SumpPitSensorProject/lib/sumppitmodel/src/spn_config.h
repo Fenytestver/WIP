@@ -18,6 +18,8 @@
 // Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).
 // Normal below this.
 #define SPN_PUMP_RPM_DEVI_TECHNICAL 40
+// The instability quotient for rpm. The margin between turning on/off.
+#define SPN_PUMP_RPM_DEVI_VARIANCE 5
 // Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).
 // Technical alert below this.
 #define SPN_PUMP_RPM_DEVI_CRITICAL 70
