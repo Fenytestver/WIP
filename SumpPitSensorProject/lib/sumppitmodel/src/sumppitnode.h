@@ -1,3 +1,7 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef SUMPPITNODE_H
 #define SUMPPITNODE_H
 

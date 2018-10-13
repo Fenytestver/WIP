@@ -49,5 +49,6 @@ void TestMain::start(TestBase* testCase)
     success++;
   } else {
     fail++;
+    throw 1;
   }
 }

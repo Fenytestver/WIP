@@ -1,3 +1,7 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef SUMPPITSENSOR_H
 #define SUMPPITSENSOR_H
 #include "waterlevelsensor.h"
