@@ -1,3 +1,7 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef PUMP_H
 #define PUMP_H
 #include "rpmsensor.h"

@@ -1,3 +1,7 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef WATERLEVELSENSOR_H
 #define WATERLEVELSENSOR_H
 
@@ -18,6 +22,7 @@ class WaterLevelSensor
   protected:
 
   private:
+    int lastAlarm;
 };
 
 #endif // WATERLEVELSENSOR_H

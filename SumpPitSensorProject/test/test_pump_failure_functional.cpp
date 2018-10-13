@@ -32,13 +32,20 @@ void test_pump_failure_functional::test() {
                                    | SPN_ALARM_PUMP_VOLTAGE_CRITICAL)) != 0,
          "Motor just starting up, shouldn't be a problem (yet).");
   // let it run for a while
-  systemTime->addTime(SPS_PUMP_SPINUP_TIME * 2);
+  systemTime->addTime(SPN_PUMP_SPINUP_TIME * 2);
   node->update();
-
-  assert(subPump1->getUptime() >= SPS_PUMP_SPINUP_TIME, "P1 SPS_PUMP_SPINUP_TIME time passed");
-  assert(subPump2->getUptime() >= SPS_PUMP_SPINUP_TIME, "P2 SPS_PUMP_SPINUP_TIME time passed");
+  assert(subPump1->getUptime() >= SPN_PUMP_SPINUP_TIME, "P1 SPS_PUMP_SPINUP_TIME time passed");
+  assert(subPump2->getUptime() >= SPN_PUMP_SPINUP_TIME, "P2 SPS_PUMP_SPINUP_TIME time passed");
   // We may BTW assume if pump has no voltage will not have rpm.
   assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_CRITICAL
                                    | SPN_ALARM_PUMP_RPM_CRITICAL, // FIXME: NOT WORKING
          "Motor failed to start with multiple problems.");
+
+  waterLevelSensor->setLevel(SPN_WATER_CRITICAL - 1);
+  node->update();
+  assert((node->getAlarmReason() & SPN_ALARM_WATER_CRITICAL) != 0, "WaterLevel did not drop to forget critical.");
+
+  waterLevelSensor->setLevel(SPN_WATER_CRITICAL - SPN_WATER_VARIANCE - 10);
+  node->update();
+  assert((node->getAlarmReason() & SPN_ALARM_WATER_CRITICAL), 0, "WaterLevel below critical-variance.");
 }

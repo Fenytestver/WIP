@@ -1,10 +1,14 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef SPNCONFIG_H
 #define SPNCONFIG_H
 
 // Number of pumps
 #define SPN_PUMP_COUNT 2
 // give a little time after a turn on to spin up the pump
-#define SPS_PUMP_SPINUP_TIME 10000L
+#define SPN_PUMP_SPINUP_TIME 10000L
 // Pump uptime that triggers technical alert. No alert below this.
 #define SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL 30000
 // Pump uptime that triggers critical alert. Technical alert below this.
@@ -27,7 +31,7 @@
 #define SPN_WATER_HIGH 20
 // Critical water level.
 #define SPN_WATER_CRITICAL 80
-
+#define SPN_WATER_VARIANCE 10
 // Magic, do not touch.
 // Alert levels
 #define SPN_ALERT_NO_ALERT 0
@@ -43,7 +47,8 @@
 #define SPN_ALARM_PUMP_CYCLE_TECHNICAL (1<<4)
 #define SPN_ALARM_PUMP_CYCLE_CRITICAL (1<<5)
 #define SPN_ALARM_WATER_CRITICAL (1<<6)
-#define SPN_ALARM_SYSTEM_ERROR (1<<7)
+#define SPN_ALARM_WATER_LOW (1<<7)
+#define SPN_ALARM_SYSTEM_ERROR (1<<8)
 // all technical alerts
 #define SPN_ALERT_ALL_TECHNICAL \
   (SPN_ALARM_PUMP_RPM_TECHNICAL \

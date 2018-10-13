@@ -28,6 +28,7 @@ bool SumpPitSensor::isLeaking()
 int SumpPitSensor::checkState()
 {
   int state = SPN_ALARM_NO_ALARM;
+
   state |= checkPumpState();
   state |= checkWaterLevelState();
   state |= checkLeakState();
@@ -41,8 +42,9 @@ int SumpPitSensor::checkPumpState()
 
 int SumpPitSensor::checkWaterLevelState()
 {
-  return waterLevelSensors->measureLevel() >= SPN_ALARM_WATER_CRITICAL ?
-    SPN_ALARM_WATER_CRITICAL : SPN_ALARM_NO_ALARM;
+  int state = waterLevelSensors->checkState();
+  // TODO: rename waterlevelsensors to single
+  return state;
 }
 
 int SumpPitSensor::checkLeakState()

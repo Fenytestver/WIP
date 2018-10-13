@@ -53,7 +53,7 @@ int Pump::checkState()
 
   int flags = SPN_ALARM_NO_ALARM;
   int uptime = getUptime();
-  if (uptime > SPS_PUMP_SPINUP_TIME) {
+  if (uptime > SPN_PUMP_SPINUP_TIME) {
     int rpm = getRpm();
     int deviation = abso(rpm - SPN_PUMP_STD_RPM);
     // rpm deviation check
@@ -62,10 +62,10 @@ int Pump::checkState()
     sb(flags, SPN_ALARM_PUMP_RPM_CRITICAL,
        deviation > SPN_PUMP_RPM_DEVI_CRITICAL);
     // uptime check
-    sb(flags, SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL,
-       uptime > SPN_ALARM_PUMP_CYCLE_TECHNICAL);
-    sb(flags, SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL,
-       uptime > SPN_ALARM_PUMP_CYCLE_CRITICAL);
+    sb(flags, SPN_ALARM_PUMP_CYCLE_TECHNICAL,
+       uptime > SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL);
+    sb(flags, SPN_ALARM_PUMP_CYCLE_CRITICAL,
+       uptime > SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL);
   }
   return flags;
 }

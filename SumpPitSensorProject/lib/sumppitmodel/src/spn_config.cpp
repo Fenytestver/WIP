@@ -8,6 +8,6 @@ void spn::sb(int& flag, int mask, bool condition) {
   if (condition) {
     flag |= mask;
   } else {
-    flag &= ~flag;
+    flag &= ~mask;
   }
 }
