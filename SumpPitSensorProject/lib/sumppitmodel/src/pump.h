@@ -1,3 +1,8 @@
+#ifdef DEBUG
+#include <bitset>
+#include <iostream>
+#endif // DEBUG
+
 #ifndef PUMP_H
 #define PUMP_H
 #include "rpmsensor.h"
@@ -32,6 +37,7 @@ class Pump
   private:
     bool turnedOn;
     unsigned long turnedOnAt;
+    int lastState;
 };
 
 #endif // PUMP_H

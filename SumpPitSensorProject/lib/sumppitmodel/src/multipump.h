@@ -1,3 +1,7 @@
+#ifdef DEBUG
+#include <iostream>
+#endif // DEBUG
+
 #ifndef MULTIPUMP_H
 #define MULTIPUMP_H
 
