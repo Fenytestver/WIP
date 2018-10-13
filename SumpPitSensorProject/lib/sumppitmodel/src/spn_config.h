@@ -54,7 +54,8 @@
 // all technical alerts
 #define SPN_ALERT_ALL_TECHNICAL \
   (SPN_ALARM_PUMP_RPM_TECHNICAL \
-   | SPN_ALARM_PUMP_CYCLE_TECHNICAL)
+   | SPN_ALARM_PUMP_CYCLE_TECHNICAL \
+   | SPN_ALARM_WATER_LOW)
 
 // all critical alerts
 #define SPN_ALERT_ALL_CRITICAL \
