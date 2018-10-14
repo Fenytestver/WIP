@@ -38,34 +38,6 @@ RealShutoffValve shutoffValve();
 UltrasonicWaterLevelSensor waterLevelSensor(
   PIN_WATERLEVEL_TRIG, PIN_WATERLEVEL_ECHO, WATER_DIST_MIN, WATER_DIST_MAX);
 
-class OnArmPress : public OnButtonPressListener {
-  public:
-    void onPress() {
-      Serial.println("Arm pressed");
-    }
-} armPressListener;
-
-class OnDisarmPress : public OnButtonPressListener {
-  public:
-    void onPress() {
-      Serial.println("Disarm pressed");
-    }
-} disarmPressListener;
-
-class OnMaintenancePress : public OnButtonPressListener {
-  public:
-    void onPress() {
-      Serial.println("Maintenance pressed");
-    }
-} mainrenancePressListener;
-
-class OnAnyPress : public OnButtonPressListener {
-  public:
-    void onPress() {
-      buzzer.beep();
-    }
-} beepPressListener;
-
 /*
  * Project SumpPitSensorProject
  * Description:
@@ -85,14 +57,6 @@ void setup() {
   button3.setup();
   buzzer.setup();
   siren.setup();
-  // TODO: Move this to node.
-  // set up buttons
-  button1.setOnButtonLongPressListener(&armPressListener);
-  button2.setOnButtonLongPressListener(&mainrenancePressListener);
-  button3.setOnButtonLongPressListener(&disarmPressListener);
-  button1.setOnButtonPressListener(&beepPressListener);
-  button2.setOnButtonPressListener(&beepPressListener);
-  button3.setOnButtonPressListener(&beepPressListener);
 }
 
 // loop() runs over and over again, as quickly as it can execute.
@@ -100,7 +64,6 @@ void loop() {
   button1.update();
   button2.update();
   button3.update();
-
 
   // The core of your code will likely live here.
   bool leak = leakSensor1.isLeaking();
