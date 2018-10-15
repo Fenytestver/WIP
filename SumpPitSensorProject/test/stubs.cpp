@@ -56,10 +56,12 @@ class StubSiren : public Siren {
 };
 class StubButton : public Button {
   public:
+    StubButton(SystemTime* systemTime) : Button(systemTime) {
+    }
     void press() {
       SPN_DBG_STUB << "Button" << " pressed."<< endl;
-      if (_onPressListener) {
-        _onPressListener->onPress();
+      if (onPressListener) {
+        onPressListener->onPress();
       }
     }
 };

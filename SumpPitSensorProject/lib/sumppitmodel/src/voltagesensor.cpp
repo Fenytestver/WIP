@@ -13,3 +13,7 @@ float VoltageSensor::getVoltage()
 {
   return 0;
 }
+
+void VoltageSensor::setup()
+{
+}

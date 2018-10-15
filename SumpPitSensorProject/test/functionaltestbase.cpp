@@ -28,16 +28,17 @@ void FunctionalTestBase::create()
   pump->addPump(subPump1);
   pump->addPump(subPump2);
 
-  disarmButton = new StubButton();
-  maintenanceButton = new StubButton();
-  armResetButton = new StubButton();
+  disarmButton = new StubButton(systemTime);
+  maintenanceButton = new StubButton(systemTime);
+  armResetButton = new StubButton(systemTime);
 
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, pump);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);
   siren = new StubSiren();
   display = new StubDisplay();
   shutoffValve = new StubShutoffValve();
-  node = new SumpPitNode(siren, display, sensor, inputs, shutoffValve);
+  StubBuzzer* buzzer = new StubBuzzer();
+  node = new SumpPitNode(siren, buzzer, display, sensor, inputs, shutoffValve);
 }
 
 void FunctionalTestBase::destroy()

@@ -1,6 +1,7 @@
 #include "sumppitnode.h"
 
 SumpPitNode::SumpPitNode(Siren* _siren,
+    Buzzer* _buzzer,
     Display* _display,
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
@@ -8,12 +9,24 @@ SumpPitNode::SumpPitNode(Siren* _siren,
 {
   //ctor
   siren = _siren;
+  buzzer = _buzzer;
   display = _display;
   sensor = _sensor;
   inputs = _inputs;
   shutoffValve = _shutoffValve;
 
   mode = SPN_INITIALIZING;
+  mainrenancePressListener = new OnMaintenancePress(this);
+  disarmPressListener = new OnDisarmPress(this);
+  armPressListener = new OnArmPress(this);
+  beepPressListener = new OnAnyPress(buzzer);
+  // set up button callbacks
+  inputs->armResetButton->setOnButtonLongPressListener(armPressListener);
+  inputs->disarmButton->setOnButtonLongPressListener(disarmPressListener);
+  inputs->maintenanceButton->setOnButtonLongPressListener(mainrenancePressListener);
+  inputs->armResetButton->setOnButtonPressListener(beepPressListener);
+  inputs->disarmButton->setOnButtonPressListener(beepPressListener);
+  inputs->maintenanceButton->setOnButtonPressListener(beepPressListener);
 }
 
 SumpPitNode::~SumpPitNode()
