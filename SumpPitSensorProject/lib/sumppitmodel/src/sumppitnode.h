@@ -1,5 +1,5 @@
 #ifdef DEBUG
-#include <iostream>
+//#include <iostream>
 #endif // DEBUG
 
 #ifndef SUMPPITNODE_H

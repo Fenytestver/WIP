@@ -9,6 +9,8 @@
 #include "waterlevelsensor.h"
 #include "buzzer.h"
 #include "application.h"
+#include "rpmsensor.h"
+#include "display.h"
 
 #define PUB_SHUTOFF_STATE "shutoff-valve-state"
 
@@ -180,4 +182,20 @@ class RealButton : public Button {
 
   private:
     int pin;
+};
+
+class RealRpmSensor : public RpmSensor {
+  public:
+    int getRpm() {
+      // TODO: implement rpm detection here.
+      return 0;
+    }
+};
+
+class LcdDisplay : public Display {
+  public:
+    void displayMessage(char* message) {
+      Serial.println(message);
+    }
+    void clear() {}
 };
