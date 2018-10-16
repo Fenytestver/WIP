@@ -9,6 +9,7 @@
 #include "test_pump_failure_functional.h"
 #include "test_multipump_unit.h"
 #include "test_display_demo.h"
+#include "test_buttons.h"
 
 class TestMain
 {

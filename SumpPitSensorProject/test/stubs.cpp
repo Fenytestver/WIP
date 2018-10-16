@@ -64,6 +64,9 @@ class StubButton : public Button {
         onPressListener->onPress();
       }
     }
+    void setPressed(bool pressed) {
+      Button::setPressed(pressed);
+    }
 };
 
 class StubLeakSensor : public LeakSensor {

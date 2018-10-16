@@ -41,6 +41,7 @@ void TestMain::runSmallTests()
   start(new test_pump_unit());
   start(new test_multipump_unit());
   start(new test_multipump_unit());
+  start(new test_buttons());
 }
 
 void TestMain::start(TestBase* testCase)

@@ -72,6 +72,8 @@
 		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/functionaltestbase.h" />
 		<Unit filename="../SumpPitSensorProject/test/stubs.cpp" />
+		<Unit filename="../SumpPitSensorProject/test/test_buttons.cpp" />
+		<Unit filename="../SumpPitSensorProject/test/test_buttons.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_display_demo.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_display_demo.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_multipump_unit.cpp" />

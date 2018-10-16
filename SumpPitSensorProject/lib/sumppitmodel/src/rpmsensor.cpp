@@ -9,6 +9,7 @@ RpmSensor::~RpmSensor()
 {
   //dtor
 }
+
 int RpmSensor::getRpm()
 {
   return 0;
