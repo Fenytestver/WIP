@@ -18,3 +18,7 @@ void Display::clear()
 {
 
 }
+
+void Display::setup() {
+
+}

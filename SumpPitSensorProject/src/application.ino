@@ -28,6 +28,10 @@
 // minimum measurable water disatance (inches)
 #define WATER_DIST_MIN 4
 #define WATER_DIST_MAX 78
+
+#define DISPLAY_I2C_ADDR 0x27
+#define DISPLAY_COLS 20
+#define DISPLAY_ROWS 4
 #endif
 
 RealSiren* siren;
@@ -67,7 +71,7 @@ SumpPitNode* node;
 // setup() runs once, when the device is first turned on.
 void setup() {
   systemTime = new RealSystemTime();
-  display = new LcdDisplay();
+  display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
   siren = new RealSiren(PIN_SIREN);
   buzzer = new RealBuzzer(PIN_BUZZER);
   leakSensor1 = new RealLeakSensor(PIN_LEAK_1);
@@ -94,6 +98,8 @@ void setup() {
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor1, 1, multiPump);
   node = new SumpPitNode(siren, buzzer, display, sensor, inputs, shutoffValve);
   node->setup();
+
+  display->displayMessage("Hello World!\nSystem started.");
 }
 
 // loop() runs over and over again, as quickly as it can execute.

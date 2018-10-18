@@ -64,6 +64,7 @@ void SumpPitNode::alarm()
 void SumpPitNode::setup()
 {
   sensor->setup();
+  display->setup();
   alarmOff();
   arm();
 }
