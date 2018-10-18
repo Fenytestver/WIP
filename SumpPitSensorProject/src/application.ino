@@ -98,6 +98,8 @@ void setup() {
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor1, 1, multiPump);
   node = new SumpPitNode(siren, buzzer, display, sensor, inputs, shutoffValve);
   node->setup();
+
+  display->displayMessage("Hello World!\nSystem started.");
 }
 
 // loop() runs over and over again, as quickly as it can execute.
