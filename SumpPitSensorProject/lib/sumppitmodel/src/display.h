@@ -9,7 +9,7 @@ class Display
     Display();
     /** Default destructor */
     virtual ~Display();
-
+    virtual void setup();
     virtual void displayMessage(char* message);
     virtual void clear();
   protected:

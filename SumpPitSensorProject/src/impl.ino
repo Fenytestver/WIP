@@ -195,8 +195,32 @@ class RealRpmSensor : public RpmSensor {
 
 class LcdDisplay : public Display {
   public:
-    void displayMessage(char* message) {
-      Serial.println(message);
+    LcdDisplay(int address, int cols, int rows) : Display() {
+      lcd = new LiquidCrystal_I2C(address, cols, rows);
     }
-    void clear() {}
+
+    void setup() {
+      Display::setup();
+      lcd->begin();
+      lcd->backlight();
+    }
+
+    void displayMessage(char* message) {
+      Display::displayMessage(message);
+      lcd->clear();
+      char c = message[0];
+      int i = 0;
+      while (c != '\0') {
+        lcd->write(c);
+        c = message[++i];
+      }
+    }
+
+    void clear() {
+      Display::clear();
+      lcd->clear();
+    }
+
+  private:
+    LiquidCrystal_I2C* lcd;
 };
