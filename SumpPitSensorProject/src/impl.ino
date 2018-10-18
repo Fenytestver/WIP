@@ -11,6 +11,7 @@
 #include "application.h"
 #include "rpmsensor.h"
 #include "display.h"
+#include "LiquidCrystal_I2C.h"
 
 #define PUB_SHUTOFF_STATE "shutoff-valve-state"
 
@@ -129,8 +130,8 @@ class RealShutoffValve : public ShutoffValve {
     }
 
     void setup() {
-      //Particle.subscribe(PUB_SHUTOFF_STATE, &RealShutoffValve::myHandler);
     }
+
     void activate() {
       if (!active && Particle.publish(PUB_SHUTOFF_STATE, "true", PRIVATE | WITH_ACK)) {
         active = true;
