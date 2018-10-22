@@ -2,15 +2,15 @@
 #define LOCALVIEW_H
 
 #define SPN_DISPLAY_TEST \
-  "####################\n"\
-  "####################\n"\
-  "####################\n"\
+  "####################"\
+  "####################"\
+  "####################"\
   "####################"
 
 #define SPN_DISPLAY_WELCOME \
-  "      Welcome!      \n"\
-  "   Initializing...  \n"\
-  "                    \n"\
+  "      Welcome!      "\
+  "   Initializing...  "\
+  "                    "\
   "     Please wait!   "
 
 /**
@@ -24,9 +24,9 @@ string(3) pump2(status)
 string(max 6) pump2(rpm)
 */
 #define SPN_DISPLAY_NORMAL \
-  "**NORMAL OPERATION**\n"\
-  "Level:%3d\" - %3d%%\n"\
-  "Pump1:%s rpm:%s\n"\
+  "**NORMAL OPERATION**"\
+  "Level:%3d\" - %3d%%"\
+  "Pump1:%s rpm:%s"\
   "Pump2:%s rpm:%s"
 // 01234567890123456789
 /**
@@ -38,9 +38,9 @@ string(?) line 2
 string(?) line 3
 */
 #define SPN_DISPLAY_WARNING \
-  "%s! #%3d\n"\
-  "%s\n"\
-  "%s\n"\
+  "%s! #%3d"\
+  "%s"\
+  "%s"\
   "%s"
 
 /**
@@ -48,21 +48,21 @@ same as normal.
 */
 // 01234567890123456789
 #define SPN_DISPLAY_MAINTENANCE \
-  "--MAINTENANCE MODE--\n"\
-  "Level:%3d\" - %3d%%\n"\
-  "Pump1:%s rpm:%s\n"\
+  "--MAINTENANCE MODE--"\
+  "Level:%3d\" - %3d%%"\
+  "Pump1:%s rpm:%s"\
   "Pump2:%s rpm:%s"
 // 01234567890123456789
 #define SPN_DISPLAY_OFF \
-  "-All ALARMS ARE OFF-\n"\
-  "The Water Intrusion\n"\
-  "Systeem is disabled!\n"\
+  "-All ALARMS ARE OFF-"\
+  "The Water Intrusion"\
+  "Systeem is disabled!"\
   "-All ALARMS ARE OFF-"
 // 01234567890123456789
 #define SPN_DISPLAY_MAINTENANCE_REMINDER \
-  "Maintenance mode ON!\n"\
-  "       REARM\n"\
-  "       REARM\n"\
+  "Maintenance mode ON!"\
+  "       REARM"\
+  "       REARM"\
   "when job is complete"
 // 01234567890123456789
 

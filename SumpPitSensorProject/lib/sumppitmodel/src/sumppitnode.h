@@ -12,6 +12,7 @@
 #include "spn_config.h"
 #include "shutoffvalve.h"
 #include "buzzer.h"
+#include "localview.h"
 
 using namespace spn;
 // The main system modes
