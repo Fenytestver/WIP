@@ -13,6 +13,7 @@
 #include "shutoffvalve.h"
 #include "buzzer.h"
 #include "localview.h"
+#include "state.h"
 
 using namespace spn;
 // The main system modes
@@ -36,7 +37,7 @@ class SumpPitNode
     /**
       Update the system state. Not taking any actions.
       */
-    virtual void update();
+    virtual State* update();
 
     /**
        Tells the currently selected mode.
@@ -62,9 +63,10 @@ class SumpPitNode
     SumpPitInputs* inputs;
     ShutoffValve* shutoffValve;
     Buzzer* buzzer;
+
+    void showState(State stateCopy);
   private: // variables
-    int mode;
-    int alarmReason;
+    State state;
 
     class OnArmPress : public OnButtonPressListener {
       public:

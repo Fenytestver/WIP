@@ -52,6 +52,7 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spn_config.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spnsystem.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spnsystem.h" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/state.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitinputs.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitinputs.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitnode.cpp" />

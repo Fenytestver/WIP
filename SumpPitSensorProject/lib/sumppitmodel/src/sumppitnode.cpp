@@ -15,7 +15,7 @@ SumpPitNode::SumpPitNode(Siren* _siren,
   inputs = _inputs;
   shutoffValve = _shutoffValve;
 
-  mode = SPN_INITIALIZING;
+  state.mode = SPN_INITIALIZING;
   mainrenancePressListener = new OnMaintenancePress(this);
   disarmPressListener = new OnDisarmPress(this);
   armPressListener = new OnArmPress(this);
@@ -35,28 +35,28 @@ SumpPitNode::~SumpPitNode()
 }
 int SumpPitNode::getMode()
 {
-  return mode;
+  return state.mode;
 }
 
 void SumpPitNode::arm()
 {
-  mode = SPN_ARMED;
+  state.mode = SPN_ARMED;
 }
 
 void SumpPitNode::disarm()
 {
-  mode = SPN_DISARMED;
+  state.mode = SPN_DISARMED;
   alarmOff();
 }
 
 void SumpPitNode::maintenance()
 {
-  mode = SPN_MAINTENANCE;
+  state.mode = SPN_MAINTENANCE;
 }
 
 void SumpPitNode::alarm()
 {
-  if (mode == SPN_ARMED) {
+  if (state.mode == SPN_ARMED) {
     siren->on();
   }
 }
@@ -69,35 +69,41 @@ void SumpPitNode::setup()
   arm();
 }
 
-void SumpPitNode::update()
+State* SumpPitNode::update()
 {
   switch (getMode()) {
   case SPN_ARMED:
     updateArmed();
     break;
   }
+  return &state;
 }
 
 void SumpPitNode::updateArmed() {
   sensor->updatePump();
-  alarmReason = sensor->checkState();
+  state.alarmReason = sensor->checkState();
 
   // check system status
-  if (isCritical(alarmReason)) {
+  if (isCritical(state.alarmReason)) {
     siren->on();
     // take care of the critical water level
-    if ((alarmReason & SPN_WATER_CRITICAL) != 0) {
+    if ((state.alarmReason & SPN_WATER_CRITICAL) != 0) {
       shutoffValve->activate();
     } else {
       shutoffValve->deactivate();
     }
-  } else if (isTechnical(alarmReason)) {
+  } else if (isTechnical(state.alarmReason)) {
     // TODO: do we need this?
     siren->on();
   } else {
     siren->off();
   }
+  showState(state);
+}
 
+void SumpPitNode::showState(State stateCopy)
+{
+  display->show(stateCopy);
 }
 
 void SumpPitNode::alarmOff() {
@@ -106,7 +112,7 @@ void SumpPitNode::alarmOff() {
 
 int SumpPitNode::getAlarmReason()
 {
-  return alarmReason;
+  return state.alarmReason;
 }
 
 bool SumpPitNode::isCritical(int reason)
