@@ -2,6 +2,7 @@
 #define DISPLAY_H
 
 #include "state.h"
+
 class Display
 {
   public:
@@ -14,8 +15,6 @@ class Display
     virtual void clear();
     virtual void show(State state);
   protected:
-
-  private:
 };
 
 #endif // DISPLAY_H

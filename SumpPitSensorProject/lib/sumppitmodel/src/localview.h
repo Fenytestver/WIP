@@ -66,16 +66,25 @@ same as normal.
   "when job is complete"
 // 01234567890123456789
 
+#include "state.h"
+#include "display.h"
+#include "spn_config.h"
+
+using namespace spn;
+
 class LocalView
 {
   public:
-    LocalView();
+    LocalView(Display* _display);
     virtual ~LocalView();
-    virtual char* render();
+    virtual void setup();
+    virtual void render(State state);
 
   protected:
 
   private:
+    Display* display;
+    void renderArmed(State state);
 };
 
 #endif // LOCALVIEW_H

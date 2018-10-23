@@ -11,3 +11,14 @@ void spn::sb(int& flag, int mask, bool condition) {
     flag &= ~mask;
   }
 }
+
+
+bool spn::isCritical(int reason)
+{
+  return (reason & SPN_ALERT_ALL_CRITICAL) != SPN_ALERT_NO_ALERT;
+}
+
+bool spn::isTechnical(int reason)
+{
+  return (reason & SPN_ALERT_ALL_TECHNICAL) != SPN_ALERT_NO_ALERT;
+}

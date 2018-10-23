@@ -67,6 +67,13 @@
 namespace spn {
   int abso(int a);
   void sb(int& flag, int mask, bool condition);
+  bool isTechnical(int reason);
+  bool isCritical(int reason);
 }
+
+// The main system modes
+enum Mode {
+  SPN_INITIALIZING, SPN_DISARMED, SPN_ARMED, SPN_MAINTENANCE, SPN_SYS_ERROR
+}; // end SumpPitNodeModes
 
 #endif // SPNCONFIG_H

@@ -36,9 +36,10 @@ void FunctionalTestBase::create()
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armResetButton);
   siren = new StubSiren();
   display = new StubDisplay();
+  localView = new LocalView(display);
   shutoffValve = new StubShutoffValve();
   StubBuzzer* buzzer = new StubBuzzer();
-  node = new SumpPitNode(siren, buzzer, display, sensor, inputs, shutoffValve);
+  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
 }
 
 void FunctionalTestBase::destroy()

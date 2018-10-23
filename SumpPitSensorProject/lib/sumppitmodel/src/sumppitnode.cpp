@@ -2,7 +2,7 @@
 
 SumpPitNode::SumpPitNode(Siren* _siren,
     Buzzer* _buzzer,
-    Display* _display,
+    LocalView* _localView,
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
     ShutoffValve* _shutoffValve)
@@ -10,7 +10,7 @@ SumpPitNode::SumpPitNode(Siren* _siren,
   //ctor
   siren = _siren;
   buzzer = _buzzer;
-  display = _display;
+  localView = _localView;
   sensor = _sensor;
   inputs = _inputs;
   shutoffValve = _shutoffValve;
@@ -64,7 +64,7 @@ void SumpPitNode::alarm()
 void SumpPitNode::setup()
 {
   sensor->setup();
-  display->setup();
+  localView->setup();
   alarmOff();
   arm();
 }
@@ -103,7 +103,7 @@ void SumpPitNode::updateArmed() {
 
 void SumpPitNode::showState(State stateCopy)
 {
-  display->show(stateCopy);
+  localView->render(stateCopy);
 }
 
 void SumpPitNode::alarmOff() {
@@ -113,14 +113,4 @@ void SumpPitNode::alarmOff() {
 int SumpPitNode::getAlarmReason()
 {
   return state.alarmReason;
-}
-
-bool SumpPitNode::isCritical(int reason)
-{
-  return (reason & SPN_ALERT_ALL_CRITICAL) != SPN_ALERT_NO_ALERT;
-}
-
-bool SumpPitNode::isTechnical(int reason)
-{
-  return (reason & SPN_ALERT_ALL_TECHNICAL) != SPN_ALERT_NO_ALERT;
 }
