@@ -387,7 +387,7 @@
 1537753015 source:c:\etc\sumpit\sumppitsensorproject\test\testbase.cpp
 	"testbase.h"
 
-1540177083 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
+1540878055 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
 	"testmain.h"
 	"localview.h"
 
@@ -424,7 +424,7 @@
 
 1538464951 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.h
 
-1540279205 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
+1540279373 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
 	"localview.h"
 	"spn_config.h"
 
@@ -433,8 +433,9 @@
 	"display.h"
 	"spn_config.h"
 
-1539487502 source:c:\etc\sumpit\sumppitsensorproject\test\test_display_demo.cpp
+1540880855 source:c:\etc\sumpit\sumppitsensorproject\test\test_display_demo.cpp
 	"test_display_demo.h"
+	"stubs.cpp"
 
 1539487502 c:\etc\sumpit\sumppitsensorproject\test\test_display_demo.h
 	<iostream>
