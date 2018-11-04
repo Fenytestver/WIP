@@ -88,7 +88,9 @@ class StubDisplay : public Display {
   public:
     void displayMessage(char* _message)
     {
-      SPN_DBG_STUB << "Display:" << message << endl;
+      SPN_DBG_STUB << "Display:" << endl;
+      debout(_message);
+      SPN_DBG_STUB << endl;
       message = _message;
     }
 

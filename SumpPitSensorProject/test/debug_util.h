@@ -14,6 +14,7 @@ namespace spn {
   void assert(long actual, long expected, string msg);
   void assertFalse(bool b, string msg);
   void assertAllFlags(int value, int mask, string msg);
+  void debout(char* str);
 }
 
 #endif // DEBUG_UTIL_H

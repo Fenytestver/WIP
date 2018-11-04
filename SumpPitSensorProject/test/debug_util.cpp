@@ -8,6 +8,15 @@ void spn::assert(bool b, string msg) {
   }
 }
 
+void spn::debout(char* str) {
+  int i = 0;
+  char c = 'a';
+  while (c!='\0' || c> 1024) {
+    c = str[i++];
+    std::cout << c;
+  }
+}
+
 void spn::assert(long actual, long expected, string msg) {
   if (expected != actual) {
     SPN_DBG_FAIL << "Fail: " << msg << ", expected:" << expected << ", actual:" << actual << "\n";
