@@ -95,7 +95,7 @@ class StubDisplay : public Display {
       SPN_DBG_STUB << "#### ";
       while (c!='\0' && index < 1024) {
         c = _message[index];
-        if (c != '\n') {
+        if (c != '\n' && c != '\0') {
           std::cout << c;
         }
         if (// (index > 0 && (index % 20) == 0) ||
