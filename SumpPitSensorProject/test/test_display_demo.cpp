@@ -30,10 +30,10 @@ void test_display_demo::test()
   cout << endl << "01234567890123456789" << endl << endl;
   return;
   // Normal Operation, 112", 47%, Pump1:ON, Pump2 RPM: 1124, Pump2 OFF, Pump2 RPM: ---
-  printf(SPN_DISPLAY_NORMAL, 112, 47, "ON", "1124", "OFF", "---");
+  printf(SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, 112, 47, "ON", "1124", "OFF", "---");
   cout << endl << "01234567890123456789" << endl << endl;
   // Maintenance, 112", 47%, Pump1:ON, Pump2 RPM: 1124, Pump2 OFF, Pump2 RPM: ---
-  printf(SPN_DISPLAY_MAINTENANCE, 112, 47, "ON", "1124", "OFF", "---");
+  printf(SPN_DISPLAY_NORMAL, SPN_DISPLAY_MAINTENANCE_MODE_TEXT, 112, 47, "ON", "1124", "OFF", "---");
   cout << endl << "01234567890123456789" << endl << endl;
   // maintenance message
   printf(SPN_DISPLAY_MAINTENANCE_REMINDER);

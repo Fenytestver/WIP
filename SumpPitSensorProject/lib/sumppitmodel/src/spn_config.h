@@ -69,6 +69,8 @@ namespace spn {
   void sb(int& flag, int mask, bool condition);
   bool isTechnical(int reason);
   bool isCritical(int reason);
+  long mapp(long x, long in_min, long in_max, long out_min, long out_max);
+  void statusToString(int status, char* out);
 }
 
 // The main system modes

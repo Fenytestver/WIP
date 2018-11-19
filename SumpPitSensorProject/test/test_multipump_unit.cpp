@@ -28,21 +28,22 @@ void test_multipump_unit::test()
   pump->addPump(subPump2);
   voltageSensor1->setVoltage(12.0);
   voltageSensor2->setVoltage(0.0);
-  pump->update();
+  State state;
+  pump->update(&state);
 
   assert(subPump1->isTurnedOn(), "P1 Should be turned on");
   assertFalse(subPump2->isTurnedOn(), "P2 Shouldn't be turned on");
 
   voltageSensor1->setVoltage(0.0);
   voltageSensor2->setVoltage(12.0);
-  pump->update();
+  pump->update(&state);
   assertFalse(subPump1->isTurnedOn(), "P1 Shouldn't be turned on");
   assert(subPump2->isTurnedOn(), "P2 Should be turned on");
 
   // turbo
   voltageSensor1->setVoltage(12.0);
   voltageSensor2->setVoltage(12.0);
-  pump->update();
+  pump->update(&state);
   assert(subPump1->isTurnedOn(), "P1: All on should be on during turbo");
   assert(subPump2->isTurnedOn(), "P2: All on should be on during turbo");
 }

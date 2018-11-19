@@ -80,8 +80,8 @@ State* SumpPitNode::update()
 }
 
 void SumpPitNode::updateArmed() {
-  sensor->updatePump();
-  state.alarmReason = sensor->checkState();
+  sensor->updatePump(&state);
+  state.alarmReason = sensor->checkState(&state);
 
   // check system status
   if (isCritical(state.alarmReason)) {

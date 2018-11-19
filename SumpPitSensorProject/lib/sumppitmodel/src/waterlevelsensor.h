@@ -6,7 +6,7 @@
 #define WATERLEVELSENSOR_H
 
 #define SPN_WATER_LEVEL_UNKNOWN 0
-
+#include "state.h"
 #include "spn_config.h"
 class WaterLevelSensor
 {
@@ -17,7 +17,7 @@ class WaterLevelSensor
     virtual ~WaterLevelSensor();
     /** @return the water level in percentage. */
     virtual short measureLevel();
-    virtual int checkState();
+    virtual int checkState(State* state);
 
   protected:
 

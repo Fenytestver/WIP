@@ -2,16 +2,16 @@
 #define LOCALVIEW_H
 
 #define SPN_DISPLAY_TEST \
-  "####################"\
-  "####################"\
-  "####################"\
+  "####################\n"\
+  "####################\n"\
+  "####################\n"\
   "####################"
 
 #define SPN_DISPLAY_WELCOME \
-  "      Welcome!      "\
-  "   Initializing...  "\
-  "                    "\
-  "     Please wait!   "
+  "      Welcome!     \n"\
+  "   Initializing... \n"\
+  "                   \n"\
+  "     Please wait!  "
 
 /**
 Normal mode display.
@@ -24,11 +24,15 @@ string(3) pump2(status)
 string(max 6) pump2(rpm)
 */
 #define SPN_DISPLAY_NORMAL \
-  "**NORMAL OPERATION**"\
-  "Level:%3d\" - %3d%%"\
-  "Pump1:%s rpm:%s"\
+  "%s\n"\
+  "Level:%3d\" - %3d%%\n"\
+  "Pump1:%s rpm:%s\n"\
   "Pump2:%s rpm:%s"
 // 01234567890123456789
+
+#define SPN_DISPLAY_NORMAL_MODE_TEXT "**NORMAL OPERATION**"
+#define SPN_DISPLAY_MAINTENANCE_MODE_TEXT "--MAINTENANCE MODE--"
+
 /**
 warning screen with status, error code and 3 lines for text
 string(?) mode
@@ -38,38 +42,33 @@ string(?) line 2
 string(?) line 3
 */
 #define SPN_DISPLAY_WARNING \
-  "%s! #%3d"\
-  "%s"\
-  "%s"\
+  "%s! #%s\n"\
+  "%s\n"\
+  "%s\n"\
   "%s"
-
-/**
-same as normal.
-*/
-// 01234567890123456789
-#define SPN_DISPLAY_MAINTENANCE \
-  "--MAINTENANCE MODE--"\
-  "Level:%3d\" - %3d%%"\
-  "Pump1:%s rpm:%s"\
-  "Pump2:%s rpm:%s"
 // 01234567890123456789
 #define SPN_DISPLAY_OFF \
-  "-All ALARMS ARE OFF-"\
-  "The Water Intrusion"\
-  "Systeem is disabled!"\
-  "-All ALARMS ARE OFF-"
+  "-All ALARMS ARE OFF-\n"\
+  "The Water Intrusion\n"\
+  "Systeem is disabled!\n"\
+  "-All ALARMS ARE OFF-\n"
 // 01234567890123456789
 #define SPN_DISPLAY_MAINTENANCE_REMINDER \
-  "Maintenance mode ON!"\
-  "       REARM"\
-  "       REARM"\
-  "when job is complete"
+  "Maintenance mode ON!\n"\
+  "       REARM\n"\
+  "       REARM\n"\
+  "when job is complete\n"
 // 01234567890123456789
 
 #include "state.h"
 #include "display.h"
 #include "spn_config.h"
 
+//#ifdef SPN_UNIT_TEST
+#include <cstdio>
+//#endif // SPN_UNIT_TEST
+#include "pump.h"
+#include "waterlevelsensor.h"
 using namespace spn;
 
 class LocalView
@@ -81,10 +80,11 @@ class LocalView
     virtual void render(State state);
 
   protected:
-
   private:
     Display* display;
+    WaterLevelSensor WaterLevelSensor;
     void renderArmed(State state);
+
 };
 
 #endif // LOCALVIEW_H
