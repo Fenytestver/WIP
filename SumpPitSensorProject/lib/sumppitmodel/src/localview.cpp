@@ -59,37 +59,38 @@ void LocalView::renderArmed(State state)
 
   int lineIndex = 0;
   if (isCritical(state.alarmReason)) {
+    // pump overtime
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 cycle!! %d,%d\n", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump1,2 overtime!! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 cycle!! %d\n", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 overtime!! %ds", millisToSec(state.pump1Uptime));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 cycle!! %d\n", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 overtime!! %ds", millisToSec(state.pump2Uptime));
     }
-
+    // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 rpm!! %d,%d\n", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump1,2 rpm!! %d,%d", state.pump1Rpm, state.pump2Rpm);
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 rpm!! %d\n", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 rpm!! %d", state.pump1Rpm);
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 rpm!! %d\n", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 rpm!! %d", state.pump2Rpm);
     }
 
     if ((state.alarmReason & SPN_ALARM_LEAK) != 0) {
       sprintf(lines[lineIndex++], "Leak detected!\n");
     }
     if ((state.alarmReason * SPN_ALARM_WATER_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Water alert! %d\" %d%%\n", state.levelIn, state.levelPercent);
+      sprintf(lines[lineIndex++], "Water alert! %d\" %d%%", state.levelIn, state.levelPercent);
     }
     if ((state.alarmReason & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump overuse! P1:%s,P2:%s\n",
+      sprintf(lines[lineIndex++], "Pump overuse! P1:%s,P2:%s",
               isCritical(state.pump1Alarm) ? "CR" : "OK",
               isCritical(state.pump2Alarm) ? "CR" : "OK");
     }
     if ((state.alarmReason & SPN_ALARM_PUMP_VOLTAGE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump voltage! P1:%s,P2:%s\n",
+      sprintf(lines[lineIndex++], "Pump voltage!\nP1:%s,P2:%s",
               isCritical(state.pump1Alarm) ? "CR" : "OK",
               isCritical(state.pump2Alarm) ? "CR" : "OK");
     }
@@ -97,32 +98,29 @@ void LocalView::renderArmed(State state)
     len = sprintf(message, SPN_DISPLAY_WARNING, "critical!", statusString, lines[0], lines[1], lines[2]);
 
   } else if (isTechnical(state.alarmReason)) {
+    // pump overtime
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 cycle!! %d,%d\n", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump1,2 overtime!! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 cycle!! %d\n", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 uptime!! %ds", millisToSec(state.pump1Uptime));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 cycle!! %d\n", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 overtime!! %ds", millisToSec(state.pump2Uptime));
     }
 
+    // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 rpm warn!! %d,%d\n", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump1,2 rpm warn!! %d,%d", state.pump1Rpm, state.pump2Rpm);
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 rpm!! %d\n", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 rpm!! %d", state.pump1Rpm);
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 rpm!! %d\n", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 rpm!! %d", state.pump2Rpm);
     }
 
-    if ((state.alarmReason & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump overuse! P1:%s,P2:%s\n",
-              isTechnical(state.pump1Alarm) ? "CR" : "OK",
-              isTechnical(state.pump2Alarm) ? "CR" : "OK");
-    }
-
+    // too low water
     if ((state.alarmReason & SPN_ALARM_WATER_LOW) != 0) {
-      sprintf(lines[lineIndex++], "Water too low: %d\"\n", state.levelIn);
+      sprintf(lines[lineIndex++], "Water too low: %d\"", state.levelIn);
     }
 
     len = sprintf(message, SPN_DISPLAY_WARNING, "warning!", statusString, lines[0], lines[1], lines[2]);

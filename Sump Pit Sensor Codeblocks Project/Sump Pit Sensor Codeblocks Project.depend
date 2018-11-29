@@ -215,10 +215,10 @@
 
 1537734261 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\led.h
 
-1542596529 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.cpp
+1543466069 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.cpp
 	"multipump.h"
 
-1542596439 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.h
+1543466040 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.h
 	"pump.h"
 	"state.h"
 
@@ -245,7 +245,7 @@
 	"state.h"
 	"spn_config.h"
 
-1542605358 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.h
+1543466540 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.h
 
 1537734261 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\onbuttonpresslistener.cpp
 	"onbuttonpresslistener.h"
@@ -259,7 +259,7 @@
 1537734261 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\siren.cpp
 	"siren.h"
 
-1542605674 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.cpp
+1543466532 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.cpp
 	"spn_config.h"
 
 1537734261 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spnsystem.cpp
@@ -314,7 +314,7 @@
 	<iostream>
 	<bitset>
 
-1542604769 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
+1542609427 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -390,11 +390,11 @@
 1537749415 source:c:\etc\sumpit\sumppitsensorproject\test\testbase.cpp
 	"testbase.h"
 
-1542603982 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
+1543464426 source:c:\etc\sumpit\sumppitsensorproject\test\testmain.cpp
 	"testmain.h"
 	"localview.h"
 
-1540173483 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
+1543464437 c:\etc\sumpit\sumppitsensorproject\test\testmain.h
 	<iostream>
 	"testbase.h"
 	"test_normaloperation.h"
@@ -402,6 +402,7 @@
 	"test_pump_failure_functional.h"
 	"test_multipump_unit.h"
 	"test_display_demo.h"
+	"test_pump_failure_longoperation.h"
 	"test_buttons.h"
 
 1540273948 c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.h
@@ -427,7 +428,7 @@
 
 1538464951 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.h
 
-1542608576 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
+1543466477 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
 	"localview.h"
 	"spn_config.h"
 
@@ -459,5 +460,9 @@
 	"onbuttonpresslistener.h"
 	"stubs.cpp"
 
-1542596691 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\state.h
+1543465904 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\state.h
+
+1543465549 c:\etc\sumpit\sumppitsensorproject\test\test_pump_failure_longoperation.h
+	<iostream>
+	"functionaltestbase.h"
 

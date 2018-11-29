@@ -7,6 +7,8 @@ struct State {
   int pump2Rpm;
   int pump1Alarm;
   int pump2Alarm;
+  int pump1Uptime;
+  int pump2Uptime;
   int levelIn;
   int levelPercent;
 };

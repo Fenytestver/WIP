@@ -33,3 +33,8 @@ void spn::statusToString(int status, char* out)
   }
   out[9] = '\0';
 }
+
+long spn::millisToSec(long millis)
+{
+  return millis / 1000;
+}

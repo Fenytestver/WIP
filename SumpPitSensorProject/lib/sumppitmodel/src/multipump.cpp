@@ -26,6 +26,8 @@ int MultiPump::update(State* state)
   state->pump2Rpm = getRpm(1);
   state->pump1Alarm = checkState(0);
   state->pump2Alarm = checkState(1);
+  state->pump1Uptime = getPumpUptime(0);
+  state->pump2Uptime = getPumpUptime(1);
 
   for (int i=0; i<pumpCount; ++i) {
     pumps[i]->update();
@@ -57,4 +59,12 @@ int MultiPump::checkState(int index)
     return SPN_ALARM_NO_ALARM;
   }
   return pumps[index]->checkState();
+}
+
+int MultiPump::getPumpUptime(int index)
+{
+  if (index >= pumpCount) {
+    return -1;
+  }
+  return pumps[index]->getUptime();
 }

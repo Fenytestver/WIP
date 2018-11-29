@@ -21,6 +21,7 @@ class MultiPump
     int update(State* state);
     int checkState();
     int getRpm(int index);
+    int getPumpUptime(int index);
   protected:
 
   private:
