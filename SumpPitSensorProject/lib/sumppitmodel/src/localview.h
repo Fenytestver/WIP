@@ -82,7 +82,6 @@ class LocalView
   protected:
   private:
     Display* display;
-    WaterLevelSensor WaterLevelSensor;
     void renderArmed(State state);
 
 };

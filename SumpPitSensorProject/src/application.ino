@@ -56,6 +56,7 @@ Pump* pump1;
 Pump* pump2;
 MultiPump* multiPump;
 LcdDisplay* display;
+LocalView* localView;
 
 // TODO: 2 leak sensors
 SumpPitSensor* sensor;
@@ -96,7 +97,8 @@ void setup() {
   multiPump->addPump(pump1);
   multiPump->addPump(pump2);
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor1, 1, multiPump);
-  node = new SumpPitNode(siren, buzzer, display, sensor, inputs, shutoffValve);
+  localView = new LocalView(display);
+  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
 
   display->displayMessage("Hello World!\nSystem started.");
