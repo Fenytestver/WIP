@@ -8,6 +8,7 @@
 #include "multipump.h"
 #include "leaksensor.h"
 #include "spn_config.h"
+#include "state.h"
 
 using namespace spn;
 
@@ -24,12 +25,12 @@ class SumpPitSensor
     /** Call at setup phase, once */
     virtual void setup();
     virtual bool isLeaking();
-    virtual int checkState();
-    virtual void updatePump();
+    virtual int checkState(State* outstate);
+    virtual void updatePump(State* outstate);
   protected:
     /** Will return SPS_PUMP state bit-mask, where 0 is no error */
     virtual int checkPumpState();
-    virtual int checkWaterLevelState();
+    virtual int checkWaterLevelState(State* state);
     virtual int checkLeakState();
 
   protected:

@@ -22,3 +22,7 @@ void Display::clear()
 void Display::setup() {
 
 }
+void Display::show(State state)
+{
+
+}

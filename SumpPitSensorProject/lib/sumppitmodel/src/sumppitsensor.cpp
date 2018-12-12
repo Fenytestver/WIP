@@ -25,12 +25,12 @@ bool SumpPitSensor::isLeaking()
   // FIXME: multiple leak sensors.
   return leakSensors->isLeaking();
 }
-int SumpPitSensor::checkState()
+int SumpPitSensor::checkState(State* outstate)
 {
   int state = SPN_ALARM_NO_ALARM;
 
   state |= checkPumpState();
-  state |= checkWaterLevelState();
+  state |= checkWaterLevelState(outstate);
   state |= checkLeakState();
   return state;
 }
@@ -40,9 +40,9 @@ int SumpPitSensor::checkPumpState()
   return pump->checkState();
 }
 
-int SumpPitSensor::checkWaterLevelState()
+int SumpPitSensor::checkWaterLevelState(State* outstate)
 {
-  int state = waterLevelSensors->checkState();
+  int state = waterLevelSensors->checkState(outstate);
   // TODO: rename waterlevelsensors to single
   return state;
 }
@@ -52,9 +52,9 @@ int SumpPitSensor::checkLeakState()
   return isLeaking() ? SPN_ALARM_LEAK : SPN_ALARM_NO_ALARM;
 }
 
-void SumpPitSensor::updatePump()
+void SumpPitSensor::updatePump(State* state)
 {
-  pump->update();
+  pump->update(state);
   int waterLevel = waterLevelSensors->measureLevel();
   if (waterLevel >= SPN_WATER_CRITICAL) {
     expectedPumpState = SPN_MULTIPUMP_TURBO;

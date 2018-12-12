@@ -20,19 +20,51 @@ void MultiPump::addPump(Pump* pump)
   }
 }
 
-int MultiPump::update()
+int MultiPump::update(State* state)
 {
+  state->pump1Rpm = getRpm(0);
+  state->pump2Rpm = getRpm(1);
+  state->pump1Alarm = checkState(0);
+  state->pump2Alarm = checkState(1);
+  state->pump1Uptime = getPumpUptime(0);
+  state->pump2Uptime = getPumpUptime(1);
+
   for (int i=0; i<pumpCount; ++i) {
     pumps[i]->update();
   }
   return 0;
 }
 
+int MultiPump::getRpm(int index)
+{
+  if (index >= pumpCount) {
+    return -1;
+  }
+  return pumps[index]->getRpm();
+}
+
+
 int MultiPump::checkState()
 {
   int state = SPN_ALARM_NO_ALARM;
   for (int i=0; i<pumpCount; ++i) {
-    state |= pumps[i]->checkState();
+    state |= checkState(i);
   }
   return state;
+}
+
+int MultiPump::checkState(int index)
+{
+  if (index >= pumpCount) {
+    return SPN_ALARM_NO_ALARM;
+  }
+  return pumps[index]->checkState();
+}
+
+int MultiPump::getPumpUptime(int index)
+{
+  if (index >= pumpCount) {
+    return -1;
+  }
+  return pumps[index]->getUptime();
 }

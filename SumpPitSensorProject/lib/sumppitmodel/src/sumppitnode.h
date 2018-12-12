@@ -5,19 +5,16 @@
 #ifndef SUMPPITNODE_H
 #define SUMPPITNODE_H
 
-#include "display.h"
 #include "siren.h"
 #include "sumppitinputs.h"
 #include "sumppitsensor.h"
 #include "spn_config.h"
 #include "shutoffvalve.h"
 #include "buzzer.h"
+#include "localview.h"
+#include "state.h"
 
 using namespace spn;
-// The main system modes
-enum {
-  SPN_INITIALIZING, SPN_DISARMED, SPN_ARMED, SPN_MAINTENANCE, SPN_SYS_ERROR
-}; // end SumpPitNodeModes
 
 class SumpPitNode
 {
@@ -25,7 +22,7 @@ class SumpPitNode
     /** Default constructor */
     SumpPitNode(Siren* _siren,
     Buzzer* _buzzer,
-    Display* _display,
+    LocalView* _localView,
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
     ShutoffValve* _shutoffValve);
@@ -35,7 +32,7 @@ class SumpPitNode
     /**
       Update the system state. Not taking any actions.
       */
-    virtual void update();
+    virtual State* update();
 
     /**
        Tells the currently selected mode.
@@ -51,19 +48,18 @@ class SumpPitNode
   private: // methods
     void updateArmed();
     void alarmOff();
-    bool isCritical(int reason);
-    bool isTechnical(int reason);
 
   protected:
     Siren* siren;
-    Display* display;
+    LocalView* localView;
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
     ShutoffValve* shutoffValve;
     Buzzer* buzzer;
+
+    void showState(State stateCopy);
   private: // variables
-    int mode;
-    int alarmReason;
+    State state;
 
     class OnArmPress : public OnButtonPressListener {
       public:

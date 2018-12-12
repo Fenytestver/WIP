@@ -52,6 +52,7 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spn_config.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spnsystem.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/spnsystem.h" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/state.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitinputs.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitinputs.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/sumppitnode.cpp" />
@@ -82,6 +83,7 @@
 		<Unit filename="../SumpPitSensorProject/test/test_normaloperation.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_functional.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_functional.h" />
+		<Unit filename="../SumpPitSensorProject/test/test_pump_failure_longoperation.h" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_unit.cpp" />
 		<Unit filename="../SumpPitSensorProject/test/test_pump_unit.h" />
 		<Unit filename="../SumpPitSensorProject/test/testbase.cpp" />

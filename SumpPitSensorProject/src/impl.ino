@@ -12,6 +12,7 @@
 #include "rpmsensor.h"
 #include "display.h"
 #include "LiquidCrystal_I2C.h"
+#include "state.h";
 
 #define PUB_SHUTOFF_STATE "shutoff-valve-state"
 
@@ -203,6 +204,10 @@ class LcdDisplay : public Display {
       Display::setup();
       lcd->begin();
       lcd->backlight();
+    }
+
+    void show(State state) {
+
     }
 
     void displayMessage(char* message) {

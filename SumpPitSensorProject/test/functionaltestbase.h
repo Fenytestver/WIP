@@ -8,6 +8,7 @@
 #include "multipump.h"
 #include "waterlevelsensor.h"
 #include "testbase.h"
+#include "localview.h"
 
 // TODO: rename this to functional test base.
 class FunctionalTestBase : public TestBase
@@ -30,6 +31,7 @@ class FunctionalTestBase : public TestBase
     SumpPitSensor* sensor;
     SumpPitInputs* inputs;
     StubShutoffValve* shutoffValve;
+    LocalView* localView;
 
     StubDisplay* display;
 

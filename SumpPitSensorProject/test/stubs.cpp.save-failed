@@ -88,26 +88,15 @@ class StubDisplay : public Display {
   public:
     void displayMessage(char* _message)
     {
-      SPN_DBG_STUB << "Display:" << endl;
-      int index = 0;
-      char c='x';
-      SPN_DBG_STUB << "###########################"<< endl;
-      SPN_DBG_STUB << "#### ";
-      while (c!='\0' && index < 1024) {
-        c = _message[index];
-        if (c != '\n' && c != '\0') {
-          std::cout << c;
-        }
-        if (// (index > 0 && (index % 20) == 0) ||
-            c == '\n') {
-          std:cout << endl;
-          SPN_DBG_STUB << "#### ";
-        }
-        index++;
+      int i = 0;
+      char c = 'a';
+      cout "printing" << end;
+      while (c!='\0') {
+        c = _message[i++];
+        cout << c;
       }
-      //debout(_message);
-      SPN_DBG_STUB << endl;
-      SPN_DBG_STUB << "###########################" << endl;
+      cout << endl;
+      SPN_DBG_STUB << "Display:" << message << endl;
       message = _message;
     }
 
