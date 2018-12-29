@@ -4,10 +4,15 @@
 #include "sumppitnode.h"
 #include "application.h"
 
-#define PLATFORM_ELECTRON 1
+#define PLATFORM_PHOTON 1
+#define PLATFORM_ELECTRON 2
+// select platform
 #define PLATFORM PLATFORM_ELECTRON
 
-#if PLATFORM == PLATFORM_ELECTRON
+// set up pins
+#if PLATFORM == PLATFORM_PHOTON
+
+#elif PLATFORM == PLATFORM_ELECTRON
 
 #define PIN_LED_GREEN B0
 #define PIN_LED_YELLOW B1
