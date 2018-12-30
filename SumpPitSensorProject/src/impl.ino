@@ -11,7 +11,7 @@
 #include "application.h"
 #include "rpmsensor.h"
 #include "display.h"
-#include "LiquidCrystal_I2C_Spark.h"
+#include "LiquidCrystal_I2C.h"
 #include "state.h";
 
 #define PUB_SHUTOFF_STATE "shutoff-valve-state"
