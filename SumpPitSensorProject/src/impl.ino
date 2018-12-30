@@ -202,8 +202,9 @@ class LcdDisplay : public Display {
 
     void setup() {
       Display::setup();
-      lcd->begin();
+      lcd->init();
       lcd->backlight();
+      lcd->clear();
     }
 
     void show(State state) {

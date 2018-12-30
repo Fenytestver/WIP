@@ -7,10 +7,26 @@
 #define PLATFORM_PHOTON 1
 #define PLATFORM_ELECTRON 2
 // select platform
-#define PLATFORM PLATFORM_ELECTRON
+#define PLATFORM PLATFORM_PHOTON
 
 // set up pins
 #if PLATFORM == PLATFORM_PHOTON
+#define PIN_LED_GREEN D5
+#define PIN_LED_YELLOW D6
+#define PIN_LED_RED D7
+#define PIN_LEAK_1 D2
+#define PIN_LEAK_2 D3
+// TODO: rename butons.
+#define PIN_BUTTON_1 A0
+#define PIN_BUTTON_2 A1
+#define PIN_BUTTON_3 D4
+#define PIN_BUZZER A2
+#define PIN_SIREN A4
+#define PIN_WATERLEVEL_TRIG D5
+#define PIN_WATERLEVEL_ECHO D5
+
+#define PIN_PUMP_VOLTAGE_1 A4
+#define PIN_PUMP_VOLTAGE_2 A3
 
 #elif PLATFORM == PLATFORM_ELECTRON
 
@@ -30,6 +46,8 @@
 
 #define PIN_PUMP_VOLTAGE_1 A4
 #define PIN_PUMP_VOLTAGE_2 A3
+#endif
+
 // minimum measurable water disatance (inches)
 #define WATER_DIST_MIN 4
 #define WATER_DIST_MAX 78
@@ -37,7 +55,7 @@
 #define DISPLAY_I2C_ADDR 0x27
 #define DISPLAY_COLS 20
 #define DISPLAY_ROWS 4
-#endif
+
 
 RealSiren* siren;
 RealBuzzer* buzzer;
