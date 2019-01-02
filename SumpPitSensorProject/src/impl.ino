@@ -31,7 +31,7 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
     }
     short measureLevel() {
       if (pin != PIN_NO_PIN) {
-        return (int) map(analogRead(pin), (double)min, (double)max, 100.0, 0.0);
+        return (int) map(analogRead(pin), (double)min, (double)max, 0.0, 100.0);
       } else {
         return SPN_WATER_LOW + 1;
       }
