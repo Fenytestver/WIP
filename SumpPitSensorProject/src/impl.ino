@@ -256,31 +256,39 @@ class LcdDisplay : public Display {
       int y = 0;
       int countX = 20;
       int countY = 4;
-
-      String str = message;
+      for (int i=0; i < bankSize; ++i) {
+        bank[i] = ' ';
+      }
+      String str = String(message);
+      Serial.println("----");
       bool end = false;
-      while (!end && y < countY) {
+      while (!end && y < countY && bankIndex < bankSize) {
         int nextNL = str.indexOf('\n', messageIndex);
-        if (nextNL < messageIndex) {
+        if (nextNL == -1) {
             nextNL = str.indexOf('\0', messageIndex);
         }
-        if (nextNL >= messageIndex) {
-          for (int i = bankIndex; i < nextNL; ++i) {
-            bank[i] = message[messageIndex++];
-            bankIndex = i;
+
+        if (nextNL != -1) {
+          int len = nextNL - messageIndex;
+          Serial.print(messageIndex);
+          Serial.print('-');
+          Serial.print(nextNL);
+          Serial.print(":");
+          Serial.println(len);
+          for (int i = messageIndex; i < nextNL; ++i) {
+            bank[bankIndex++] = message[i];
           }
+          messageIndex += len + 1;
         } else {
           end = true;
         }
 
         if (!end) {
           y++;
+          bankIndex = (y * 20);
         }
       }
 
-      for (int i=bankIndex; i<bankSize; ++i) {
-        bank[i] = '/';
-      }
       bank[bankSize - 1] = '\0';
       lcd->setCursor(0,0);
       lcd->printstr(bank);

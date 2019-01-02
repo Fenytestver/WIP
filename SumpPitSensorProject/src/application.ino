@@ -124,12 +124,12 @@ void setup() {
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
 
-
+  Serial.begin(115200);
 }
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   node->update();
   Particle.process();
-  //delay(30);
+  delay(100);
 }
