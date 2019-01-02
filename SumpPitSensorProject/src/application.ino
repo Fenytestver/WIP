@@ -4,6 +4,8 @@
 #include "sumppitnode.h"
 #include "application.h"
 
+SYSTEM_MODE(AUTOMATIC);
+
 #define PLATFORM_PHOTON 1
 #define PLATFORM_ELECTRON 2
 // select platform
@@ -11,19 +13,18 @@
 
 // set up pins
 #if PLATFORM == PLATFORM_PHOTON
-#define PIN_LED_GREEN D5
-#define PIN_LED_YELLOW D6
-#define PIN_LED_RED D7
+#define PIN_LED_GREEN PIN_NO_PIN
+#define PIN_LED_YELLOW PIN_NO_PIN
+#define PIN_LED_RED PIN_NO_PIN
 #define PIN_LEAK_1 D2
 #define PIN_LEAK_2 D3
 // TODO: rename butons.
-#define PIN_BUTTON_1 A0
-#define PIN_BUTTON_2 A1
-#define PIN_BUTTON_3 D4
-#define PIN_BUZZER A2
-#define PIN_SIREN A4
-#define PIN_WATERLEVEL_TRIG D5
-#define PIN_WATERLEVEL_ECHO D5
+#define PIN_BUTTON_1 PIN_NO_PIN
+#define PIN_BUTTON_2 PIN_NO_PIN
+#define PIN_BUTTON_3 PIN_NO_PIN
+#define PIN_BUZZER PIN_NO_PIN
+#define PIN_SIREN PIN_NO_PIN
+#define PIN_WATERLEVEL PIN_NO_PIN
 
 #define PIN_PUMP_VOLTAGE_1 A4
 #define PIN_PUMP_VOLTAGE_2 A3
@@ -41,8 +42,7 @@
 #define PIN_BUTTON_3 B4
 #define PIN_BUZZER D2
 #define PIN_SIREN B3
-#define PIN_WATERLEVEL_TRIG C3
-#define PIN_WATERLEVEL_ECHO C2
+#define PIN_WATERLEVEL PIN_NO_PIN
 
 #define PIN_PUMP_VOLTAGE_1 A4
 #define PIN_PUMP_VOLTAGE_2 A3
@@ -69,7 +69,7 @@ RealButton* armButton;
 RealButton* maintenanceButton;
 RealButton* disarmButton;
 RealShutoffValve* shutoffValve;
-UltrasonicWaterLevelSensor* waterLevelSensor;
+AnalogWaterLevelSensor* waterLevelSensor;
 SumpPitInputs* inputs;
 RealRpmSensor* rpmSensor1;
 RealRpmSensor* rpmSensor2;
@@ -107,8 +107,8 @@ void setup() {
   maintenanceButton = new RealButton(systemTime, PIN_BUTTON_2);
   disarmButton = new RealButton(systemTime, PIN_BUTTON_3);
   shutoffValve = new RealShutoffValve();
-  waterLevelSensor = new UltrasonicWaterLevelSensor(
-    PIN_WATERLEVEL_TRIG, PIN_WATERLEVEL_ECHO, WATER_DIST_MIN, WATER_DIST_MAX);
+  waterLevelSensor = new AnalogWaterLevelSensor(
+    PIN_WATERLEVEL, WATER_DIST_MIN, WATER_DIST_MAX);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
   rpmSensor1 = new RealRpmSensor();
   rpmSensor2 = new RealRpmSensor();
@@ -124,11 +124,12 @@ void setup() {
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
 
-  display->displayMessage("Hello World!\nSystem started.");
+
 }
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   node->update();
-  delay(10);
+  Particle.process();
+  //delay(30);
 }

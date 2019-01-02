@@ -5,11 +5,25 @@ LocalView::LocalView(Display* _display)
 {
   //ctor
   display = _display;
+  pump1Rpm = new char[10];
+  pump2Rpm = new char[10];
+  statusString = new char[10];
+  for (int i = 0; i < 4; ++i) {
+    lines[i] = new char[100];
+  }
+  message = new char[1024];
 }
 
 LocalView::~LocalView()
 {
   //dtor
+  delete pump1Rpm;
+  delete pump2Rpm;
+  delete statusString;
+  for (int i = 0; i < 4; ++i) {
+    delete lines[i];
+  }
+  delete message;
 }
 
 void LocalView::setup()
@@ -37,24 +51,21 @@ void LocalView::render(State state)
 
 void LocalView::renderArmed(State state)
 {
+
   int levelInches = state.levelIn;
   int levelPercent = state.levelPercent;
   const char* pump1Status = state.pump1Rpm == 0 ? "OFF" : " ON";
   const char* pump2Status = state.pump2Rpm == 0 ? "OFF" : " ON";
-  char* pump1Rpm = new char[10];
-  char* pump2Rpm = new char[10];
+
   sprintf(pump1Rpm, "%d", state.pump1Rpm);
   sprintf(pump2Rpm, "%d", state.pump2Rpm);
-  char* statusString = new char[10];
   statusToString(state.alarmReason, statusString);
-  char* lines[4] = {new char[100], new char[100], new char[100], new char[100]};
-
   lines[0][0] = '\0';
   lines[1][0] = '\0';
   lines[2][0] = '\0';
   // FIXME: magic number
   // must be a c-style string.
-  char* message = new char[1024];
+
   int len=0;
 
   int lineIndex = 0;
@@ -107,7 +118,6 @@ void LocalView::renderArmed(State state)
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
       sprintf(lines[lineIndex++], "Pump2 overtime!! %ds", millisToSec(state.pump2Uptime));
     }
-
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
@@ -128,5 +138,6 @@ void LocalView::renderArmed(State state)
     len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, levelInches, levelPercent,
                 pump1Status, pump1Rpm, pump2Status, pump2Rpm);
   }
+  message[len] = '\0';
   display->displayMessage(message);
 }

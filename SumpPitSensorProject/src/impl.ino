@@ -14,34 +14,38 @@
 #include "LiquidCrystal_I2C.h"
 #include "state.h";
 
+#define PIN_NO_PIN -1
 #define PUB_SHUTOFF_STATE "shutoff-valve-state"
 
-class UltrasonicWaterLevelSensor : public WaterLevelSensor {
+class AnalogWaterLevelSensor : public WaterLevelSensor {
   public:
     /**
     constructor
     @param min minimum measurable distance (max measurable water level)
     @param max maximum measurable distance (empty tank)
     */
-    UltrasonicWaterLevelSensor(int trigPin, int echoPin, double _min, double _max) {
-      rangefinder = new HC_SR04(trigPin, echoPin);
+    AnalogWaterLevelSensor(int _pin, double _min, double _max) {
       min = _min;
       max = _max;
+      pin = _pin;
     }
     short measureLevel() {
-      double range = rangefinder->getDistanceInch();
-      // minimum distance 100% full
-      // maxumum distance 0% empty
-      return (int) map(range, (double)min, (double)max, 100.0, 0.0);
+      if (pin != PIN_NO_PIN) {
+        return (int) map(analogRead(pin), (double)min, (double)max, 100.0, 0.0);
+      } else {
+        return SPN_WATER_LOW + 1;
+      }
     }
     int checkState() {
       return SPN_ALARM_NO_ALARM;
     }
     void setup() {
-
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, INPUT);
+      }
     }
   private:
-    HC_SR04* rangefinder;
+    int pin;
     int min;
     int max;
 
@@ -55,12 +59,18 @@ class RealVoltageSensor : public VoltageSensor {
 
     void setup() {
       VoltageSensor::setup();
-      pinMode(pin, INPUT);
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, INPUT);
+      }
     }
 
     float getVoltage() {
       VoltageSensor::getVoltage();
-      return analogRead(pin);
+      if (pin != PIN_NO_PIN) {
+        return analogRead(pin);
+      } else {
+        return 0.0;
+      }
     }
 
 
@@ -74,12 +84,16 @@ class RealLeakSensor : public LeakSensor {
       pin = _pin;
     }
     void setup() {
-      pinMode(pin, INPUT_PULLUP);
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, INPUT_PULLUP);
+      }
     }
     bool isLeaking() {
       LeakSensor::isLeaking();
-      // PULLUP is enabled, pulled low when water detected
-      return digitalRead(pin) == LOW;
+      if (pin != PIN_NO_PIN) {
+        // PULLUP is enabled, pulled low when water detected
+        return digitalRead(pin) == LOW;
+      }
     }
   private:
     int pin;
@@ -92,11 +106,15 @@ class HardwarePinLed : public Led {
     }
 
     void setup() {
-      pinMode(_pin, OUTPUT);
+      if (_pin != PIN_NO_PIN) {
+        pinMode(_pin, OUTPUT);
+      }
     }
 
     void setState(bool on) {
-      digitalWrite(_pin, on ? HIGH : LOW);
+      if (_pin != PIN_NO_PIN) {
+        digitalWrite(_pin, on ? HIGH : LOW);
+      }
     }
 
   private:
@@ -110,15 +128,19 @@ class RealSiren : public Buzzer {
     }
 
     void setup() {
-      pinMode(pin, OUTPUT);
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, OUTPUT);
+      }
     }
 
     void on() {
-      digitalWrite(pin, HIGH);
+      if (pin != PIN_NO_PIN) {
+        digitalWrite(pin, HIGH);
+      }
     }
 
     void off() {
-      digitalWrite(pin, LOW);
+      //digitalWrite(pin, LOW);
     }
   private:
     int pin;
@@ -174,12 +196,16 @@ class RealButton : public Button {
       pin = _pin;
     }
     void setup() {
-      pinMode(pin, INPUT_PULLUP);
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, INPUT_PULLUP);
+      }
     }
 
     void update() {
-      bool pressed = digitalRead(pin) == LOW;
-      setPressed(pressed);
+      if (pin != PIN_NO_PIN) {
+        bool pressed = digitalRead(pin) == LOW;
+        setPressed(pressed);
+      }
     }
 
   private:
@@ -195,9 +221,16 @@ class RealRpmSensor : public RpmSensor {
 };
 
 class LcdDisplay : public Display {
+  private:
+    const int bankSize = 20*4 + 1;
+    char bank[20*4 + 1];
   public:
     LcdDisplay(int address, int cols, int rows) : Display() {
       lcd = new LiquidCrystal_I2C(address, cols, rows);
+      for (int i=0; i<bankSize; ++i) {
+        bank[i] = ' ';
+      }
+      bank[bankSize+1] = '\0';
     }
 
     void setup() {
@@ -213,17 +246,63 @@ class LcdDisplay : public Display {
 
     void displayMessage(char* message) {
       Display::displayMessage(message);
-      lcd->clear();
+      //lcd->setCursor(0,0);
+      //lcd->write('a');
+    //  return;
       char c = message[0];
-      int i = 0;
-      while (c != '\0') {
-        lcd->write(c);
-        c = message[++i];
+      int messageIndex = 0;
+      int bankIndex = 0;
+      int x = 0;
+      int y = 0;
+      int countX = 20;
+      int countY = 4;
+
+      String str = message;
+      bool end = false;
+      while (!end && y < countY) {
+        int nextNL = str.indexOf('\n', messageIndex);
+        if (nextNL < messageIndex) {
+            nextNL = str.indexOf('\0', messageIndex);
+        }
+        if (nextNL >= messageIndex) {
+          for (int i = bankIndex; i < nextNL; ++i) {
+            bank[i] = message[messageIndex++];
+            bankIndex = i;
+          }
+        } else {
+          end = true;
+        }
+
+        if (!end) {
+          y++;
+        }
       }
+
+      for (int i=bankIndex; i<bankSize; ++i) {
+        bank[i] = '/';
+      }
+      bank[bankSize - 1] = '\0';
+      lcd->setCursor(0,0);
+      lcd->printstr(bank);
+      // fill space
+      /*for (int k=line; k<4; ++k) {
+        for (int j=0; j<20;++j) {
+          lcd->setCursor(k, j);
+          lcd->write(' ');
+        }
+      }
+      lcd->printstr(message);
+      lcd->setCursor(0,0);
+      lcd->write('0' + ((millis() / 100) % 10));*/
     }
 
     void clear() {
       Display::clear();
+      /*for (int i=0; bankSize; ++i) {
+        bank[i] = ' ';
+      }
+      bank[bankSize - 1]='\0';
+      lcd->print("bank\0");*/
       lcd->clear();
     }
 

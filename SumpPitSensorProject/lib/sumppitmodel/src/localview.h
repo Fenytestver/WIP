@@ -81,6 +81,12 @@ class LocalView
 
   protected:
   private:
+    char* pump1Rpm;
+    char* pump2Rpm;
+    char* statusString;
+    char* lines[4];
+    char* message;
+
     Display* display;
     void renderArmed(State state);
 
