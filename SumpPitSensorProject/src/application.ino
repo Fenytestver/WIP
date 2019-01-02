@@ -1,15 +1,20 @@
+#define PLATFORM_PHOTON 1
+#define PLATFORM_ELECTRON 2
+// select platform by uncommenting one of the lines below
+// #define PLATFORM PLATFORM_PHOTON
+// #define PLATFORM PLATFORM_ELECTRON
+#ifndef PLATFORM
+#error "Platform is not defined, please open application.ino"
+#endif
+
 #define DEBUG 0
 #include "impl.ino"
 #include "sumppitinputs.h"
 #include "sumppitnode.h"
 #include "application.h"
 
+// main system mode
 SYSTEM_MODE(AUTOMATIC);
-
-#define PLATFORM_PHOTON 1
-#define PLATFORM_ELECTRON 2
-// select platform
-#define PLATFORM PLATFORM_PHOTON
 
 // set up pins
 #if PLATFORM == PLATFORM_PHOTON
