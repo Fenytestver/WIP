@@ -31,8 +31,8 @@ SYSTEM_MODE(AUTOMATIC);
 #define PIN_SIREN PIN_NO_PIN
 #define PIN_WATERLEVEL PIN_NO_PIN
 
-#define PIN_PUMP_VOLTAGE_1 A4
-#define PIN_PUMP_VOLTAGE_2 A3
+#define PIN_PUMP_VOLTAGE_1 PIN_NO_PIN
+#define PIN_PUMP_VOLTAGE_2 PIN_NO_PIN
 
 #elif PLATFORM == PLATFORM_ELECTRON
 
@@ -136,5 +136,20 @@ void setup() {
 void loop() {
   node->update();
   Particle.process();
+  Serial.print("-----@");
+  Serial.print(systemTime->nowMillis());
+  Serial.println("-----");
+  Serial.print("pump1Voltage:");
+  Serial.println(voltageSensor1->getVoltage());
+  Serial.print("pump2Voltage:");
+  Serial.println(voltageSensor2->getVoltage());
+  Serial.print("pump1Rpm:");
+  Serial.println(pump1->getRpm());
+  Serial.print("pump2Rpm:");
+  Serial.println(pump2->getRpm());
+  Serial.print("leakSensor1:");
+  Serial.println(leakSensor1->isLeaking());
+  Serial.print("leakSensor2:");
+  Serial.println(leakSensor2->isLeaking());
   delay(100);
 }

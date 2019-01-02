@@ -69,7 +69,7 @@ class RealVoltageSensor : public VoltageSensor {
       if (pin != PIN_NO_PIN) {
         return analogRead(pin);
       } else {
-        return 0.0;
+        return 0;
       }
     }
 
@@ -260,7 +260,7 @@ class LcdDisplay : public Display {
         bank[i] = ' ';
       }
       String str = String(message);
-      Serial.println("----");
+
       bool end = false;
       while (!end && y < countY && bankIndex < bankSize) {
         int nextNL = str.indexOf('\n', messageIndex);
@@ -270,11 +270,6 @@ class LcdDisplay : public Display {
 
         if (nextNL != -1) {
           int len = nextNL - messageIndex;
-          Serial.print(messageIndex);
-          Serial.print('-');
-          Serial.print(nextNL);
-          Serial.print(":");
-          Serial.println(len);
           for (int i = messageIndex; i < nextNL; ++i) {
             bank[bankIndex++] = message[i];
           }
