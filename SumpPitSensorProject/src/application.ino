@@ -1,10 +1,11 @@
+// If you get File not found error for 'localsettings.h', please
+// copy the localsettings.h file from SumpPitSensorProject to
+// SumpPitSensorProject/src
 #include "localsettings.h"
 
 #define PLATFORM_PHOTON 1
 #define PLATFORM_ELECTRON 2
-// select platform by uncommenting one of the lines below
-// #define PLATFORM PLATFORM_PHOTON
-// #define PLATFORM PLATFORM_ELECTRON
+
 #ifndef PLATFORM
 #error "Platform is not defined, please open application.ino"
 #endif
