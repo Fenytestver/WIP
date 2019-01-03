@@ -93,7 +93,7 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Leak detected!\n");
     }
     if ((state.alarmReason * SPN_ALARM_WATER_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Water alert! %d\" %d%%", state.levelIn, state.levelPercent);
+      sprintf(lines[lineIndex++], "Water alert!%d\"%d%%", state.levelIn, state.levelPercent);
     }
     if ((state.alarmReason & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
       sprintf(lines[lineIndex++], "Pump overuse! P1:%s,P2:%s",
