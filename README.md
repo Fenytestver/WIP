@@ -1,6 +1,9 @@
 # Sump Pit Sensor & Remote monitoring
 
 ## Overview
+to stop tracking local onfiguration files, run this git command in SumpPitSensorProject/src/:
+git update-index --skip-worktree localsettings.h
+
 
 ## Project structure
 

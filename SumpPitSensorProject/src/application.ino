@@ -1,8 +1,18 @@
+// If you get File not found error for 'localsettings.h', please
+// copy the localsettings.h file from SumpPitSensorProject to
+// SumpPitSensorProject/src
+#include "localsettings.h"
+
 #define PLATFORM_PHOTON 1
 #define PLATFORM_ELECTRON 2
-// select platform by uncommenting one of the lines below
-// #define PLATFORM PLATFORM_PHOTON
-// #define PLATFORM PLATFORM_ELECTRON
+
+// enable cloud by default.
+// enter this to disable
+// #define CLOUD_ENABLED false
+#ifndef CLOUD_ENABLED
+#define CLOUD_ENABLED true
+#endif
+
 #ifndef PLATFORM
 #error "Platform is not defined, please open application.ino"
 #endif
@@ -16,26 +26,14 @@
 // main system mode
 SYSTEM_MODE(AUTOMATIC);
 
-// set up pins
+// Photon platform from here
 #if PLATFORM == PLATFORM_PHOTON
-#define PIN_LED_GREEN PIN_NO_PIN
-#define PIN_LED_YELLOW PIN_NO_PIN
-#define PIN_LED_RED PIN_NO_PIN
+#define PIN_WATERLEVEL A0
 #define PIN_LEAK_1 D2
 #define PIN_LEAK_2 D3
-// TODO: rename butons.
-#define PIN_BUTTON_1 PIN_NO_PIN
-#define PIN_BUTTON_2 PIN_NO_PIN
-#define PIN_BUTTON_3 PIN_NO_PIN
-#define PIN_BUZZER PIN_NO_PIN
-#define PIN_SIREN PIN_NO_PIN
-#define PIN_WATERLEVEL A0
 
-#define PIN_PUMP_VOLTAGE_1 PIN_NO_PIN
-#define PIN_PUMP_VOLTAGE_2 PIN_NO_PIN
-
+// Electron platform from here
 #elif PLATFORM == PLATFORM_ELECTRON
-
 #define PIN_LED_GREEN B0
 #define PIN_LED_YELLOW B1
 #define PIN_LED_RED B2
@@ -48,11 +46,54 @@ SYSTEM_MODE(AUTOMATIC);
 #define PIN_BUZZER D2
 #define PIN_SIREN B3
 #define PIN_WATERLEVEL A0
-
 #define PIN_PUMP_VOLTAGE_1 A4
 #define PIN_PUMP_VOLTAGE_2 A3
 #endif
+/////////////////////////
+// fallback to no pin when something is not defined.
+/////////////////////////
+#ifndef PIN_LED_GREEN
+#define PIN_LED_GREEN PIN_NO_PIN
+#endif
+#ifndef PIN_LED_YELLOW
+#define PIN_LED_YELLOW PIN_NO_PIN
+#endif
+#ifndef PIN_LED_RED
+#define PIN_LED_RED PIN_NO_PIN
+#endif
+#ifndef PIN_LEAK_1
+#define PIN_LEAK_1 PIN_NO_PIN
+#endif
+#ifndef PIN_LEAK_2
+#define PIN_LEAK_2 PIN_NO_PIN
+#endif
+#ifndef PIN_BUTTON_1
+#define PIN_BUTTON_1 PIN_NO_PIN
+#endif
+#ifndef PIN_BUTTON_2
+#define PIN_BUTTON_2 PIN_NO_PIN
+#endif
+#ifndef PIN_BUTTON_3
+#define PIN_BUTTON_3 PIN_NO_PIN
+#endif
+#ifndef PIN_BUZZER
+#define PIN_BUZZER PIN_NO_PIN
+#endif
+#ifndef PIN_SIREN
+#define PIN_SIREN PIN_NO_PIN
+#endif
+#ifndef PIN_WATERLEVEL
+#define PIN_WATERLEVEL PIN_NO_PIN
+#endif
+#ifndef PIN_PUMP_VOLTAGE_1
+#define PIN_PUMP_VOLTAGE_1 PIN_NO_PIN
+#endif
+#ifndef PIN_PUMP_VOLTAGE_2
+#define PIN_PUMP_VOLTAGE_2 PIN_NO_PIN
+#endif
+// end of fallback definitions.
 
+//////////////////////////
 // minimum measurable water disatance (inches)
 #define WATER_DIST_MIN 0
 #define WATER_DIST_MAX 3516
@@ -65,8 +106,7 @@ SYSTEM_MODE(AUTOMATIC);
 RealSiren* siren;
 RealBuzzer* buzzer;
 RealSystemTime* systemTime;
-RealLeakSensor* leakSensor1;
-RealLeakSensor* leakSensor2;
+RealLeakSensor* leakSensor;
 HardwarePinLed* ledGreen;
 HardwarePinLed* ledYellow;
 HardwarePinLed* ledRed;
@@ -103,8 +143,7 @@ void setup() {
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
   siren = new RealSiren(PIN_SIREN);
   buzzer = new RealBuzzer(PIN_BUZZER);
-  leakSensor1 = new RealLeakSensor(PIN_LEAK_1);
-  leakSensor2 = new RealLeakSensor(PIN_LEAK_2);
+  leakSensor = new RealLeakSensor(PIN_LEAK_1, PIN_LEAK_2);
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
   ledRed = new HardwarePinLed(PIN_LED_RED);
@@ -124,7 +163,7 @@ void setup() {
   multiPump = new MultiPump();
   multiPump->addPump(pump1);
   multiPump->addPump(pump2);
-  sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor1, 1, multiPump);
+  sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
   localView = new LocalView(display);
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
@@ -132,9 +171,33 @@ void setup() {
   Serial.begin(115200);
 }
 
+int lastStatus = -1;
+char statusString[10];
+char publishString[256];
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  node->update();
+
+  State* state = node->update();
+  if (CLOUD_ENABLED && state->alarmReason != lastStatus && Particle.connected() == 1) {
+    statusToString(state->alarmReason, statusString);
+    sprintf(publishString,
+      "{"
+      "'alarm':'%s', 'waterLevel':'%d',"
+      "'leakSensor':'%s',"
+      "'rpm1':'%d','rpm2':'%d',"
+      "'uptime':'%d'"
+      "}",
+
+      statusString, waterLevelSensor->measureLevel(),
+      leakSensor->isLeaking() ? "true" : "false",
+      rpmSensor1->getRpm(), rpmSensor2->getRpm(),
+      systemTime->nowMillis()
+    );
+    Particle.publish("status", publishString);
+
+    lastStatus = state->alarmReason;
+  }
+
   Particle.process();
   Serial.print("-----@");
   Serial.print(systemTime->nowMillis());
@@ -147,9 +210,7 @@ void loop() {
   Serial.println(pump1->getRpm());
   Serial.print("pump2Rpm:");
   Serial.println(pump2->getRpm());
-  Serial.print("leakSensor1:");
-  Serial.println(leakSensor1->isLeaking());
-  Serial.print("leakSensor2:");
-  Serial.println(leakSensor2->isLeaking());
+  Serial.print("leakSensor:");
+  Serial.println(leakSensor->isLeaking());
   delay(100);
 }

@@ -80,23 +80,33 @@ class RealVoltageSensor : public VoltageSensor {
 
 class RealLeakSensor : public LeakSensor {
   public:
-    RealLeakSensor(int _pin) : LeakSensor() {
+    RealLeakSensor(int _pin, int _pin2) : LeakSensor() {
       pin = _pin;
+      pin2 = _pin2;
     }
     void setup() {
       if (pin != PIN_NO_PIN) {
         pinMode(pin, INPUT_PULLUP);
       }
+      if (pin2 != PIN_NO_PIN) {
+        pinMode(pin2, INPUT_PULLUP);
+      }
     }
     bool isLeaking() {
       LeakSensor::isLeaking();
-      if (pin != PIN_NO_PIN) {
-        // PULLUP is enabled, pulled low when water detected
-        return digitalRead(pin) == LOW;
-      }
+      return readPin(pin) || readPin(pin2);
     }
   private:
     int pin;
+    int pin2;
+    bool readPin(int pin) {
+      if (pin != PIN_NO_PIN) {
+        // PULLUP is enabled, pulled low when water detected
+        return digitalRead(pin) == LOW;
+      } else {
+        return false;
+      }
+    }
 };
 
 class HardwarePinLed : public Led {
