@@ -140,7 +140,9 @@ class RealSiren : public Buzzer {
     }
 
     void off() {
-      //digitalWrite(pin, LOW);
+      if (pin != PIN_NO_PIN) {
+        digitalWrite(pin, LOW);
+      }
     }
   private:
     int pin;
@@ -270,8 +272,12 @@ class LcdDisplay : public Display {
 
         if (nextNL != -1) {
           int len = nextNL - messageIndex;
+
           for (int i = messageIndex; i < nextNL; ++i) {
-            bank[bankIndex++] = message[i];
+            if (i < messageIndex + 20) {
+              bank[bankIndex++] = message[i];
+              // TODO: run the loop until minimum of nextNL and 20(display size).
+            }
           }
           messageIndex += len + 1;
         } else {
@@ -280,32 +286,36 @@ class LcdDisplay : public Display {
 
         if (!end) {
           y++;
-          bankIndex = (y * 20);
+          // TODO: ugly code.
+          // my lcd line order is ACBD, fix that here.
+          switch (y) {
+            case 1:
+              bankIndex = (2 * 20);
+              break;
+            case 2:
+              bankIndex = (1 * 20);
+              break;
+            case 0:
+            case 3:
+            default:
+              bankIndex = (y * 20);
+              break;
+          }
+
         }
       }
 
       bank[bankSize - 1] = '\0';
       lcd->setCursor(0,0);
       lcd->printstr(bank);
-      // fill space
-      /*for (int k=line; k<4; ++k) {
-        for (int j=0; j<20;++j) {
-          lcd->setCursor(k, j);
-          lcd->write(' ');
-        }
-      }
-      lcd->printstr(message);
-      lcd->setCursor(0,0);
-      lcd->write('0' + ((millis() / 100) % 10));*/
     }
 
     void clear() {
       Display::clear();
-      /*for (int i=0; bankSize; ++i) {
+      for (int i=0; bankSize; ++i) {
         bank[i] = ' ';
       }
       bank[bankSize - 1]='\0';
-      lcd->print("bank\0");*/
       lcd->clear();
     }
 
