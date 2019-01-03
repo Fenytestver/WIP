@@ -140,7 +140,9 @@ class RealSiren : public Buzzer {
     }
 
     void off() {
-      //digitalWrite(pin, LOW);
+      if (pin != PIN_NO_PIN) {
+        digitalWrite(pin, LOW);
+      }
     }
   private:
     int pin;
