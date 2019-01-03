@@ -1,3 +1,5 @@
+#include "localsettings.h"
+
 #define PLATFORM_PHOTON 1
 #define PLATFORM_ELECTRON 2
 // select platform by uncommenting one of the lines below
