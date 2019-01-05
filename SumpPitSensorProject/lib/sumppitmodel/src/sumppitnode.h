@@ -26,6 +26,9 @@ class SumpPitNode
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
     ShutoffValve* _shutoffValve);
+    // :( pls do not edit from outside)
+    State state;
+
     /** Default destructor */
     virtual ~SumpPitNode();
     virtual void setup();
@@ -59,7 +62,6 @@ class SumpPitNode
 
     void showState(State stateCopy);
   private: // variables
-    State state;
 
     class OnArmPress : public OnButtonPressListener {
       public:

@@ -79,12 +79,12 @@ class LocalView
     virtual ~LocalView();
     virtual void setup();
     virtual void render(State state);
-
+    char* statusString;
   protected:
   private:
     char* pump1Rpm;
     char* pump2Rpm;
-    char* statusString;
+
     char* lines[4];
     char* message;
 

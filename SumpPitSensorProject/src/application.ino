@@ -169,7 +169,18 @@ void setup() {
     bool success = Particle.function("arm", armSystem);
     success = Particle.function("disarm", disarmSystem);
     success = Particle.function("startMaintenance", startMaintenance);
+    Particle.variable("mode", node->state.mode);
+    Particle.variable("rpm1", node->state.pump1Rpm);
+    Particle.variable("rpm2", node->state.pump2Rpm);
+    Particle.variable("pump1On", node->state.pump1On);
+    Particle.variable("pump2On", node->state.pump2On);
+    Particle.variable("status", localView->statusString);
 
+    Particle.variable("pump1Uptime", node->state.pump1Uptime);
+    Particle.variable("pump2Uptime", node->state.pump2Uptime);
+    Particle.variable("levelIn", node->state.levelIn);
+    Particle.variable("levelPercent", node->state.levelPercent);
+    Particle.variable("leak", node->state.leak);
   }
 
   Serial.begin(115200);
@@ -200,13 +211,13 @@ void loop() {
     sprintf(publishString,
       "{"
       "'alarm':'%s', 'waterLevel':'%d',"
-      "'leakSensor':'%s',"
+      "'leakSensor':'%s', 'mode':'%d'"
       "'rpm1':'%d','rpm2':'%d',"
       "'uptime':'%d'"
       "}",
 
       statusString, waterLevelSensor->measureLevel(),
-      leakSensor->isLeaking() ? "true" : "false",
+      leakSensor->isLeaking() ? "true" : "false", node->state.mode,
       rpmSensor1->getRpm(), rpmSensor2->getRpm(),
       systemTime->nowMillis()
     );

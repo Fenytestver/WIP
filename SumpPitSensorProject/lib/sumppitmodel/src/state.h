@@ -13,5 +13,6 @@ struct State {
   int levelPercent;
   int pump1On;
   int pump2On;
+  bool leak;
 };
 #endif

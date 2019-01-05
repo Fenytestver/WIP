@@ -22,16 +22,16 @@ void SumpPitSensor::setup() {
 
 bool SumpPitSensor::isLeaking()
 {
-  // FIXME: multiple leak sensors.
   return leakSensors->isLeaking();
 }
 int SumpPitSensor::checkState(State* outstate)
 {
   int state = SPN_ALARM_NO_ALARM;
-
+  bool leakState = checkLeakState();
   state |= checkPumpState();
   state |= checkWaterLevelState(outstate);
-  state |= checkLeakState();
+  state |= leakState;
+  outstate->leak = (leakState != SPN_ALARM_NO_ALARM);
   return state;
 }
 
