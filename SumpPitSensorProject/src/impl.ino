@@ -60,14 +60,14 @@ class RealVoltageSensor : public VoltageSensor {
     void setup() {
       VoltageSensor::setup();
       if (pin != PIN_NO_PIN) {
-        pinMode(pin, INPUT);
+        pinMode(pin, INPUT_PULLUP);
       }
     }
 
     float getVoltage() {
       VoltageSensor::getVoltage();
       if (pin != PIN_NO_PIN) {
-        return analogRead(pin);
+        return digitalRead(pin) == LOW;
       } else {
         return 0;
       }

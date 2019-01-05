@@ -28,9 +28,6 @@ SYSTEM_MODE(AUTOMATIC);
 
 // Photon platform from here
 #if PLATFORM == PLATFORM_PHOTON
-#define PIN_WATERLEVEL A0
-#define PIN_LEAK_1 D2
-#define PIN_LEAK_2 D3
 
 // Electron platform from here
 #elif PLATFORM == PLATFORM_ELECTRON
@@ -212,5 +209,5 @@ void loop() {
   Serial.println(pump2->getRpm());
   Serial.print("leakSensor:");
   Serial.println(leakSensor->isLeaking());
-  delay(100);
+  delay(50);
 }

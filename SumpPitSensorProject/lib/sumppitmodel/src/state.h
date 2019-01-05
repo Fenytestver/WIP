@@ -11,5 +11,7 @@ struct State {
   int pump2Uptime;
   int levelIn;
   int levelPercent;
+  int pump1On;
+  int pump2On;
 };
 #endif

@@ -28,6 +28,8 @@ int MultiPump::update(State* state)
   state->pump2Alarm = checkState(1);
   state->pump1Uptime = getPumpUptime(0);
   state->pump2Uptime = getPumpUptime(1);
+  state->pump1On = isTurnedOn(0);
+  state->pump2On = isTurnedOn(1);
 
   for (int i=0; i<pumpCount; ++i) {
     pumps[i]->update();
@@ -67,4 +69,11 @@ int MultiPump::getPumpUptime(int index)
     return -1;
   }
   return pumps[index]->getUptime();
+}
+
+bool MultiPump::isTurnedOn(int index) {
+  if (index >= pumpCount) {
+    return false;
+  }
+  return pumps[index]->isTurnedOn();
 }

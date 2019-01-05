@@ -54,8 +54,8 @@ void LocalView::renderArmed(State state)
 
   int levelInches = state.levelIn;
   int levelPercent = state.levelPercent;
-  const char* pump1Status = state.pump1Rpm == 0 ? "OFF" : " ON";
-  const char* pump2Status = state.pump2Rpm == 0 ? "OFF" : " ON";
+  const char* pump1Status = state.pump1On == 0 ? "OFF" : " ON";
+  const char* pump2Status = state.pump2On == 0 ? "OFF" : " ON";
 
   sprintf(pump1Rpm, "%d", state.pump1Rpm);
   sprintf(pump2Rpm, "%d", state.pump2Rpm);
@@ -73,11 +73,11 @@ void LocalView::renderArmed(State state)
     // pump overtime
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 overtime!! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
+      sprintf(lines[lineIndex++], "Pump1,2 OVT! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 overtime!! %ds", millisToSec(state.pump1Uptime));
+      sprintf(lines[lineIndex++], "Pump1 OVT! %ds", millisToSec(state.pump1Uptime));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 overtime!! %ds", millisToSec(state.pump2Uptime));
+      sprintf(lines[lineIndex++], "Pump2 OVT! %ds", millisToSec(state.pump2Uptime));
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0
@@ -112,11 +112,11 @@ void LocalView::renderArmed(State state)
     // pump overtime
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 overtime!! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
+      sprintf(lines[lineIndex++], "P1,2 ovt! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 uptime!! %ds", millisToSec(state.pump1Uptime));
+      sprintf(lines[lineIndex++], "P1 ovt! %ds", millisToSec(state.pump1Uptime));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 overtime!! %ds", millisToSec(state.pump2Uptime));
+      sprintf(lines[lineIndex++], "P2 ovt! %ds", millisToSec(state.pump2Uptime));
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0

@@ -22,6 +22,7 @@ class MultiPump
     int checkState();
     int getRpm(int index);
     int getPumpUptime(int index);
+    bool isTurnedOn(int index);
   protected:
 
   private:
