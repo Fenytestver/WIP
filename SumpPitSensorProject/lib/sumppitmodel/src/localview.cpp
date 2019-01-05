@@ -106,7 +106,7 @@ void LocalView::renderArmed(State state)
               isCritical(state.pump2Alarm) ? "CR" : "OK");
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "critical!", statusString, lines[0], lines[1], lines[2]);
+    len = sprintf(message, SPN_DISPLAY_WARNING, "ALERT!", statusString, lines[0], lines[1], lines[2]);
 
   } else if (isTechnical(state.alarmReason)) {
     // pump overtime
@@ -133,7 +133,7 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Water too low: %d\"", state.levelIn);
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "warning!", statusString, lines[0], lines[1], lines[2]);
+    len = sprintf(message, SPN_DISPLAY_WARNING, "warn!", statusString, lines[0], lines[1], lines[2]);
   } else {
     len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, levelInches, levelPercent,
                 pump1Status, pump1Rpm, pump2Status, pump2Rpm);

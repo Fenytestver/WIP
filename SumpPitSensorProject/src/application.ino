@@ -31,7 +31,7 @@ SYSTEM_MODE(AUTOMATIC);
 
 // Electron platform from here
 #elif PLATFORM == PLATFORM_ELECTRON
-#define PIN_LED_GREEN B0
+/*#define PIN_LED_GREEN B0
 #define PIN_LED_YELLOW B1
 #define PIN_LED_RED B2
 #define PIN_LEAK_1 C5
@@ -41,10 +41,10 @@ SYSTEM_MODE(AUTOMATIC);
 #define PIN_BUTTON_2 B5
 #define PIN_BUTTON_3 B4
 #define PIN_BUZZER D2
-#define PIN_SIREN B3
-#define PIN_WATERLEVEL A0
-#define PIN_PUMP_VOLTAGE_1 A4
-#define PIN_PUMP_VOLTAGE_2 A3
+#define PIN_SIREN B3*/
+//#define PIN_WATERLEVEL A0
+//#define PIN_PUMP_VOLTAGE_1 A4
+//#define PIN_PUMP_VOLTAGE_2 A3
 #endif
 /////////////////////////
 // fallback to no pin when something is not defined.
