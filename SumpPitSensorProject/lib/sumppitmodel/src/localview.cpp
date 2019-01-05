@@ -42,19 +42,25 @@ void LocalView::render(State state)
   ledRed->setState(state.mode == Mode::SPN_DISARMED);
   ledGreen->setState(state.mode == Mode::SPN_ARMED);
   ledYellow->setState(state.mode == Mode::SPN_MAINTENANCE);
-
+  int len;
   switch (state.mode) {
     case Mode::SPN_ARMED:
       renderArmed(state);
       break;
     case Mode::SPN_DISARMED:
-      display->displayMessage(SPN_DISPLAY_OFF);
+      len = sprintf(message, SPN_DISPLAY_OFF);
+      message[len] = '\0';
+      display->displayMessage(message);
       break;
     case Mode::SPN_INITIALIZING:
-      display->displayMessage(SPN_DISPLAY_WELCOME);
+      len = sprintf(message, SPN_DISPLAY_WELCOME);
+      message[len] = '\0';
+      display->displayMessage(message);
       break;
     case Mode::SPN_MAINTENANCE:
-      display->displayMessage(SPN_DISPLAY_MAINTENANCE_MODE_TEXT);
+      len = sprintf(message, SPN_DISPLAY_MAINTENANCE_MODE_TEXT);
+      message[len] = '\0';
+      display->displayMessage(message);
       break;
   }
 }

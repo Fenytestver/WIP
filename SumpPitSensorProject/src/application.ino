@@ -165,7 +165,27 @@ void setup() {
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
 
+  if (CLOUD_ENABLED) {
+    bool success = Particle.function("arm", armSystem);
+    success = Particle.function("disarm", disarmSystem);
+    success = Particle.function("startMaintenance", startMaintenance);
+
+  }
+
   Serial.begin(115200);
+}
+
+int armSystem(String extra) {
+  node->arm();
+  return 0;
+}
+int disarmSystem(String extra) {
+  node->disarm();
+  return 0;
+}
+int startMaintenance(String extra) {
+  node->maintenance();
+  return 0;
 }
 
 int lastStatus = -1;

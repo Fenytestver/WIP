@@ -78,6 +78,9 @@ State* SumpPitNode::update()
   case SPN_ARMED:
     updateArmed();
     break;
+    default:
+    showState(state);
+    break;
   }
   return &state;
 }
