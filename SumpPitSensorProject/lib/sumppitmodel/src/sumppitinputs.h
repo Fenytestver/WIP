@@ -10,10 +10,11 @@ class SumpPitInputs
     SumpPitInputs(Button* _disarmButton, Button* _maintenanceButton, Button* _armResetButton);
     /** Default destructor */
     virtual ~SumpPitInputs();
-
+    virtual void setup();
     Button* disarmButton;
     Button* maintenanceButton;
     Button* armResetButton;
+
   private:
 };
 

@@ -9,6 +9,12 @@ Siren::~Siren()
 {
   //dtor
 }
+
+void Siren::setup()
+{
+
+}
+
 void Siren::on()
 {
 

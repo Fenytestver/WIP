@@ -12,3 +12,9 @@ SumpPitInputs::~SumpPitInputs()
 {
   //dtor
 }
+
+void SumpPitInputs::setup() {
+  disarmButton->setup();
+  maintenanceButton->setup();
+  armResetButton->setup();
+}

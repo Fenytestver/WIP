@@ -12,7 +12,7 @@ class Button
     Button(SystemTime* _systemTime);
     /** Default destructor */
     virtual ~Button();
-
+    virtual void setup();
     void setOnButtonPressListener(OnButtonPressListener* _onPressListener) {
       onPressListener = _onPressListener;
     }

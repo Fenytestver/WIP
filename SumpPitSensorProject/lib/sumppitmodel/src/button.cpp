@@ -15,6 +15,11 @@ Button::~Button()
 {
   //dtor
 }
+
+void Button::setup() {
+
+}
+
 void Button::setPressed(bool _pressed)
 {
   if (!pressed && _pressed) {

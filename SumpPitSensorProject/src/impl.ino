@@ -122,6 +122,7 @@ class HardwarePinLed : public Led {
     }
 
     void setState(bool on) {
+      Led::setState(on);
       if (_pin != PIN_NO_PIN) {
         digitalWrite(_pin, on ? HIGH : LOW);
       }
@@ -138,18 +139,21 @@ class RealSiren : public Buzzer {
     }
 
     void setup() {
+      Buzzer::setup();
       if (pin != PIN_NO_PIN) {
         pinMode(pin, OUTPUT);
       }
     }
 
     void on() {
+      Buzzer::on();
       if (pin != PIN_NO_PIN) {
         digitalWrite(pin, HIGH);
       }
     }
 
     void off() {
+      Buzzer::off();
       if (pin != PIN_NO_PIN) {
         digitalWrite(pin, LOW);
       }

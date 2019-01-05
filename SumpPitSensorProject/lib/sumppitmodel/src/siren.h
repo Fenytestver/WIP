@@ -9,7 +9,7 @@ class Siren
     Siren();
     /** Default destructor */
     virtual ~Siren();
-
+    virtual void setup();
     /** Turn on the alarm. */
     virtual void on();
     /** Turn off the alarm. */

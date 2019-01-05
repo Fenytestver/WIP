@@ -65,6 +65,9 @@ void SumpPitNode::setup()
 {
   sensor->setup();
   localView->setup();
+  siren->setup();
+  buzzer->setup();
+  inputs->setup();
   alarmOff();
   arm();
 }
