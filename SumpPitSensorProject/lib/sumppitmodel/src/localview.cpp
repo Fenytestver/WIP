@@ -1,10 +1,13 @@
 #include "localview.h"
 #include "spn_config.h"
 
-LocalView::LocalView(Display* _display)
+LocalView::LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledYellow)
 {
   //ctor
   display = _display;
+  ledRed = _ledRed;
+  ledGreen = _ledGreen;
+  ledYellow = _ledYellow;
   pump1Rpm = new char[10];
   pump2Rpm = new char[10];
   statusString = new char[10];
@@ -29,22 +32,29 @@ LocalView::~LocalView()
 void LocalView::setup()
 {
   display->setup();
+  ledRed->setup();
+  ledYellow->setup();
+  ledGreen->setup();
 }
 
 void LocalView::render(State state)
 {
+  ledRed->setState(state.mode == Mode::SPN_DISARMED);
+  ledGreen->setState(state.mode == Mode::SPN_ARMED);
+  ledYellow->setState(state.mode == Mode::SPN_MAINTENANCE);
+
   switch (state.mode) {
     case Mode::SPN_ARMED:
       renderArmed(state);
       break;
     case Mode::SPN_DISARMED:
-      //display->displayMessage(SPN_DISPLAY_OFF);
+      display->displayMessage(SPN_DISPLAY_OFF);
       break;
     case Mode::SPN_INITIALIZING:
-      //display->displayMessage(SPN_DISPLAY_WELCOME);
+      display->displayMessage(SPN_DISPLAY_WELCOME);
       break;
     case Mode::SPN_MAINTENANCE:
-      //display->displayMessage(SPN_DISPLAY_MAINTENANCE);
+      display->displayMessage(SPN_DISPLAY_MAINTENANCE_MODE_TEXT);
       break;
   }
 }

@@ -161,7 +161,7 @@ void setup() {
   multiPump->addPump(pump1);
   multiPump->addPump(pump2);
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
-  localView = new LocalView(display);
+  localView = new LocalView(display, ledRed, ledGreen, ledYellow);
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
 

@@ -8,7 +8,7 @@ class Led {
     Led();
     /** Default destructor */
     virtual ~Led();
-
+    virtual void setup();
     virtual void setState(bool on);
   protected:
 

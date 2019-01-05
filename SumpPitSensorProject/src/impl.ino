@@ -116,6 +116,7 @@ class HardwarePinLed : public Led {
     }
 
     void setup() {
+      Led::setup();
       if (_pin != PIN_NO_PIN) {
         pinMode(_pin, OUTPUT);
       }

@@ -68,13 +68,14 @@ string(?) line 3
 #include <cstdio>
 //#endif // SPN_UNIT_TEST
 #include "pump.h"
+#include "led.h"
 #include "waterlevelsensor.h"
 using namespace spn;
 
 class LocalView
 {
   public:
-    LocalView(Display* _display);
+    LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledYellow);
     virtual ~LocalView();
     virtual void setup();
     virtual void render(State state);
@@ -88,6 +89,9 @@ class LocalView
     char* message;
 
     Display* display;
+    Led* ledRed;
+    Led* ledGreen;
+    Led* ledYellow;
     void renderArmed(State state);
 
 };
