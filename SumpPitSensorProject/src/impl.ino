@@ -178,7 +178,7 @@ class RealShutoffValve : public ShutoffValve {
       }
     }
     void deactivate() {
-      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "false", PRIVATE | WITH_ACK)) {
+      if (active /* && Particle.publish(PUB_SHUTOFF_STATE, "false", PRIVATE | WITH_ACK)*/) {
         active = false;
       }
     }
