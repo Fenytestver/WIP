@@ -168,7 +168,7 @@ void setup() {
   if (CLOUD_ENABLED) {
     bool success = Particle.function("arm", armSystem);
     success = Particle.function("disarm", disarmSystem);
-    success = Particle.function("startMaintenance", startMaintenance);
+    success = Particle.function("maintenance", startMaintenance);
     Particle.variable("mode", node->state.mode);
     Particle.variable("rpm1", node->state.pump1Rpm);
     Particle.variable("rpm2", node->state.pump2Rpm);
@@ -176,10 +176,10 @@ void setup() {
     Particle.variable("pump2On", node->state.pump2On);
     Particle.variable("status", localView->statusString);
 
-    Particle.variable("pump1Uptime", node->state.pump1Uptime);
-    Particle.variable("pump2Uptime", node->state.pump2Uptime);
+    Particle.variable("p1Uptime", node->state.pump1Uptime);
+    Particle.variable("p2Uptime", node->state.pump2Uptime);
     Particle.variable("levelIn", node->state.levelIn);
-    Particle.variable("levelPercent", node->state.levelPercent);
+    Particle.variable("levelP", node->state.levelPercent);
     Particle.variable("leak", node->state.leak);
   }
 
