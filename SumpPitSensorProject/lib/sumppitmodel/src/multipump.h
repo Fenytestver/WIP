@@ -19,6 +19,7 @@ class MultiPump
     virtual ~MultiPump();
     virtual void addPump(Pump* pump);
     int update(State* state);
+    void setup();
     int checkState();
     int getRpm(int index);
     int getPumpUptime(int index);

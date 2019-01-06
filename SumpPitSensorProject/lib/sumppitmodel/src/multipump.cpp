@@ -12,7 +12,11 @@ MultiPump::~MultiPump()
   //dtor
   delete pumps;
 }
-
+void MultiPump::setup() {
+  for (int i=0; i<pumpCount; ++i) {
+    pumps[i]->setup();
+  }
+}
 void MultiPump::addPump(Pump* pump)
 {
   if (pumpCount < SPN_MULTIPUMP_MAX_PUMPS) {

@@ -19,6 +19,7 @@ class Pump
     Pump(SystemTime* _systemTime, RpmSensor* _rpmSensor, VoltageSensor* _voltageSensor);
     /** Default destructor */
     virtual ~Pump();
+    virtual void setup();
     /** gives the on/off state of the pump based on the voltage. */
     virtual bool isTurnedOn();
     /** @return returns the RPM of the pump. */

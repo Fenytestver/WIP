@@ -16,6 +16,10 @@ Pump::~Pump()
   //dtor
 }
 
+void Pump::setup() {
+  rpmSensor->setup();
+}
+
 bool Pump::isTurnedOn()
 {
   return turnedOn;

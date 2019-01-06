@@ -17,7 +17,7 @@ SumpPitSensor::~SumpPitSensor()
 }
 
 void SumpPitSensor::setup() {
-
+  pump->setup();
 }
 
 bool SumpPitSensor::isLeaking()

@@ -92,6 +92,12 @@ SYSTEM_MODE(AUTOMATIC);
 #ifndef PIN_PUMP_VOLTAGE_2
 #define PIN_PUMP_VOLTAGE_2 PIN_NO_PIN
 #endif
+#ifndef PIN_PUMP_RPM_1
+#define PIN_PUMP_RPM_1 PIN_NO_PIN
+#endif
+#ifndef PIN_PUMP_RPM_2
+#define PIN_PUMP_RPM_2 PIN_NO_PIN
+#endif
 // end of fallback definitions.
 
 //////////////////////////
@@ -155,8 +161,8 @@ void setup() {
   waterLevelSensor = new AnalogWaterLevelSensor(
     PIN_WATERLEVEL, WATER_DIST_MIN, WATER_DIST_MAX);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
-  rpmSensor1 = new RealRpmSensor();
-  rpmSensor2 = new RealRpmSensor();
+  rpmSensor1 = new RealRpmSensor(PIN_PUMP_RPM_1, systemTime);
+  rpmSensor2 = new RealRpmSensor(PIN_PUMP_RPM_2, systemTime);
   voltageSensor1 = new RealVoltageSensor(PIN_PUMP_VOLTAGE_1);
   voltageSensor2 = new RealVoltageSensor(PIN_PUMP_VOLTAGE_2);
   pump1 = new Pump(systemTime, rpmSensor1, voltageSensor1);
@@ -168,6 +174,15 @@ void setup() {
   localView = new LocalView(display, ledRed, ledGreen, ledYellow);
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
   node->setup();
+
+  if (PIN_PUMP_RPM_1 != PIN_NO_PIN) {
+    pinMode(PIN_PUMP_RPM_1, INPUT_PULLUP);
+    attachInterrupt(PIN_PUMP_RPM_1, triggerRpm1, RISING);
+  }
+  if (PIN_PUMP_RPM_2 != PIN_NO_PIN) {
+    pinMode(PIN_PUMP_RPM_2, INPUT_PULLUP);
+    attachInterrupt(PIN_PUMP_RPM_2, triggerRpm2, RISING);
+  }
 
   if (CLOUD_ENABLED) {
     if (SIM_3RD_PARTY) {
@@ -191,6 +206,14 @@ void setup() {
   }
 
   Serial.begin(115200);
+}
+
+void triggerRpm1() {
+  rpmSensor1->trigger();
+}
+
+void triggerRpm2() {
+  rpmSensor2->trigger();
 }
 
 int armSystem(String extra) {
@@ -217,10 +240,10 @@ void loop() {
     statusToString(state->alarmReason, statusString);
     sprintf(publishString,
       "{"
-      "'alarm':'%s', 'waterLevel':'%d',"
-      "'leakSensor':'%s', 'mode':'%d'"
-      "'rpm1':'%d','rpm2':'%d',"
-      "'uptime':'%d'"
+      "\"alarm\":\"%s\", \"waterLevel\":\"%d\","
+      "\"leakSensor\":\"%s\", \"mode\":\"%d\","
+      "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
+      "\"uptime\":\"%d\""
       "}",
 
       statusString, waterLevelSensor->measureLevel(),

@@ -231,10 +231,43 @@ class RealButton : public Button {
 
 class RealRpmSensor : public RpmSensor {
   public:
-    int getRpm() {
-      // TODO: implement rpm detection here.
-      return 0;
+    RealRpmSensor(int _pin, SystemTime* _systemTime) {
+      pin = _pin;
+      systemTime = _systemTime;
+      count = 0;
+      lastRpm = 0;
     }
+
+    void setup() {
+      RpmSensor::setup();
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, INPUT_PULLUP);
+      }
+      timestamp = systemTime->nowMillis();
+    }
+
+    int getRpm() {
+      long lastupdate = timestamp;
+      long currentCount = count;
+      long now = systemTime->nowMillis();
+      // not the same second
+      if (now - lastupdate > 1000L) {
+        count = 0;
+        timestamp = now;
+        lastRpm = (int)(((float)currentCount) / (((float)(now - lastupdate) / 1000.0)));
+      }
+      return lastRpm;
+    }
+    void trigger() {
+      count++;
+    }
+  private:
+    int pin;
+    SystemTime* systemTime;
+    volatile long count;
+    long timestamp;
+    int lastRpm;
+
 };
 
 class LcdDisplay : public Display {

@@ -9,6 +9,7 @@ class RpmSensor
     RpmSensor();
     /** Default destructor */
     virtual ~RpmSensor();
+    virtual void setup();
     virtual int getRpm();
   protected:
 
