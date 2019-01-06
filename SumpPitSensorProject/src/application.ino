@@ -13,6 +13,10 @@
 #define CLOUD_ENABLED true
 #endif
 
+#ifndef SIM_3RD_PARTY
+#define SIM_3RD_PARTY false
+#endif
+
 #ifndef PLATFORM
 #error "Platform is not defined, please open application.ino"
 #endif
@@ -166,6 +170,9 @@ void setup() {
   node->setup();
 
   if (CLOUD_ENABLED) {
+    if (SIM_3RD_PARTY) {
+      Particle.keepAlive(120);
+    }
     bool success = Particle.function("arm", armSystem);
     success = Particle.function("disarm", disarmSystem);
     success = Particle.function("maintenance", startMaintenance);
