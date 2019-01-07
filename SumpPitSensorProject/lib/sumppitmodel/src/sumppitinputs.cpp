@@ -18,3 +18,9 @@ void SumpPitInputs::setup() {
   maintenanceButton->setup();
   armResetButton->setup();
 }
+
+void SumpPitInputs::update() {
+  disarmButton->update();
+  maintenanceButton->update();
+  armResetButton->update();
+}

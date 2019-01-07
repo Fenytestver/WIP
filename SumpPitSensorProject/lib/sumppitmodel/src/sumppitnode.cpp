@@ -74,6 +74,7 @@ void SumpPitNode::setup()
 
 State* SumpPitNode::update()
 {
+  inputs->update();
   switch (getMode()) {
   case SPN_ARMED:
     updateArmed();

@@ -203,6 +203,7 @@ void setup() {
     bool success = Particle.function("arm", armSystem);
     success = Particle.function("disarm", disarmSystem);
     success = Particle.function("maintenance", startMaintenance);
+    success = Particle.function("lcdInit", lcdInit);
     Particle.variable("mode", node->state.mode);
     Particle.variable("rpm1", node->state.pump1Rpm);
     Particle.variable("rpm2", node->state.pump2Rpm);
@@ -238,6 +239,10 @@ int disarmSystem(String extra) {
 }
 int startMaintenance(String extra) {
   node->maintenance();
+  return 0;
+}
+int lcdInit(String extra) {
+  display->setup();
   return 0;
 }
 

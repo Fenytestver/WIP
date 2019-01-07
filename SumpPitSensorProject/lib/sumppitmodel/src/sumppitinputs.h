@@ -14,6 +14,7 @@ class SumpPitInputs
     Button* disarmButton;
     Button* maintenanceButton;
     Button* armResetButton;
+    virtual void update();
 
   private:
 };

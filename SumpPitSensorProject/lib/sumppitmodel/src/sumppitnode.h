@@ -67,7 +67,7 @@ class SumpPitNode
       public:
         OnArmPress(SumpPitNode* _node) {node = _node;}
         void onPress() {
-          node->disarm();
+          node->arm();
         }
       private:
         SumpPitNode* node;

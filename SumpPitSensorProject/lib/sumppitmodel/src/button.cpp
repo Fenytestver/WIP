@@ -43,3 +43,7 @@ void Button::press()
   setPressed(true);
   setPressed(false);
 }
+
+void Button::update() {
+  
+}
