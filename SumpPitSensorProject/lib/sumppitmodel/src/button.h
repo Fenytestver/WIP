@@ -3,7 +3,9 @@
 #include "onbuttonpresslistener.h"
 #include "systemtime.h"
 
+#ifndef SPN_BUTTON_LONG_PRESS_TIME
 #define SPN_BUTTON_LONG_PRESS_TIME 30000
+#endif
 
 class Button
 {
