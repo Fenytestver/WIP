@@ -147,6 +147,7 @@ LocalView* localView;
 // TODO: 2 leak sensors
 SumpPitSensor* sensor;
 SumpPitNode* node;
+FuelGauge fuel;
 
 /*
  * Project SumpPitSensorProject
@@ -292,18 +293,40 @@ void loop() {
 
 void sendFullStatus(State* state) {
   statusToString(state->alarmReason, statusString);
+  int bars = 0;
+  int rssi = 0;
+  #if Wiring_WiFi == 1
+      rssi = WiFi.RSSI();
+  #elif Wiring_Cellular == 1
+      CellularSignal sig = Cellular.RSSI();
+      rssi = sig.rssi;
+  #endif
+  if (rssi < 0) {
+      if (rssi >= -57) bars = 5;
+      else if (rssi > -68) bars = 4;
+      else if (rssi > -80) bars = 3;
+      else if (rssi > -92) bars = 2;
+      else if (rssi > -104) bars = 1;
+  }
+
   sprintf(publishString,
     "{"
+    "\"technical\":\"%d\","
+    "\"critical\":\"%d\","
     "\"alarm\":\"%s\", \"waterLevel\":\"%d\","
     "\"leakSensor\":\"%s\", \"mode\":\"%d\","
     "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
-    "\"uptime\":\"%d\""
+    "\"uptime\":\"%d\",\"battery\":\"%.2f\","
+    "\"rssi\":\"%d\",\"bars\":\"%d\""
     "}",
 
+    isTechnical(node->state.alarmReason) ? 1 : 0,
+    isCritical(node->state.alarmReason) ? 1 : 0,
     statusString, waterLevelSensor->measureLevel(),
-    leakSensor->isLeaking() ? "true" : "false", node->state.mode,
+    leakSensor->isLeaking() ? "1" : "0", node->state.mode,
     rpmSensor1->getRpm(), rpmSensor2->getRpm(),
-    systemTime->nowMillis()
+    systemTime->nowMillis(), fuel.getVCell(),
+    rssi, bars
   );
   Particle.publish("status", publishString, PRIVATE);
 
