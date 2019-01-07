@@ -58,7 +58,16 @@ void LocalView::render(State state)
       display->displayMessage(message);
       break;
     case Mode::SPN_MAINTENANCE:
-      len = sprintf(message, SPN_DISPLAY_MAINTENANCE_MODE_TEXT);
+      int levelInches = state.levelIn;
+      int levelPercent = state.levelPercent;
+      const char* pump1Status = state.pump1On == 0 ? "OFF" : " ON";
+      const char* pump2Status = state.pump2On == 0 ? "OFF" : " ON";
+
+      sprintf(pump1Rpm, "%d", state.pump1Rpm);
+      sprintf(pump2Rpm, "%d", state.pump2Rpm);
+      statusToString(state.alarmReason, statusString);
+      len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_MAINTENANCE_MODE_TEXT, levelInches, levelPercent,
+                pump1Status, pump1Rpm, pump2Status, pump2Rpm);
       message[len] = '\0';
       display->displayMessage(message);
       break;

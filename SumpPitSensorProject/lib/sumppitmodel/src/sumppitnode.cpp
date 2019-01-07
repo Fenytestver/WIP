@@ -78,7 +78,12 @@ State* SumpPitNode::update()
   case SPN_ARMED:
     updateArmed();
     break;
-    default:
+  case SPN_MAINTENANCE:
+    sensor->checkWaterLevelState(&state);
+    sensor->updatePump(&state);
+    showState(state);
+    break;
+  default:
     showState(state);
     break;
   }

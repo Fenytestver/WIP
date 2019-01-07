@@ -27,7 +27,7 @@ bool SumpPitSensor::isLeaking()
 int SumpPitSensor::checkState(State* outstate)
 {
   int state = SPN_ALARM_NO_ALARM;
-  bool leakState = checkLeakState();
+  int leakState = checkLeakState();
   state |= checkPumpState();
   state |= checkWaterLevelState(outstate);
   state |= leakState;

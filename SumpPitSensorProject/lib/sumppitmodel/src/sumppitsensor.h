@@ -27,10 +27,10 @@ class SumpPitSensor
     virtual bool isLeaking();
     virtual int checkState(State* outstate);
     virtual void updatePump(State* outstate);
+    virtual int checkWaterLevelState(State* state);
   protected:
     /** Will return SPS_PUMP state bit-mask, where 0 is no error */
     virtual int checkPumpState();
-    virtual int checkWaterLevelState(State* state);
     virtual int checkLeakState();
 
   protected:
