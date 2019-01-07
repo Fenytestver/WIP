@@ -98,6 +98,17 @@ SYSTEM_MODE(AUTOMATIC);
 #ifndef PIN_PUMP_RPM_2
 #define PIN_PUMP_RPM_2 PIN_NO_PIN
 #endif
+
+#ifndef SYNC_ENABLED
+#define SYNC_ENABLED false
+#endif
+#ifndef SYNC_PERIOD_MIN
+#define SYNC_PERIOD_MIN 30000L
+#endif
+#ifndef SYNC_PERIOD_MAX
+#define SYNC_PERIOD_MAX 600000L
+#endif
+
 // end of fallback definitions.
 
 //////////////////////////
@@ -230,34 +241,40 @@ int startMaintenance(String extra) {
 }
 
 int lastStatus = -1;
+long lastStatusTime = 0L;
 char statusString[10];
 char publishString[256];
+long syncPeriod = SYNC_PERIOD_MIN;
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
 
   State* state = node->update();
-  if (CLOUD_ENABLED && state->alarmReason != lastStatus && Particle.connected() == 1) {
-    statusToString(state->alarmReason, statusString);
-    sprintf(publishString,
-      "{"
-      "\"alarm\":\"%s\", \"waterLevel\":\"%d\","
-      "\"leakSensor\":\"%s\", \"mode\":\"%d\","
-      "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
-      "\"uptime\":\"%d\""
-      "}",
 
-      statusString, waterLevelSensor->measureLevel(),
-      leakSensor->isLeaking() ? "true" : "false", node->state.mode,
-      rpmSensor1->getRpm(), rpmSensor2->getRpm(),
-      systemTime->nowMillis()
-    );
-    Particle.publish("status", publishString);
+  if (CLOUD_ENABLED && Particle.connected() == 1) {
+    bool sendStatus = false;
+    if (state->alarmReason != lastStatus) {
+      sendStatus = true;
+      // status changed
+      syncPeriod = SYNC_PERIOD_MIN;
+    }
+    long now = systemTime->nowMillis();
+    if (SYNC_ENABLED && now - lastStatusTime > syncPeriod) {
+      sendStatus = true;
+      syncPeriod = syncPeriod * 2;
+      if (syncPeriod > SYNC_PERIOD_MAX) {
+        syncPeriod = SYNC_PERIOD_MAX;
+      }
+      // only reset update here
+      lastStatusTime = systemTime->nowMillis();
+    }
 
-    lastStatus = state->alarmReason;
+    if (sendStatus) {
+      sendFullStatus(state);
+    }
   }
 
   Particle.process();
-  Serial.print("-----@");
+  /*Serial.print("-----@");
   Serial.print(systemTime->nowMillis());
   Serial.println("-----");
   Serial.print("pump1Voltage:");
@@ -270,5 +287,25 @@ void loop() {
   Serial.println(pump2->getRpm());
   Serial.print("leakSensor:");
   Serial.println(leakSensor->isLeaking());
-  delay(50);
+  delay(50);*/
+}
+
+void sendFullStatus(State* state) {
+  statusToString(state->alarmReason, statusString);
+  sprintf(publishString,
+    "{"
+    "\"alarm\":\"%s\", \"waterLevel\":\"%d\","
+    "\"leakSensor\":\"%s\", \"mode\":\"%d\","
+    "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
+    "\"uptime\":\"%d\""
+    "}",
+
+    statusString, waterLevelSensor->measureLevel(),
+    leakSensor->isLeaking() ? "true" : "false", node->state.mode,
+    rpmSensor1->getRpm(), rpmSensor2->getRpm(),
+    systemTime->nowMillis()
+  );
+  Particle.publish("status", publishString, PRIVATE);
+
+  lastStatus = state->alarmReason;
 }
