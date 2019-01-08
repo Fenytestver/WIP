@@ -253,7 +253,7 @@ class RealRpmSensor : public RpmSensor {
       long currentCount = count;
       long now = systemTime->nowMillis();
       // not the same second
-      if (now - lastupdate > 1000L) {
+      if (now - lastupdate > 500L) {
         count = 0;
         timestamp = now;
         lastRpm = (int)(((float)currentCount) / (((float)(now - lastupdate) / 1000.0)));
