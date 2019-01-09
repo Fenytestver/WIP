@@ -215,7 +215,7 @@ class RealSystemTime : public SystemTime {
 
 class RealButton : public Button {
   public:
-    RealButton(SystemTime* _systemTime, int _pin) : Button(_systemTime) {
+    RealButton(SystemTime* _systemTime, long longPressTime, int _pin) : Button(_systemTime, longPressTime) {
       pin = _pin;
     }
     void setup() {

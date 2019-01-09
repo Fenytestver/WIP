@@ -41,6 +41,9 @@ class FunctionalTestBase : public TestBase
 
     StubSiren* siren;
     SumpPitNode* node;
+    StubLed* ledRed;
+    StubLed* ledGreen;
+    StubLed* ledYellow;
 
   protected:
     virtual void create();

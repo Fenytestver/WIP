@@ -109,6 +109,10 @@ SYSTEM_MODE(AUTOMATIC);
 #define SYNC_PERIOD_MAX 600000L
 #endif
 
+#ifndef SPN_BUTTON_LONG_PRESS_TIME
+#define SPN_BUTTON_LONG_PRESS_TIME 30000
+#endif
+
 // end of fallback definitions.
 
 //////////////////////////
@@ -166,9 +170,9 @@ void setup() {
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
   ledRed = new HardwarePinLed(PIN_LED_RED);
-  armButton = new RealButton(systemTime, PIN_BUTTON_1);
-  maintenanceButton = new RealButton(systemTime, PIN_BUTTON_2);
-  disarmButton = new RealButton(systemTime, PIN_BUTTON_3);
+  armButton = new RealButton(systemTime, PIN_BUTTON_1, SPN_BUTTON_LONG_PRESS_TIME);
+  maintenanceButton = new RealButton(systemTime, PIN_BUTTON_2, SPN_BUTTON_LONG_PRESS_TIME);
+  disarmButton = new RealButton(systemTime, PIN_BUTTON_3, SPN_BUTTON_LONG_PRESS_TIME);
   shutoffValve = new RealShutoffValve();
   waterLevelSensor = new AnalogWaterLevelSensor(
     PIN_WATERLEVEL, WATER_DIST_MIN, WATER_DIST_MAX);

@@ -3,15 +3,11 @@
 #include "onbuttonpresslistener.h"
 #include "systemtime.h"
 
-#ifndef SPN_BUTTON_LONG_PRESS_TIME
-#define SPN_BUTTON_LONG_PRESS_TIME 30000
-#endif
-
 class Button
 {
   public:
     /** Default constructor */
-    Button(SystemTime* _systemTime);
+    Button(SystemTime* _systemTime, long _longPressTime);
     /** Default destructor */
     virtual ~Button();
     virtual void setup();
@@ -30,6 +26,7 @@ class Button
     OnButtonPressListener* onLongPressListener;
     void setPressed(bool _pressed);
   private:
+    long longPressTime;
     bool pressed;
     long pressedAt;
     bool longPressHandled;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "string.h"
-
+#define SPN_BUTTON_LONG_PRESS_TIME 30000
 #ifndef stubs_cpp
 #define stubs_cpp
 
@@ -56,7 +56,7 @@ class StubSiren : public Siren {
 };
 class StubButton : public Button {
   public:
-    StubButton(SystemTime* systemTime) : Button(systemTime) {
+    StubButton(SystemTime* systemTime) : Button(systemTime, SPN_BUTTON_LONG_PRESS_TIME) {
     }
     void press() {
       SPN_DBG_STUB << "Button" << " pressed."<< endl;

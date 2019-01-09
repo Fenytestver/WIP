@@ -1,9 +1,10 @@
 #include "button.h"
 
-Button::Button(SystemTime* _systemTime)
+Button::Button(SystemTime* _systemTime, long _longPressTime)
 {
   //ctor
   systemTime = _systemTime;
+  longPressTime = _longPressTime;
   onLongPressListener = nullptr;
   onPressListener = nullptr;
   pressed = false;
@@ -27,7 +28,7 @@ void Button::setPressed(bool _pressed)
     pressedAt = systemTime->nowMillis();
     onPressListener->onPress();
   } else if (pressed && !longPressHandled
-             && (systemTime->nowMillis() - pressedAt > SPN_BUTTON_LONG_PRESS_TIME)) {
+             && (systemTime->nowMillis() - pressedAt > longPressTime)) {
     longPressHandled = true;
     onLongPressListener->onPress();
   } else if (pressed && !_pressed) {
@@ -45,5 +46,5 @@ void Button::press()
 }
 
 void Button::update() {
-  
+
 }
