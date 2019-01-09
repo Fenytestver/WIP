@@ -297,7 +297,9 @@ class LcdDisplay : public Display {
       lcd->backlight();
       lcd->clear();
     }
-
+    char* getBank() {
+      return bank;
+    }
     void show(State state) {
 
     }

@@ -208,6 +208,8 @@ void setup() {
     success = Particle.function("disarm", disarmSystem);
     success = Particle.function("maintenance", startMaintenance);
     success = Particle.function("lcdInit", lcdInit);
+    success = Particle.function("update", sendStatusNow);
+    success = Particle.function("getLcd", sendScreen);
     Particle.variable("mode", node->state.mode);
     Particle.variable("rpm1", node->state.pump1Rpm);
     Particle.variable("rpm2", node->state.pump2Rpm);
@@ -255,13 +257,13 @@ long lastStatusTime = 0L;
 char statusString[10];
 char publishString[256];
 long syncPeriod = SYNC_PERIOD_MIN;
+bool sendStatus = false;
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
 
   State* state = node->update();
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
-    bool sendStatus = false;
     if (state->alarmReason != lastStatus) {
       sendStatus = true;
       // status changed
@@ -280,6 +282,7 @@ void loop() {
 
     if (sendStatus) {
       sendFullStatus(state);
+      sendStatus = false;
     }
   }
 
@@ -298,6 +301,16 @@ void loop() {
   Serial.print("leakSensor:");
   Serial.println(leakSensor->isLeaking());
   delay(50);*/
+}
+
+int sendStatusNow(String extra) {
+  sendStatus = true;
+  return 0;
+}
+
+int sendScreen(String extra) {
+  Particle.publish("lcdtext", display->getBank(), PRIVATE);
+  return 0;
 }
 
 void sendFullStatus(State* state) {
