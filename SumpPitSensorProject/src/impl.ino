@@ -159,6 +159,12 @@ class RealSiren : public Buzzer {
         digitalWrite(pin, LOW);
       }
     }
+
+    void beep() {
+      on();
+      delay(50);
+      off();
+    }
   private:
     int pin;
 };
