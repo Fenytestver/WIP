@@ -347,6 +347,7 @@ void sendFullStatus(State* state) {
     "{"
     "\"technical\":\"%d\","
     "\"critical\":\"%d\","
+    "\"shutoffValve\":\"%s\","
     "\"alarm\":\"%s\", \"waterLevel\":\"%d\","
     "\"leakSensor\":\"%s\", \"mode\":\"%d\","
     "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
@@ -356,6 +357,7 @@ void sendFullStatus(State* state) {
 
     isTechnical(node->state.alarmReason) ? 1 : 0,
     isCritical(node->state.alarmReason) ? 1 : 0,
+    shutoffValve->isActive() ? "1" : "0",
     statusString, waterLevelSensor->measureLevel(),
     leakSensor->isLeaking() ? "1" : "0", node->state.mode,
     rpmSensor1->getRpm(), rpmSensor2->getRpm(),
