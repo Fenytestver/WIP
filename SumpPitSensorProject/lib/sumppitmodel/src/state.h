@@ -14,5 +14,6 @@ struct State {
   int pump1On;
   int pump2On;
   bool leak;
+  bool shutoffValve;
 };
 #endif

@@ -210,6 +210,8 @@ void setup() {
     success = Particle.function("lcdInit", lcdInit);
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
+    Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
+
     Particle.variable("mode", node->state.mode);
     Particle.variable("rpm1", node->state.pump1Rpm);
     Particle.variable("rpm2", node->state.pump2Rpm);
@@ -222,6 +224,7 @@ void setup() {
     Particle.variable("levelIn", node->state.levelIn);
     Particle.variable("levelP", node->state.levelPercent);
     Particle.variable("leak", node->state.leak);
+    Particle.variable("shutoffValve", node->state.shutoffValve);
   }
 
   Serial.begin(115200);
@@ -311,6 +314,15 @@ int sendStatusNow(String extra) {
 int sendScreen(String extra) {
   Particle.publish("lcdtext", display->getBank(), PRIVATE);
   return 0;
+}
+
+void shutoffValveHandler(const char *event, const char *data)
+{
+  if ("true" == data) {
+    shutoffValve->activate();
+  } else if ("false" == data) {
+    shutoffValve->deactivate();
+  }
 }
 
 void sendFullStatus(State* state) {

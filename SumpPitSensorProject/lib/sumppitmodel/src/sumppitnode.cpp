@@ -110,6 +110,7 @@ void SumpPitNode::updateArmed() {
   } else {
     siren->off();
   }
+  state.shutoffValve = shutoffValve->isActive();
   showState(state);
 }
 

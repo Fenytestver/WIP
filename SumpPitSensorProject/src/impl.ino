@@ -15,7 +15,7 @@
 #include "state.h";
 
 #define PIN_NO_PIN -1
-#define PUB_SHUTOFF_STATE "shutoff-valve-state"
+#define PUB_SHUTOFF_STATE "shutoffValve"
 
 class AnalogWaterLevelSensor : public WaterLevelSensor {
   public:
@@ -179,12 +179,12 @@ class RealShutoffValve : public ShutoffValve {
     }
 
     void activate() {
-      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "true", PRIVATE | WITH_ACK)) {
+      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "true", WITH_ACK)) {
         active = true;
       }
     }
     void deactivate() {
-      if (active /* && Particle.publish(PUB_SHUTOFF_STATE, "false", PRIVATE | WITH_ACK)*/) {
+      if (active) {
         active = false;
       }
     }
