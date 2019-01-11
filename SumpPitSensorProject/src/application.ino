@@ -99,6 +99,14 @@ SYSTEM_MODE(AUTOMATIC);
 #define PIN_PUMP_RPM_2 PIN_NO_PIN
 #endif
 
+#ifndef PIN_FLOAT_SWITCH_1
+#define PIN_FLOAT_SWITCH_1 PIN_NO_PIN
+#endif
+
+#ifndef PIN_FLOAT_SWITCH_2
+#define PIN_FLOAT_SWITCH_2 PIN_NO_PIN
+#endif
+
 #ifndef SYNC_ENABLED
 #define SYNC_ENABLED false
 #endif
@@ -147,6 +155,7 @@ Pump* pump2;
 MultiPump* multiPump;
 LcdDisplay* display;
 LocalView* localView;
+RealFloatSwitch* floatSwitch;
 
 // TODO: 2 leak sensors
 SumpPitSensor* sensor;
@@ -188,7 +197,8 @@ void setup() {
   multiPump->addPump(pump2);
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
   localView = new LocalView(display, ledRed, ledGreen, ledYellow);
-  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve);
+  floatSwitch = new RealFloatSwitch(PIN_FLOAT_SWITCH_1, PIN_FLOAT_SWITCH_2);
+  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
   node->setup();
 
   if (PIN_PUMP_RPM_1 != PIN_NO_PIN) {
@@ -225,6 +235,7 @@ void setup() {
     Particle.variable("levelP", node->state.levelPercent);
     Particle.variable("leak", node->state.leak);
     Particle.variable("shutoffValve", node->state.shutoffValve);
+    Particle.variable("floatSwitch", node->state.floatSwitch);
   }
 
   Serial.begin(115200);
@@ -257,7 +268,7 @@ int lcdInit(String extra) {
 
 int lastStatus = -1;
 long lastStatusTime = 0L;
-char statusString[10];
+char statusString[11];
 char publishString[256];
 long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;
@@ -353,6 +364,7 @@ void sendFullStatus(State* state) {
     "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
     "\"uptime\":\"%d\",\"battery\":\"%.2f\","
     "\"rssi\":\"%d\",\"bars\":\"%d\""
+    "\"floatSwitch\":\"%s\","
     "}",
 
     isTechnical(node->state.alarmReason) ? 1 : 0,
@@ -362,7 +374,8 @@ void sendFullStatus(State* state) {
     leakSensor->isLeaking() ? "1" : "0", node->state.mode,
     rpmSensor1->getRpm(), rpmSensor2->getRpm(),
     systemTime->nowMillis(), fuel.getVCell(),
-    rssi, bars
+    rssi, bars,
+    floatSwitch->isTriggered() ? "1" : "0"
   );
   Particle.publish("status", publishString, PRIVATE);
 

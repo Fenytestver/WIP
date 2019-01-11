@@ -10,7 +10,7 @@ LocalView::LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledY
   ledYellow = _ledYellow;
   pump1Rpm = new char[10];
   pump2Rpm = new char[10];
-  statusString = new char[10];
+  statusString = new char[11];
   for (int i = 0; i < 4; ++i) {
     lines[i] = new char[100];
   }
@@ -129,6 +129,9 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Pump voltage!\nP1:%s,P2:%s",
               isCritical(state.pump1Alarm) ? "CR" : "OK",
               isCritical(state.pump2Alarm) ? "CR" : "OK");
+    }
+    if ((state.alarmReason & SPN_ALARM_FLOAT_SWITCH_CRITICAL) != 0) {
+      sprintf(lines[lineIndex++], SPN_DISPLAY_FLOAT_SWITH);
     }
 
     len = sprintf(message, SPN_DISPLAY_WARNING, "ALERT!", statusString, lines[0], lines[1], lines[2]);

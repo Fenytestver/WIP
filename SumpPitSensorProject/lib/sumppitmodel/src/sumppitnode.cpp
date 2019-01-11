@@ -5,7 +5,8 @@ SumpPitNode::SumpPitNode(Siren* _siren,
     LocalView* _localView,
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
-    ShutoffValve* _shutoffValve)
+    ShutoffValve* _shutoffValve,
+    FloatSwitch* _floatSwitch)
 {
   //ctor
   siren = _siren;
@@ -14,6 +15,7 @@ SumpPitNode::SumpPitNode(Siren* _siren,
   sensor = _sensor;
   inputs = _inputs;
   shutoffValve = _shutoffValve;
+  floatSwitch = _floatSwitch;
 
   state.mode = SPN_INITIALIZING;
   mainrenancePressListener = new OnMaintenancePress(this);
@@ -68,6 +70,7 @@ void SumpPitNode::setup()
   siren->setup();
   buzzer->setup();
   inputs->setup();
+  floatSwitch->setup();
   alarmOff();
   arm();
 }
@@ -93,7 +96,11 @@ State* SumpPitNode::update()
 
 void SumpPitNode::updateArmed() {
   sensor->updatePump(&state);
+  state.floatSwitch = floatSwitch->isTriggered();
   state.alarmReason = sensor->checkState(&state);
+  if (state.floatSwitch) {
+    state.alarmReason |= SPN_ALARM_FLOAT_SWITCH_CRITICAL;
+  }
 
   // check system status
   if (isCritical(state.alarmReason)) {

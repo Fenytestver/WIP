@@ -12,7 +12,8 @@
 #include "rpmsensor.h"
 #include "display.h"
 #include "LiquidCrystal_I2C.h"
-#include "state.h";
+#include "state.h"
+#include "floatswitch.h"
 
 #define PIN_NO_PIN -1
 #define PUB_SHUTOFF_STATE "shutoffValve"
@@ -78,7 +79,7 @@ class RealVoltageSensor : public VoltageSensor {
     int pin;
 };
 
-class RealLeakSensor : public LeakSensor {
+class RealLeakSensor : virtual public LeakSensor {
   public:
     RealLeakSensor(int _pin, int _pin2) : LeakSensor() {
       pin = _pin;
@@ -379,4 +380,20 @@ class LcdDisplay : public Display {
 
   private:
     LiquidCrystal_I2C* lcd;
+};
+
+class RealFloatSwitch : virtual public FloatSwitch, private RealLeakSensor {
+  public:
+    RealFloatSwitch(int pin1, int pin2) : RealLeakSensor(pin1, pin2), FloatSwitch() {
+
+    }
+
+    void setup() {
+      RealLeakSensor::setup();
+    }
+
+    bool isTriggered() {
+      return RealLeakSensor::isLeaking();
+    }
+
 };

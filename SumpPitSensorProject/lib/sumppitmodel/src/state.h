@@ -1,7 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 struct State {
-  int alarmReason;
+  long alarmReason;
   int mode;
   int pump1Rpm;
   int pump2Rpm;
@@ -15,5 +15,6 @@ struct State {
   int pump2On;
   bool leak;
   bool shutoffValve;
+  bool floatSwitch;
 };
 #endif

@@ -60,6 +60,8 @@ string(?) line 3
   "when job is complete\n"
 // 01234567890123456789
 
+#define SPN_DISPLAY_FLOAT_SWITH "Emergency float!"
+
 #include "state.h"
 #include "display.h"
 #include "spn_config.h"

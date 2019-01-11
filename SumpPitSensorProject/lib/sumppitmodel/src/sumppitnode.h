@@ -13,6 +13,7 @@
 #include "buzzer.h"
 #include "localview.h"
 #include "state.h"
+#include "floatswitch.h"
 
 using namespace spn;
 
@@ -25,7 +26,9 @@ class SumpPitNode
     LocalView* _localView,
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
-    ShutoffValve* _shutoffValve);
+    ShutoffValve* _shutoffValve,
+    FloatSwitch* _floatSwitch);
+
     // :( pls do not edit from outside)
     State state;
 
@@ -59,6 +62,7 @@ class SumpPitNode
     SumpPitInputs* inputs;
     ShutoffValve* shutoffValve;
     Buzzer* buzzer;
+    FloatSwitch* floatSwitch;
 
     void showState(State stateCopy);
   private: // variables

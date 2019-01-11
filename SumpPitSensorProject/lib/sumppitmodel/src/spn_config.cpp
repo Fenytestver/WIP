@@ -28,10 +28,10 @@ bool spn::isTechnical(int reason)
 
 void spn::statusToString(int status, char* out)
 {
-  for (int i = 0; i<9; ++i) {
+  for (int i = 0; i<11; ++i) {
     out[i] = (1 == ( (status >> i) & 1)) ? '1':'0';
   }
-  out[9] = '\0';
+  out[10] = '\0';
 }
 
 long spn::millisToSec(long millis)
