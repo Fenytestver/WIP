@@ -8,11 +8,12 @@
 // Number of pumps
 #define SPN_PUMP_COUNT 2
 // give a little time after a turn on to spin up the pump
-#define SPN_PUMP_SPINUP_TIME 10000L
+#define SPN_PUMP_SPINUP_TIME 5000L
+#define SPN_PUMP_CYCLE_LENGTH_NORMAL 10000L
 // Pump uptime that triggers technical alert. No alert below this.
-#define SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL 30000
+#define SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL 30000L
 // Pump uptime that triggers critical alert. Technical alert below this.
-#define SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL 40000
+#define SPN_PUMP_CYCLE_MAX_LENGTH_CRITICAL 40000L
 // The usual RPM of the pump motor
 #define SPN_PUMP_STD_RPM 400
 // Technical alert above this. Deviation to STD_RPM (unit:RPM +/-).

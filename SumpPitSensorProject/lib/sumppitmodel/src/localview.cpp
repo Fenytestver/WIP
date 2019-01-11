@@ -96,13 +96,13 @@ void LocalView::renderArmed(State state)
   int lineIndex = 0;
   if (isCritical(state.alarmReason)) {
     // pump overtime
-    if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0
-        && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 OVT! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
-    } else if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 OVT! %ds", millisToSec(state.pump1Uptime));
-    } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 OVT! %ds", millisToSec(state.pump2Uptime));
+    int percentExtra = (int)(100.0 * ((state.pump1Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
+    if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
+      sprintf(lines[lineIndex++], "Pump1 cycle is %d%%+", percentExtra);
+    }
+    percentExtra = (int)(100.0 * ((state.pump2Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
+    if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
+      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+", percentExtra);
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0
@@ -120,11 +120,7 @@ void LocalView::renderArmed(State state)
     if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
       sprintf(lines[lineIndex++], "Water alert!%d\"%d%%", state.levelIn, state.levelPercent);
     }
-    if ((state.alarmReason & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump overuse! P1:%s,P2:%s",
-              isCritical(state.pump1Alarm) ? "CR" : "OK",
-              isCritical(state.pump2Alarm) ? "CR" : "OK");
-    }
+
     if ((state.alarmReason & SPN_ALARM_PUMP_VOLTAGE_CRITICAL) != 0) {
       sprintf(lines[lineIndex++], "Pump voltage!\nP1:%s,P2:%s",
               isCritical(state.pump1Alarm) ? "CR" : "OK",
@@ -138,6 +134,7 @@ void LocalView::renderArmed(State state)
 
   } else if (isTechnical(state.alarmReason)) {
     // pump overtime
+    /*
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
       sprintf(lines[lineIndex++], "P1,2 ovt! %ds,%ds", millisToSec(state.pump1Uptime), millisToSec(state.pump2Uptime));
@@ -145,6 +142,14 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "P1 ovt! %ds", millisToSec(state.pump1Uptime));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
       sprintf(lines[lineIndex++], "P2 ovt! %ds", millisToSec(state.pump2Uptime));
+    }*/
+    int percentExtra = (int)(100.0 * ((state.pump1Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
+    if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
+      sprintf(lines[lineIndex++], "Pump1 CYCLE is %d%%+", percentExtra);
+    }
+    percentExtra = (int)(100.0 * ((state.pump2Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
+    if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
+      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+", percentExtra);
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0
