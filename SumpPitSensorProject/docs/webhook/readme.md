@@ -1,22 +1,21 @@
 Particle - Ubidots webhook configuration
 ========================================
 
-URL:
+== URL ==
 https://industrial.api.ubidots.com/api/v1.6/devices/{{{PARTICLE_DEVICE_ID}}}
 
-Request Type:
+== Request Type ==
 POST
 
-Format:
+== Format ==
 Json
 
-Device:
+== Device ==
 Any
 
-Advanced Settings
+== Advanced Settings ==
 -----------------
-[ ] Default
-[X] Custom
+[ ] Default [X] Custom
 
 Contents:
 ```
@@ -49,3 +48,14 @@ Contents:
   "bars": "{{{bars}}}"
 }
 ```
+
+== Http headers ==
+
+X-Auth-Token [... insert the auth token here... ]
+
+=== How to get X-Auth-Token? ===
+
+- Open https://industrial.ubidots.com/accounts/me/apikeys
+- Copy "Default token" (OR for better security, create a new tocken for this Web hook)
+- Paste token to as "X-Auth-Token" value
+- Save Webhook
