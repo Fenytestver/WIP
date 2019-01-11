@@ -19,7 +19,7 @@ Advanced Settings
 [X] Custom
 
 Contents:
-'''
+```
 {
   "event": {
     "value": 0,
@@ -48,4 +48,4 @@ Contents:
   "rssi": "{{{rssi}}}",
   "bars": "{{{bars}}}"
 }
-'''
+```
