@@ -75,6 +75,8 @@ namespace spn {
   long mapp(long x, long in_min, long in_max, long out_min, long out_max);
   void statusToString(int status, char* out);
   long millisToSec(long millis);
+  int toPercent(int value, int complete);
+  int toPercentExtra(int value, int complete);
 }
 
 // The main system modes

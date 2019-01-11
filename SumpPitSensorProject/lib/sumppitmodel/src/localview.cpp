@@ -96,13 +96,13 @@ void LocalView::renderArmed(State state)
   int lineIndex = 0;
   if (isCritical(state.alarmReason)) {
     // pump overtime
-    int percentExtra = (int)(100.0 * ((state.pump1Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 cycle is %d%%+", percentExtra);
+      sprintf(lines[lineIndex++], "Pump1 cycle is %d%%+",
+        toPercentExtra(state.pump1Uptime, SPN_PUMP_CYCLE_LENGTH_NORMAL));
     }
-    percentExtra = (int)(100.0 * ((state.pump2Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
     if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+", percentExtra);
+      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+",
+        toPercentExtra(state.pump2Uptime, SPN_PUMP_CYCLE_LENGTH_NORMAL));
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0
@@ -143,13 +143,13 @@ void LocalView::renderArmed(State state)
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
       sprintf(lines[lineIndex++], "P2 ovt! %ds", millisToSec(state.pump2Uptime));
     }*/
-    int percentExtra = (int)(100.0 * ((state.pump1Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
     if ((state.pump1Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 CYCLE is %d%%+", percentExtra);
+      sprintf(lines[lineIndex++], "Pump1 CYCLE is %d%%+",
+        toPercentExtra(state.pump1Uptime, SPN_PUMP_CYCLE_LENGTH_NORMAL));
     }
-    percentExtra = (int)(100.0 * ((state.pump2Uptime - SPN_PUMP_CYCLE_LENGTH_NORMAL) / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
     if ((state.pump2Alarm & SPN_ALARM_PUMP_CYCLE_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+", percentExtra);
+      sprintf(lines[lineIndex++], "Pump2 cycle is %d%%+",
+        toPercentExtra(state.pump2Uptime, SPN_PUMP_CYCLE_LENGTH_NORMAL));
     }
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0
