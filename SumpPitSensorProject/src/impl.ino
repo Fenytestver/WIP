@@ -81,9 +81,10 @@ class RealVoltageSensor : public VoltageSensor {
 
 class RealLeakSensor : virtual public LeakSensor {
   public:
-    RealLeakSensor(int _pin, int _pin2) : LeakSensor() {
+    RealLeakSensor(int _pin, int _pin2, int _pin3) : LeakSensor() {
       pin = _pin;
       pin2 = _pin2;
+      pin3 = _pin3;
     }
     void setup() {
       if (pin != PIN_NO_PIN) {
@@ -92,14 +93,18 @@ class RealLeakSensor : virtual public LeakSensor {
       if (pin2 != PIN_NO_PIN) {
         pinMode(pin2, INPUT_PULLUP);
       }
+      if (pin3 != PIN_NO_PIN) {
+        pinMode(pin3, INPUT_PULLUP);
+      }
     }
     bool isLeaking() {
       LeakSensor::isLeaking();
-      return readPin(pin) || readPin(pin2);
+      return readPin(pin) || readPin(pin2) || readPin(pin3);
     }
   private:
     int pin;
     int pin2;
+    int pin3;
     bool readPin(int pin) {
       if (pin != PIN_NO_PIN) {
         // PULLUP is enabled, pulled low when water detected
@@ -384,7 +389,7 @@ class LcdDisplay : public Display {
 
 class RealFloatSwitch : virtual public FloatSwitch, private RealLeakSensor {
   public:
-    RealFloatSwitch(int pin1, int pin2) : RealLeakSensor(pin1, pin2), FloatSwitch() {
+    RealFloatSwitch(int pin1, int pin2) : RealLeakSensor(pin1, pin2, PIN_NO_PIN), FloatSwitch() {
 
     }
 

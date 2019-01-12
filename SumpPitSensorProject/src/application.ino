@@ -68,6 +68,9 @@ SYSTEM_MODE(AUTOMATIC);
 #ifndef PIN_LEAK_2
 #define PIN_LEAK_2 PIN_NO_PIN
 #endif
+#ifndef PIN_LEAK_3
+#define PIN_LEAK_3 PIN_NO_PIN
+#endif
 #ifndef PIN_BUTTON_1
 #define PIN_BUTTON_1 PIN_NO_PIN
 #endif
@@ -175,7 +178,7 @@ void setup() {
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
   siren = new RealSiren(PIN_SIREN);
   buzzer = new RealBuzzer(PIN_BUZZER);
-  leakSensor = new RealLeakSensor(PIN_LEAK_1, PIN_LEAK_2);
+  leakSensor = new RealLeakSensor(PIN_LEAK_1, PIN_LEAK_2, PIN_LEAK_3);
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
   ledRed = new HardwarePinLed(PIN_LED_RED);
