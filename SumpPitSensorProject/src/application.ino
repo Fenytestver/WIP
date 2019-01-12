@@ -350,19 +350,25 @@ void connectToCloud() {
     if (Particle.connected() == false) {
       char message[20];
       attempt++;
-      sprintf(message, "Connecting...");
+      sprintf(message, "Welcome!\nConnecting to Cloud.\nPlease wait ");
       display->displayMessage(message);
-      Particle.connect();
       long start = systemTime->nowMillis();
+      Particle.connect();
       long wait = 0;
       delay(1000);
       while (!Particle.connected()
           && wait < 60000L) {
-        wait = systemTime->nowMillis() - start;
-        sprintf(message, "Connecting... %ds", wait / 1000);
-        display->displayMessage(message);
         delay(500);
       }
+      wait = systemTime->nowMillis() - start;
+      if (Particle.connected()) {
+        sprintf(message, "Connected after %ds", wait / 1000);
+        Particle.process();
+      } else {
+        sprintf(message, "Cannot connect\n after %ds", wait / 1000);
+      }
+      display->displayMessage(message);
+      delay(1000);
     }
   }
 }
