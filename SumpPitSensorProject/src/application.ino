@@ -285,7 +285,9 @@ long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
-
+  if (CLOUD_ENABLED) {
+    Particle.process();
+  }
   State* state = node->update();
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
@@ -309,9 +311,6 @@ void loop() {
       sendFullStatus(state);
       sendStatus = false;
     }
-  }
-  if (CLOUD_ENABLED) {
-    Particle.process();
   }
 
   /*Serial.print("-----@");
@@ -347,28 +346,31 @@ int setDeviceId(String extra) {
 void connectToCloud() {
   if (CLOUD_ENABLED) {
     int attempt = 0;
+    int len;
     if (Particle.connected() == false) {
       char message[20];
       attempt++;
-      sprintf(message, "Welcome!\nConnecting to Cloud.\nPlease wait ");
+      len = sprintf(message, "Connecting to Cloud.");
+      message[len] = '\0';
       display->displayMessage(message);
       long start = systemTime->nowMillis();
       Particle.connect();
       long wait = 0;
-      delay(1000);
-      while (!Particle.connected()
-          && wait < 60000L) {
-        delay(500);
-      }
-      wait = systemTime->nowMillis() - start;
-      if (Particle.connected()) {
-        sprintf(message, "Connected after %ds", wait / 1000);
-        Particle.process();
-      } else {
-        sprintf(message, "Cannot connect\n after %ds", wait / 1000);
-      }
-      display->displayMessage(message);
-      delay(1000);
+      //delay(1000);
+      // while (!Particle.connected()
+      //     && wait < 60000L) {
+      //   delay(500);
+      // }
+      // wait = systemTime->nowMillis() - start;
+      // int len = 0;
+      // if (Particle.connected()) {
+      //   len = sprintf(message, "Connected after %ds", wait / 1000);
+      // } else {
+      //   len = sprintf(message, "Cannot connect\n after %ds", wait / 1000);
+      // }
+      // message[len] = '\0';
+      // display->displayMessage(message);
+      // delay(1000);
     }
   }
 }
