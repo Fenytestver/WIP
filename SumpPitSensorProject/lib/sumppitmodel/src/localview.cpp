@@ -121,9 +121,7 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Water alert!%d\"%d%%", state.levelIn, state.levelPercent);
     }
 
-    if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "%s is overwhelmed", state.pump1On ? "P1" : "P2");
-    } else if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_CRITICAL) != 0) {
+    if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_CRITICAL) != 0) {
       sprintf(lines[lineIndex++], "P1&2 overwhelmed");
     }
 
@@ -136,7 +134,11 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], SPN_DISPLAY_FLOAT_SWITH);
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT!", statusString, lines[0], lines[1], lines[2]);
+    if ((state.alarmReason & SPN_ALARM_PUMP_FAILED_CRITICAL) != 0) {
+      sprintf(lines[lineIndex++], "P1&2 failed to turn on");
+    }
+
+    len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT", statusString, lines[0], lines[1], lines[2]);
 
   } else if (isTechnical(state.alarmReason)) {
     // pump overtime
@@ -172,7 +174,15 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Water too low: %d\"", state.levelIn);
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "warn!", statusString, lines[0], lines[1], lines[2]);
+    if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_TECHNICAL) != 0) {
+      sprintf(lines[lineIndex++], "%s is overwhelmed", state.pump1On ? "P1" : "P2");
+    }
+
+    if ((state.alarmReason & SPN_ALARM_PUMP_FAILED_TECHNICAL) != 0) {
+      sprintf(lines[lineIndex++], "Pump failed to turn");
+    }
+
+    len = sprintf(message, SPN_DISPLAY_WARNING, "wrn", statusString, lines[0], lines[1], lines[2]);
   } else {
     len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, levelInches, levelPercent,
                 pump1Status, pump1Rpm, pump2Status, pump2Rpm);

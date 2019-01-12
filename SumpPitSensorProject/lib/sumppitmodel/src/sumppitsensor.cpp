@@ -52,6 +52,20 @@ int SumpPitSensor::checkState(State* outstate)
     }
   }
 
+  if (waterLevel >= SPN_WATER_CRITICAL) {
+    expectedPumpState = SPN_MULTIPUMP_TURBO;
+    if (!pump->isTurnedOn(0) || !pump->isTurnedOn(1)) {
+      state |= SPN_ALARM_PUMP_FAILED_CRITICAL;
+    }
+  } else if (waterLevel >= SPN_WATER_HIGH) {
+    expectedPumpState = SPN_MULTIPUMP_ON;
+    if (!pump->isTurnedOn(0) && !pump->isTurnedOn(1)) {
+      state |= SPN_ALARM_PUMP_FAILED_TECHNICAL;
+    }
+  } else if (waterLevel <= SPN_WATER_LOW) {
+    expectedPumpState = SPN_MULTIPUMP_OFF;
+  }
+
   return state;
 }
 
@@ -75,12 +89,4 @@ int SumpPitSensor::checkLeakState()
 void SumpPitSensor::updatePump(State* state)
 {
   pump->update(state);
-
-  /*if (waterLevel >= SPN_WATER_CRITICAL) {
-    expectedPumpState = SPN_MULTIPUMP_TURBO;
-  } else if (waterLevel >= SPN_WATER_HIGH) {
-    expectedPumpState = SPN_MULTIPUMP_ON;
-  } else if (waterLevel <= SPN_WATER_LOW) {
-    expectedPumpState = SPN_MULTIPUMP_OFF;
-  }*/
 }
