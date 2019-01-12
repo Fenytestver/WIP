@@ -40,7 +40,7 @@ void FunctionalTestBase::create()
   ledRed = new StubLed("R");
   ledGreen = new StubLed("G");
   ledYellow = new StubLed("B");
-  localView = new LocalView(display, ledRed, ledGreen, ledYellow);
+  localView = new LocalView(display, systemTime, ledRed, ledGreen, ledYellow);
   shutoffValve = new StubShutoffValve();
   StubBuzzer* buzzer = new StubBuzzer();
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);

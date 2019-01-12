@@ -27,8 +27,8 @@
 #include "sumppitnode.h"
 #include "application.h"
 
-// main system mode
-SYSTEM_MODE(AUTOMATIC);
+// Main system mode. Do not change this!
+SYSTEM_MODE(MANUAL);
 
 // Photon platform from here
 #if PLATFORM == PLATFORM_PHOTON
@@ -203,7 +203,7 @@ void setup() {
   multiPump->addPump(pump1);
   multiPump->addPump(pump2);
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
-  localView = new LocalView(display, ledRed, ledGreen, ledYellow);
+  localView = new LocalView(display, systemTime, ledRed, ledGreen, ledYellow);
   floatSwitch = new RealFloatSwitch(PIN_FLOAT_SWITCH_1, PIN_FLOAT_SWITCH_2);
   node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
   node->setup();
@@ -218,6 +218,7 @@ void setup() {
   }
 
   if (CLOUD_ENABLED) {
+    connectToCloud();
     if (SIM_3RD_PARTY) {
       Particle.keepAlive(120);
     }
@@ -228,6 +229,7 @@ void setup() {
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
     success = Particle.function("setDeviceId", setDeviceId);
+    success = Particle.function("reboot", reboot);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
 
     Particle.variable("deviceId", deviceId);
@@ -283,7 +285,9 @@ long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
-
+  if (CLOUD_ENABLED) {
+    Particle.process();
+  }
   State* state = node->update();
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
@@ -309,7 +313,6 @@ void loop() {
     }
   }
 
-  Particle.process();
   /*Serial.print("-----@");
   Serial.print(systemTime->nowMillis());
   Serial.println("-----");
@@ -325,7 +328,10 @@ void loop() {
   Serial.println(leakSensor->isLeaking());
   delay(50);*/
 }
-
+int reboot(String extra) {
+  System.reset();
+  return 1;
+}
 int setDeviceId(String extra) {
   if (extra.length() > 0) {
     int tmp = extra.toInt();
@@ -335,6 +341,38 @@ int setDeviceId(String extra) {
     EEPROM.put(EEPROM_DEVICE_ID, deviceId);
   }
   return deviceId;
+}
+
+void connectToCloud() {
+  if (CLOUD_ENABLED) {
+    int attempt = 0;
+    int len;
+    if (Particle.connected() == false) {
+      char message[20];
+      attempt++;
+      len = sprintf(message, "Connecting to Cloud.");
+      message[len] = '\0';
+      display->displayMessage(message);
+      long start = systemTime->nowMillis();
+      Particle.connect();
+      long wait = 0;
+      //delay(1000);
+      // while (!Particle.connected()
+      //     && wait < 60000L) {
+      //   delay(500);
+      // }
+      // wait = systemTime->nowMillis() - start;
+      // int len = 0;
+      // if (Particle.connected()) {
+      //   len = sprintf(message, "Connected after %ds", wait / 1000);
+      // } else {
+      //   len = sprintf(message, "Cannot connect\n after %ds", wait / 1000);
+      // }
+      // message[len] = '\0';
+      // display->displayMessage(message);
+      // delay(1000);
+    }
+  }
 }
 
 int sendStatusNow(String extra) {
