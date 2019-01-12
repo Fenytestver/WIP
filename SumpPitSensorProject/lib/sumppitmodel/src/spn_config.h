@@ -8,7 +8,7 @@
 // Number of pumps
 #define SPN_PUMP_COUNT 2
 // give a little time after a turn on to spin up the pump
-#define SPN_PUMP_SPINUP_TIME 5000L
+#define SPN_PUMP_SPINUP_TIME 2000L
 #define SPN_PUMP_CYCLE_LENGTH_NORMAL 10000L
 // Pump uptime that triggers technical alert. No alert below this.
 #define SPN_PUMP_CYCLE_MAX_LENGTH_TECHNICAL 30000L

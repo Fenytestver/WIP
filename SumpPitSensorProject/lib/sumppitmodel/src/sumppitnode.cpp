@@ -77,6 +77,7 @@ void SumpPitNode::setup()
 
 State* SumpPitNode::update()
 {
+  state.alarmReason = SPN_ALARM_NO_ALARM;
   inputs->update();
   switch (getMode()) {
   case SPN_ARMED:
@@ -97,7 +98,7 @@ State* SumpPitNode::update()
 void SumpPitNode::updateArmed() {
   sensor->updatePump(&state);
   state.floatSwitch = floatSwitch->isTriggered();
-  state.alarmReason = sensor->checkState(&state);
+  state.alarmReason |= sensor->checkState(&state);
   if (state.floatSwitch) {
     state.alarmReason |= SPN_ALARM_FLOAT_SWITCH_CRITICAL;
   }

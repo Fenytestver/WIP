@@ -26,6 +26,9 @@ void MultiPump::addPump(Pump* pump)
 
 int MultiPump::update(State* state)
 {
+  for (int i=0; i<pumpCount; ++i) {
+    pumps[i]->update();
+  }
   state->pump1Rpm = getRpm(0);
   state->pump2Rpm = getRpm(1);
   state->pump1Alarm = checkState(0);
@@ -34,11 +37,8 @@ int MultiPump::update(State* state)
   state->pump2Uptime = getPumpUptime(1);
   state->pump1On = isTurnedOn(0);
   state->pump2On = isTurnedOn(1);
-
-  for (int i=0; i<pumpCount; ++i) {
-    pumps[i]->update();
-  }
-  return 0;
+  state->alarmReason |= state->pump1Alarm | state->pump2Alarm;
+  return state->alarmReason;
 }
 
 int MultiPump::getRpm(int index)

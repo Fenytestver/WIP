@@ -40,7 +40,7 @@ long spn::millisToSec(long millis)
 }
 
 int spn::toPercent(int value, int complete) {
-  return (int)(100.0 * (value / (double)SPN_PUMP_CYCLE_LENGTH_NORMAL));
+  return (int)((100.0 * (double)value / (double)complete));
 }
 
 int spn::toPercentExtra(int value, int complete) {

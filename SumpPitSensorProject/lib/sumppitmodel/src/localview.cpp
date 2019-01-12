@@ -107,11 +107,13 @@ void LocalView::renderArmed(State state)
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 rpm!! %d,%d", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "P1,2 rpm: %d%%,%d%%",
+          toPercent(state.pump1Rpm, SPN_PUMP_STD_RPM),
+          toPercent(state.pump2Rpm, SPN_PUMP_STD_RPM));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 rpm!! %d", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 rpm: %d%%", toPercent(state.pump1Rpm, SPN_PUMP_STD_RPM));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_RPM_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 rpm!! %d", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 rpm: %d%%", toPercent(state.pump2Rpm, SPN_PUMP_STD_RPM));
     }
 
     if ((state.alarmReason & SPN_ALARM_LEAK) != 0) {
@@ -162,11 +164,13 @@ void LocalView::renderArmed(State state)
     // pump rpm
     if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0
         && (state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1,2 rpm warn!! %d,%d", state.pump1Rpm, state.pump2Rpm);
+      sprintf(lines[lineIndex++], "P1,2 rpm: %d%%,%d%%",
+          toPercent(state.pump1Rpm, SPN_PUMP_STD_RPM),
+          toPercent(state.pump2Rpm, SPN_PUMP_STD_RPM));
     } else if ((state.pump1Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump1 rpm!! %d", state.pump1Rpm);
+      sprintf(lines[lineIndex++], "Pump1 rpm: %d%%", toPercent(state.pump1Rpm, SPN_PUMP_STD_RPM));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump2 rpm!! %d", state.pump2Rpm);
+      sprintf(lines[lineIndex++], "Pump2 rpm: %d%%", toPercent(state.pump2Rpm, SPN_PUMP_STD_RPM));
     }
 
     // too low water
