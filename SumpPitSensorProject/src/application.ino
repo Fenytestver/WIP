@@ -135,7 +135,9 @@ SYSTEM_MODE(AUTOMATIC);
 #define DISPLAY_COLS 20
 #define DISPLAY_ROWS 4
 
+#define EEPROM_DEVICE_ID 1
 
+int deviceId;
 RealSiren* siren;
 RealBuzzer* buzzer;
 RealSystemTime* systemTime;
@@ -174,6 +176,8 @@ FuelGauge fuel;
 
 // setup() runs once, when the device is first turned on.
 void setup() {
+  deviceId = -1;
+  EEPROM.get(EEPROM_DEVICE_ID, deviceId);
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
   siren = new RealSiren(PIN_SIREN);
@@ -223,8 +227,10 @@ void setup() {
     success = Particle.function("lcdInit", lcdInit);
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
+    success = Particle.function("setDeviceId", setDeviceId);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
 
+    Particle.variable("deviceId", deviceId);
     Particle.variable("mode", node->state.mode);
     Particle.variable("rpm1", node->state.pump1Rpm);
     Particle.variable("rpm2", node->state.pump2Rpm);
@@ -320,6 +326,17 @@ void loop() {
   delay(50);*/
 }
 
+int setDeviceId(String extra) {
+  if (extra.length() > 0) {
+    int tmp = extra.toInt();
+    if (tmp > 0) {
+      deviceId = tmp;
+    }
+    EEPROM.put(EEPROM_DEVICE_ID, deviceId);
+  }
+  return deviceId;
+}
+
 int sendStatusNow(String extra) {
   sendStatus = true;
   return 0;
@@ -359,6 +376,7 @@ void sendFullStatus(State* state) {
 
   sprintf(publishString,
     "{"
+    "\"id\":\"%d\","
     "\"technical\":\"%d\","
     "\"critical\":\"%d\","
     "\"shutoffValve\":\"%s\","
@@ -369,7 +387,7 @@ void sendFullStatus(State* state) {
     "\"rssi\":\"%d\",\"bars\":\"%d\""
     "\"floatSwitch\":\"%s\","
     "}",
-
+    deviceId,
     isTechnical(node->state.alarmReason) ? 1 : 0,
     isCritical(node->state.alarmReason) ? 1 : 0,
     shutoffValve->isActive() ? "1" : "0",
