@@ -34,6 +34,12 @@ int SumpPitSensor::checkState(State* outstate)
   state |= leakState;
   outstate->leak = (leakState != SPN_ALARM_NO_ALARM);
 
+  if ((state & SPN_ALARM_WATER_LOW) != 0
+      && (!outstate->pump1On && !outstate->pump2On)) {
+    // remove flag if pumps are not running
+    state = state & ~(SPN_ALARM_WATER_LOW);
+  }
+
   int waterLevel = waterLevelSensors->measureLevel();
   if (lastWaterLevel == 0 && (pump->isTurnedOn(0) || pump->isTurnedOn(1))) {
     lastWaterLevel = waterLevel;

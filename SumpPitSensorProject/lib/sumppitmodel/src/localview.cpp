@@ -171,7 +171,11 @@ void LocalView::renderArmed(State state)
 
     // too low water
     if ((state.alarmReason & SPN_ALARM_WATER_LOW) != 0) {
-      sprintf(lines[lineIndex++], "Water too low: %d\"", state.levelIn);
+      if (state.pump1On && state.pump2On) {
+        sprintf(lines[lineIndex++], "P1&2 fail turn off");
+      } else {
+        sprintf(lines[lineIndex++], "%s fail turn off", state.pump1On ? "P1" : "P2");
+      }
     }
 
     if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_TECHNICAL) != 0) {
