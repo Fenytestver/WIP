@@ -27,8 +27,8 @@
 #include "sumppitnode.h"
 #include "application.h"
 
-// main system mode
-SYSTEM_MODE(AUTOMATIC);
+// Main system mode. Do not change this!
+SYSTEM_MODE(MANUAL);
 
 // Photon platform from here
 #if PLATFORM == PLATFORM_PHOTON
@@ -218,6 +218,7 @@ void setup() {
   }
 
   if (CLOUD_ENABLED) {
+    connectToCloud();
     if (SIM_3RD_PARTY) {
       Particle.keepAlive(120);
     }
@@ -228,6 +229,7 @@ void setup() {
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
     success = Particle.function("setDeviceId", setDeviceId);
+    success = Particle.function("reboot", reboot);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
 
     Particle.variable("deviceId", deviceId);
@@ -308,8 +310,10 @@ void loop() {
       sendStatus = false;
     }
   }
+  if (CLOUD_ENABLED) {
+    Particle.process();
+  }
 
-  Particle.process();
   /*Serial.print("-----@");
   Serial.print(systemTime->nowMillis());
   Serial.println("-----");
@@ -325,7 +329,10 @@ void loop() {
   Serial.println(leakSensor->isLeaking());
   delay(50);*/
 }
-
+int reboot(String extra) {
+  System.reset();
+  return 1;
+}
 int setDeviceId(String extra) {
   if (extra.length() > 0) {
     int tmp = extra.toInt();
@@ -335,6 +342,29 @@ int setDeviceId(String extra) {
     EEPROM.put(EEPROM_DEVICE_ID, deviceId);
   }
   return deviceId;
+}
+
+void connectToCloud() {
+  if (CLOUD_ENABLED) {
+    int attempt = 0;
+    if (Particle.connected() == false) {
+      char message[20];
+      attempt++;
+      sprintf(message, "Connecting...");
+      display->displayMessage(message);
+      Particle.connect();
+      long start = systemTime->nowMillis();
+      long wait = 0;
+      delay(1000);
+      while (!Particle.connected()
+          && wait < 60000L) {
+        wait = systemTime->nowMillis() - start;
+        sprintf(message, "Connecting... %ds", wait / 1000);
+        display->displayMessage(message);
+        delay(500);
+      }
+    }
+  }
 }
 
 int sendStatusNow(String extra) {
