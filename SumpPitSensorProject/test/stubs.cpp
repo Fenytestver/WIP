@@ -15,6 +15,7 @@
 #include "string.h"
 #include "systemtime.h"
 #include "shutoffvalve.h"
+#include "floatswitch.h"
 
 ///
 // Very dumb, non-blocking, checkable implementations.
@@ -240,5 +241,20 @@ class StubShutoffValve : public ShutoffValve {
     }
   private:
     bool active = false;
+};
+class StubFloatSwitch : public FloatSwitch {
+  public:
+    StubFloatSwitch() {
+      triggered = false;
+    }
+    bool isTriggered() {
+      FloatSwitch::isTriggered();
+      return triggered;
+    }
+    void setTriggered(bool _triggered) {
+      triggered = _triggered;
+    }
+  private:
+    bool triggered;
 };
 #endif

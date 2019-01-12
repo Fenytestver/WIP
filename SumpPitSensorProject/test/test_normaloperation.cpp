@@ -44,6 +44,9 @@ void test_normaloperation::test()
   assert(node->getAlarmReason() & SPN_ALARM_WATER_LOW, 0, "Water not low yet.");
   // should start to detect low water
   waterLevelSensor->setLevel(SPN_WATER_LOW);
+
+  // turn on pump to detect too-low water.
+  voltageSensor1->setVoltage(12.0);
   node->update();
   assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_LOW, "Must detect low water.");
   // move water to low + variance (almost ok, but still not)
@@ -54,7 +57,7 @@ void test_normaloperation::test()
   waterLevelSensor->setLevel(SPN_WATER_LOW + SPN_WATER_VARIANCE + 1);
   node->update();
   assertAllFlags(node->getAlarmReason() & SPN_ALARM_WATER_LOW, 0, "Water above minimum + variance.");
-
+  voltageSensor1->setVoltage(0);
   node->disarm();
   assertFalse(siren->isOn(), "Siren must be off after startup");
   assert(node->getMode(), SPN_DISARMED, "Mode is disarmed");

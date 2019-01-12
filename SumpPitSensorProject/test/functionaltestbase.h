@@ -9,6 +9,7 @@
 #include "waterlevelsensor.h"
 #include "testbase.h"
 #include "localview.h"
+#include "floatswitch.h"
 
 // TODO: rename this to functional test base.
 class FunctionalTestBase : public TestBase
@@ -44,6 +45,7 @@ class FunctionalTestBase : public TestBase
     StubLed* ledRed;
     StubLed* ledGreen;
     StubLed* ledYellow;
+    FloatSwitch * floatSwitch;
 
   protected:
     virtual void create();

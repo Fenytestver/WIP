@@ -182,10 +182,10 @@
 1537729372 source:c:\etc\sumpit\sumpit_test\src\test_multiwater_sensor.cpp
 	"test_multiwater_sensor.h"
 
-1547006249 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\button.cpp
+1547009101 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\button.cpp
 	"button.h"
 
-1547006119 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\button.h
+1547009101 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\button.h
 	"onbuttonpresslistener.h"
 	"systemtime.h"
 
@@ -215,7 +215,7 @@
 
 1546726206 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\led.h
 
-1546814320 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.cpp
+1547315282 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.cpp
 	"multipump.h"
 
 1546814290 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\multipump.h
@@ -245,7 +245,7 @@
 	"state.h"
 	"spn_config.h"
 
-1546656316 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.h
+1547315104 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.h
 
 1537734261 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\onbuttonpresslistener.cpp
 	"onbuttonpresslistener.h"
@@ -259,7 +259,7 @@
 1546724741 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\siren.cpp
 	"siren.h"
 
-1544593334 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.cpp
+1547316634 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spn_config.cpp
 	"spn_config.h"
 
 1537734261 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\spnsystem.cpp
@@ -273,10 +273,10 @@
 1546844681 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitinputs.h
 	"button.h"
 
-1546844793 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.cpp
+1547315213 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.cpp
 	"sumppitnode.h"
 
-1546845341 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.h
+1547185134 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitnode.h
 	"siren.h"
 	"sumppitinputs.h"
 	"sumppitsensor.h"
@@ -285,15 +285,16 @@
 	"buzzer.h"
 	"localview.h"
 	"state.h"
+	"floatswitch.h"
 
-1546839499 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitsensor.h
+1547275938 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitsensor.h
 	"waterlevelsensor.h"
 	"multipump.h"
 	"leaksensor.h"
 	"spn_config.h"
 	"state.h"
 
-1546839501 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitsensor.cpp
+1547282811 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\sumppitsensor.cpp
 	"sumppitsensor.h"
 
 1537734260 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\systemtime.cpp
@@ -302,7 +303,7 @@
 1539580748 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\voltagesensor.cpp
 	"voltagesensor.h"
 
-1546839529 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\waterlevelsensor.cpp
+1547282569 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\waterlevelsensor.cpp
 	"waterlevelsensor.h"
 
 1538788221 source:c:\etc\sumpit\sumppitsensorproject\src\project.cpp
@@ -314,7 +315,7 @@
 	<iostream>
 	<bitset>
 
-1547006346 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
+1547319252 source:c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -328,6 +329,7 @@
 	"string.h"
 	"systemtime.h"
 	"shutoffvalve.h"
+	"floatswitch.h"
 
 1544593334 source:c:\etc\sumpit\sumppitsensorproject\test\test_multipump_unit.cpp
 	"test_multipump_unit.h"
@@ -339,7 +341,7 @@
 1547006350 c:\etc\sumpit\sumppitsensorproject\test\testbase.h
 	"debug_util.h"
 
-1547006346 c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
+1547319252 c:\etc\sumpit\sumppitsensorproject\test\stubs.cpp
 	<iostream>
 	"string.h"
 	"sumppitsensor.h"
@@ -353,6 +355,7 @@
 	"string.h"
 	"systemtime.h"
 	"shutoffvalve.h"
+	"floatswitch.h"
 
 1537739296 source:c:\etc\sumpit\sumppitsensorproject\test\test_multiwater_sensor.cpp
 	"test_multiwater_sensor.h"
@@ -362,7 +365,7 @@
 	"stubs.cpp"
 	"multiwatersensor.h"
 
-1546053333 source:c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.cpp
+1547319446 source:c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.cpp
 	"test_normaloperation.h"
 
 1537749415 c:\etc\sumpit\sumppitsensorproject\test\test_normaloperation.h
@@ -405,7 +408,7 @@
 	"test_pump_failure_longoperation.h"
 	"test_buttons.h"
 
-1547006425 c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.h
+1547319511 c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.h
 	"sumppitinputs.h"
 	"sumppitnode.h"
 	"stubs.cpp"
@@ -414,8 +417,9 @@
 	"waterlevelsensor.h"
 	"testbase.h"
 	"localview.h"
+	"floatswitch.h"
 
-1547006513 source:c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.cpp
+1547319097 source:c:\etc\sumpit\sumppitsensorproject\test\functionaltestbase.cpp
 	"functionaltestbase.h"
 
 1538360809 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\shutoffvalve.cpp
@@ -428,11 +432,11 @@
 
 1538464951 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\normaloperationview.h
 
-1546838781 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
+1547316783 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.cpp
 	"localview.h"
 	"spn_config.h"
 
-1546729362 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.h
+1547275255 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\localview.h
 	"state.h"
 	"display.h"
 	"spn_config.h"
@@ -461,9 +465,16 @@
 	"onbuttonpresslistener.h"
 	"stubs.cpp"
 
-1546729818 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\state.h
+1547185134 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\state.h
 
 1546390398 c:\etc\sumpit\sumppitsensorproject\test\test_pump_failure_longoperation.h
 	<iostream>
 	"functionaltestbase.h"
+
+1547185370 source:c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\floatswitch.cpp
+	"floatswitch.h"
+
+1547185354 c:\etc\sumpit\sumppitsensorproject\lib\sumppitmodel\src\floatswitch.h
+	"leaksensor.h"
+	"state.h"
 
