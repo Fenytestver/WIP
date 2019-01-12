@@ -10,7 +10,7 @@ LocalView::LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledY
   ledYellow = _ledYellow;
   pump1Rpm = new char[10];
   pump2Rpm = new char[10];
-  statusString = new char[11];
+  statusString = new char[SPN_STATUS_BITS + 1];
   for (int i = 0; i < 4; ++i) {
     lines[i] = new char[100];
   }
@@ -121,8 +121,14 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Water alert!%d\"%d%%", state.levelIn, state.levelPercent);
     }
 
+    if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_TECHNICAL) != 0) {
+      sprintf(lines[lineIndex++], "%s is overwhelmed", state.pump1On ? "P1" : "P2");
+    } else if ((state.alarmReason & SPN_ALARM_PUMP_OVERWHELMED_CRITICAL) != 0) {
+      sprintf(lines[lineIndex++], "P1&2 overwhelmed");
+    }
+
     if ((state.alarmReason & SPN_ALARM_PUMP_VOLTAGE_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump voltage!\nP1:%s,P2:%s",
+      sprintf(lines[lineIndex++], "Pump voltage!P1:%s,P2:%s",
               isCritical(state.pump1Alarm) ? "CR" : "OK",
               isCritical(state.pump2Alarm) ? "CR" : "OK");
     }
@@ -130,7 +136,7 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], SPN_DISPLAY_FLOAT_SWITH);
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "ALERT!", statusString, lines[0], lines[1], lines[2]);
+    len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT!", statusString, lines[0], lines[1], lines[2]);
 
   } else if (isTechnical(state.alarmReason)) {
     // pump overtime

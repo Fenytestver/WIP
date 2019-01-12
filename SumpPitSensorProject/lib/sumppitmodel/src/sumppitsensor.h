@@ -41,7 +41,7 @@ class SumpPitSensor
     MultiPump* pump;
     int expectedPumpState;
   private:
-
+    int lastWaterLevel;
 };
 
 #endif // SUMPPITSENSOR_H

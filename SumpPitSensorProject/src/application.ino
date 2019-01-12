@@ -268,7 +268,7 @@ int lcdInit(String extra) {
 
 int lastStatus = -1;
 long lastStatusTime = 0L;
-char statusString[11];
+char statusString[SPN_STATUS_BITS + 1];
 char publishString[256];
 long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;

@@ -42,7 +42,7 @@ string(?) line 2
 string(?) line 3
 */
 #define SPN_DISPLAY_WARNING \
-  "%s! #%s\n"\
+  "%s!#%s\n"\
   "%s\n"\
   "%s\n"\
   "%s"
