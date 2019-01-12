@@ -1,18 +1,19 @@
 #include "localview.h"
 #include "spn_config.h"
 
-LocalView::LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledYellow)
+LocalView::LocalView(Display* _display, SystemTime* _systemTime, Led* _ledRed, Led* _ledGreen, Led* _ledYellow)
 {
   //ctor
   display = _display;
+  systemTime = _systemTime;
   ledRed = _ledRed;
   ledGreen = _ledGreen;
   ledYellow = _ledYellow;
   pump1Rpm = new char[10];
   pump2Rpm = new char[10];
   statusString = new char[SPN_STATUS_BITS + 1];
-  for (int i = 0; i < 4; ++i) {
-    lines[i] = new char[100];
+  for (int i = 0; i < SPN_LOCALVIEW_LINES_COUNT; ++i) {
+    lines[i] = new char[SPN_LOCALVIEW_LINES_LENGTH];
   }
   message = new char[1024];
 }
@@ -137,10 +138,21 @@ void LocalView::renderArmed(State state)
     }
 
     if ((state.alarmReason & SPN_ALARM_PUMP_FAILED_CRITICAL) != 0) {
-      sprintf(lines[lineIndex++], "P1&2 failed to turn on");
+      sprintf(lines[lineIndex++], "P1&2 failed turn on");
     }
+    sprintf(lines[lineIndex++], "!!CALL MANAGER NOW!!");
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT", statusString, lines[0], lines[1], lines[2]);
+    int startLine;
+    if (lineIndex > 3) {
+      startLine = (systemTime->nowMillis() / 3000) % lineIndex;
+    } else {
+      startLine = 0;
+      for (int i=lineIndex; i<SPN_LOCALVIEW_LINES_COUNT; ++i) {
+        lines[i][0] = '\0';
+      }
+    }
+    len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT", statusString,
+        lines[startLine], lines[(startLine + 1) % lineIndex], lines[(startLine + 2) % lineIndex]);
 
   } else if (isTechnical(state.alarmReason)) {
     // pump overtime
@@ -187,10 +199,22 @@ void LocalView::renderArmed(State state)
     }
 
     if ((state.alarmReason & SPN_ALARM_PUMP_FAILED_TECHNICAL) != 0) {
-      sprintf(lines[lineIndex++], "Pump failed to turn");
+      sprintf(lines[lineIndex++], "Pump failed turn on");
     }
 
-    len = sprintf(message, SPN_DISPLAY_WARNING, "wrn", statusString, lines[0], lines[1], lines[2]);
+    sprintf(lines[lineIndex++], "NOTIFY MAINTENANCE!");
+
+    int startLine;
+    if (lineIndex > 3) {
+      startLine = (systemTime->nowMillis() / 3000) % lineIndex;
+    } else {
+      startLine = 0;
+      for (int i=lineIndex; i<SPN_LOCALVIEW_LINES_COUNT; ++i) {
+        lines[i][0] = '\0';
+      }
+    }
+    len = sprintf(message, SPN_DISPLAY_WARNING, "WARN", statusString,
+        lines[startLine], lines[(startLine + 1) % lineIndex], lines[(startLine + 2) % lineIndex]);
   } else {
     len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, levelInches, levelPercent,
                 pump1Status, pump1Rpm, pump2Status, pump2Rpm);

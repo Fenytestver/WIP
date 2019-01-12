@@ -65,6 +65,7 @@ string(?) line 3
 #include "state.h"
 #include "display.h"
 #include "spn_config.h"
+#include "systemtime.h"
 
 //#ifdef SPN_UNIT_TEST
 #include <cstdio>
@@ -73,11 +74,12 @@ string(?) line 3
 #include "led.h"
 #include "waterlevelsensor.h"
 using namespace spn;
-
+#define SPN_LOCALVIEW_LINES_COUNT 20
+#define SPN_LOCALVIEW_LINES_LENGTH 100
 class LocalView
 {
   public:
-    LocalView(Display* _display, Led* _ledRed, Led* _ledGreen, Led* _ledYellow);
+    LocalView(Display* _display, SystemTime* _systemTime, Led* _ledRed, Led* _ledGreen, Led* _ledYellow);
     virtual ~LocalView();
     virtual void setup();
     virtual void render(State state);
@@ -87,10 +89,11 @@ class LocalView
     char* pump1Rpm;
     char* pump2Rpm;
 
-    char* lines[4];
+    char* lines[SPN_LOCALVIEW_LINES_COUNT];
     char* message;
 
     Display* display;
+    SystemTime* systemTime;
     Led* ledRed;
     Led* ledGreen;
     Led* ledYellow;
