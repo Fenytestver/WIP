@@ -23,7 +23,7 @@ Any
 Contents:
 ```
 {
-  "deviceId" : "{{{deviceId}}}"
+  "deviceId": "{{{deviceId}}}",
   "event": {
     "value": 0,
     "context": {
