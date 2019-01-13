@@ -1,9 +1,11 @@
 #include "waterlevelsensor.h"
 
-WaterLevelSensor::WaterLevelSensor()
+WaterLevelSensor::WaterLevelSensor(int _waterLowIn, int _waterHighIn)
 {
   //ctor
   lastAlarm = SPN_ALARM_NO_ALARM;
+  waterLowIn = _waterLowIn;
+  waterHighIn = _waterHighIn;
 }
 
 WaterLevelSensor::~WaterLevelSensor()
@@ -18,8 +20,8 @@ short WaterLevelSensor::measureLevel()
 int WaterLevelSensor::checkState(State* state)
 {
   int level = measureLevel();
-  state->levelIn = spn::mapp((long)level, (long)SPN_WATER_LOW, (long)SPN_WATER_CRITICAL, 15, 75);;
-  state->levelPercent = spn::mapp((long)level, (long)SPN_WATER_LOW, (long)SPN_WATER_CRITICAL, 0L, 100L);
+  state->levelIn = spn::mapp((long)level, SPN_WATER_LOW, SPN_WATER_HIGH, waterLowIn, waterHighIn);
+  state->levelPercent = level;
 
   if (state->mode != SPN_ARMED) {
     lastAlarm = SPN_ALARM_NO_ALARM;

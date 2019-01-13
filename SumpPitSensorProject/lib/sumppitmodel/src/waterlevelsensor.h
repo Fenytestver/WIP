@@ -12,7 +12,7 @@ class WaterLevelSensor
 {
   public:
     /** Default constructor */
-    WaterLevelSensor();
+    WaterLevelSensor(int _waterLowIn, int _waterHighIn);
     /** Default destructor */
     virtual ~WaterLevelSensor();
     /** @return the water level in percentage. */
@@ -23,6 +23,8 @@ class WaterLevelSensor
 
   private:
     int lastAlarm;
+    int waterLowIn;
+    int waterHighIn;
 };
 
 #endif // WATERLEVELSENSOR_H

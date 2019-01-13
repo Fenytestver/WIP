@@ -130,12 +130,21 @@ SYSTEM_MODE(MANUAL);
 // minimum measurable water disatance (inches)
 #define WATER_DIST_MIN 0
 #define WATER_DIST_MAX 3516
+#define WATER_DIST_LOW 300
+#define WATER_DIST_HIGH 1000
+
 
 #define DISPLAY_I2C_ADDR 0x27
 #define DISPLAY_COLS 20
 #define DISPLAY_ROWS 4
 
-#define EEPROM_DEVICE_ID 1
+#define EEPROM_DEVICE_ID (sizeof(int) * 1)
+#define EEPROM_VALID (sizeof(int) * 2)
+#define EEPROM_WATER_LOW_VALUE (sizeof(int) * 3)
+#define EEPROM_WATER_HIGH_VALUE (sizeof(int) * 4)
+#define EEPROM_WATER_LOW_IN (sizeof(int) * 5)
+#define EEPROM_WATER_HIGH_IN (sizeof(int) * 6)
+#define EEPROM_THE_ONLY_VALID_VALUE 112
 
 int deviceId;
 RealSiren* siren;
@@ -167,17 +176,36 @@ SumpPitSensor* sensor;
 SumpPitNode* node;
 FuelGauge fuel;
 
-/*
- * Project SumpPitSensorProject
- * Description:
- * Author:
- * Date:
- */
+int waterLow;
+int waterHigh;
+int waterLowIn;
+int waterHighIn;
+
+void saveEeprom() {
+  EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
+  EEPROM.put(EEPROM_WATER_HIGH_VALUE, (int)waterHigh);
+  EEPROM.put(EEPROM_WATER_LOW_IN, (int)waterLowIn);
+  EEPROM.put(EEPROM_WATER_HIGH_IN, (int)waterHighIn);
+}
 
 // setup() runs once, when the device is first turned on.
 void setup() {
   deviceId = -1;
+  int validation;
+  EEPROM.get(EEPROM_VALID, validation);
+  if (validation != EEPROM_THE_ONLY_VALID_VALUE) {
+    EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)WATER_DIST_LOW);
+    EEPROM.put(EEPROM_WATER_HIGH_VALUE, (int)WATER_DIST_HIGH);
+    EEPROM.put(EEPROM_WATER_LOW_IN, (int )15);
+    EEPROM.put(EEPROM_WATER_HIGH_IN, (int)75);
+    EEPROM.put(EEPROM_VALID, (int)EEPROM_THE_ONLY_VALID_VALUE);
+  }
   EEPROM.get(EEPROM_DEVICE_ID, deviceId);
+  EEPROM.get(EEPROM_WATER_LOW_VALUE, waterLow);
+  EEPROM.get(EEPROM_WATER_HIGH_VALUE, waterHigh);
+  EEPROM.get(EEPROM_WATER_LOW_IN, waterLowIn);
+  EEPROM.get(EEPROM_WATER_HIGH_IN, waterHighIn);
+
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
   siren = new RealSiren(PIN_SIREN);
@@ -191,7 +219,7 @@ void setup() {
   disarmButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_3);
   shutoffValve = new RealShutoffValve();
   waterLevelSensor = new AnalogWaterLevelSensor(
-    PIN_WATERLEVEL, WATER_DIST_MIN, WATER_DIST_MAX);
+    PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
   rpmSensor1 = new RealRpmSensor(PIN_PUMP_RPM_1, systemTime);
   rpmSensor2 = new RealRpmSensor(PIN_PUMP_RPM_2, systemTime);
@@ -229,8 +257,18 @@ void setup() {
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
     success = Particle.function("setDeviceId", setDeviceId);
+    success = Particle.function("setWaterLow", setWaterLow);
+    success = Particle.function("setWaterHigh", setWaterHigh);
+    success = Particle.function("setWaterLowIn", setWaterLowIn);
+    success = Particle.function("setWaterHighIn", setWaterHighIn);
     success = Particle.function("reboot", reboot);
+    success = Particle.function("clearCalib", clearCalibration);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
+
+    Particle.variable("waterLow", waterLow);
+    Particle.variable("waterHigh", waterHigh);
+    Particle.variable("waterLowIn", waterLowIn);
+    Particle.variable("waterHighIn", waterHighIn);
 
     Particle.variable("deviceId", deviceId);
     Particle.variable("mode", node->state.mode);
@@ -329,18 +367,68 @@ void loop() {
   delay(50);*/
 }
 int reboot(String extra) {
+  saveEeprom();
+  char * tmp = new char [extra.length()+1];
+  std::strcpy (tmp, extra.c_str());
+  display->displayMessage(tmp);
   System.reset();
   return 1;
 }
-int setDeviceId(String extra) {
+
+int clearCalibration(String extra) {
+  EEPROM.put(EEPROM_VALID, 0);
+  reboot("");
+}
+
+int stringToInt(String extra) {
+  int result = -1;
   if (extra.length() > 0) {
     int tmp = extra.toInt();
     if (tmp > 0) {
-      deviceId = tmp;
+      result = tmp;
     }
+  }
+  return result;
+}
+
+int setDeviceId(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    deviceId = extraInt;
     EEPROM.put(EEPROM_DEVICE_ID, deviceId);
   }
   return deviceId;
+}
+
+int setWaterLow(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    waterLow = extraInt;
+  }
+  return waterLow;
+}
+
+int setWaterHigh(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    waterHigh = extraInt;
+  }
+  return waterHigh;
+}
+
+int setWaterHighIn(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    waterHighIn = extraInt;
+  }
+  return waterHighIn;
+}
+int setWaterLowIn(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    waterLowIn = extraInt;
+  }
+  return waterLow;
 }
 
 void connectToCloud() {

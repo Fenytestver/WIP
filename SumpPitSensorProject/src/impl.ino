@@ -24,15 +24,18 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
     constructor
     @param min minimum measurable distance (max measurable water level)
     @param max maximum measurable distance (empty tank)
+    @param _waterLowIn minimum water in inches
+    @param _waterHighIn maximum water in inches
     */
-    AnalogWaterLevelSensor(int _pin, double _min, double _max) {
+    AnalogWaterLevelSensor(int _pin, double _min, double _max, int _waterLowIn, int _waterHighIn)
+        : WaterLevelSensor(_waterLowIn, _waterHighIn){
       min = _min;
       max = _max;
       pin = _pin;
     }
     short measureLevel() {
       if (pin != PIN_NO_PIN) {
-        return (int) map(analogRead(pin), (double)min, (double)max, 0.0, 100.0);
+        return (int) map(analogRead(pin), (double)min, (double)max, (double)SPN_WATER_LOW, (double)SPN_WATER_HIGH);
       } else {
         return SPN_WATER_LOW + 1;
       }
