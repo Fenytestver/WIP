@@ -1,6 +1,12 @@
 Particle - Ubidots webhook configuration
 ========================================
 
+Create webhook
+--------------
+
+- Open https://console.particle.io/integrations
+- Add 'New Integration'
+
 URL
 ---
 https://industrial.api.ubidots.com/api/v1.6/devices/{{{PARTICLE_DEVICE_ID}}}
