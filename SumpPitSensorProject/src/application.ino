@@ -522,8 +522,8 @@ void sendFullStatus(State* state) {
     "\"leakSensor\":\"%s\", \"mode\":\"%d\","
     "\"rpm1\":\"%d\",\"rpm2\":\"%d\","
     "\"uptime\":\"%d\",\"battery\":\"%.2f\","
-    "\"rssi\":\"%d\",\"bars\":\"%d\""
-    "\"floatSwitch\":\"%s\","
+    "\"rssi\":\"%d\",\"bars\":\"%d\","
+    "\"floatSwitch\":\"%s\""
     "}",
     deviceId,
     isTechnical(node->state.alarmReason) ? 1 : 0,
