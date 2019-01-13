@@ -7,6 +7,10 @@ Create webhook
 - Open https://console.particle.io/integrations
 - Add 'New Integration'
 
+Event name
+----------
+status
+
 URL
 ---
 https://industrial.api.ubidots.com/api/v1.6/devices/{{{PARTICLE_DEVICE_ID}}}
@@ -71,3 +75,33 @@ How to get X-Auth-Token?
 - Copy "Default token" (OR for better security, create a new tocken for this Web hook)
 - Paste token to as "X-Auth-Token" value
 - Save Webhook
+
+LCD Text Webhook
+================
+
+Event name: lcdtext
+
+
+
+```
+{
+  "lcdtext": {
+    "value": 0,
+    "context": {
+      "name": "{{{PARTICLE_EVENT_VALUE}}}"
+    }
+  }
+}
+```
+
+Disply lcd html
+---------------
+
+```
+<div style="background-color:#0F1DFE;">
+<pre style="width:253px; font-size: 22px; font-family: monospace;word-break: break-all;white-space: pre-wrap; color: #C6FAFF; margin: 10px 10px 10px 10px;">
+{{context.name}}  
+</pre>
+</div>
+<p style="margin: 0;">{{timestamp}}</p>
+```
