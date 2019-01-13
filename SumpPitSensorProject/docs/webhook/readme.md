@@ -98,8 +98,8 @@ Disply lcd html
 ---------------
 
 ```
-<div style="background-color:#0F1DFE;">
-<pre style="width:253px; font-size: 22px; font-family: monospace;word-break: break-all;white-space: pre-wrap; color: #C6FAFF; margin: 10px 10px 10px 10px;">
+<div style="background-image:url('https://i.imgur.com/AQ9AxYG.jpg');background-size: cover;background-repeat: no-repeat; padding: 60px 60px 45px 60px;">
+<pre style="display:block;width:230px;line-height: 22px; overflow:hidden; font-size: 20px; font-family: monospace;word-break: break-all;white-space: pre-wrap; color: #C6FAFF; ">
 {{context.name}}  
 </pre>
 </div>
