@@ -151,6 +151,9 @@ void LocalView::renderArmed(State state)
         lines[i][0] = '\0';
       }
     }
+    if (lineIndex < 3) {
+      lineIndex = 3;
+    }
     len = sprintf(message, SPN_DISPLAY_WARNING, "ALRT", statusString,
         lines[startLine], lines[(startLine + 1) % lineIndex], lines[(startLine + 2) % lineIndex]);
 
@@ -211,6 +214,9 @@ void LocalView::renderArmed(State state)
       startLine = 0;
       for (int i=lineIndex; i<SPN_LOCALVIEW_LINES_COUNT; ++i) {
         lines[i][0] = '\0';
+      }
+      if (lineIndex < 3) {
+        lineIndex = 3;
       }
     }
     len = sprintf(message, SPN_DISPLAY_WARNING, "WARN", statusString,
