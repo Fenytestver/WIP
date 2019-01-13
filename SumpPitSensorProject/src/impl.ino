@@ -27,8 +27,9 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
     @param _waterLowIn minimum water in inches
     @param _waterHighIn maximum water in inches
     */
-    AnalogWaterLevelSensor(int _pin, double _min, double _max, int _waterLowIn, int _waterHighIn)
-        : WaterLevelSensor(_waterLowIn, _waterHighIn){
+    AnalogWaterLevelSensor(int _pin, double _min, double _max,
+      int _waterLowIn, int _waterHighIn, int _waterPercentCritical)
+        : WaterLevelSensor(_waterLowIn, _waterHighIn, _waterPercentCritical){
       min = _min;
       max = _max;
       pin = _pin;

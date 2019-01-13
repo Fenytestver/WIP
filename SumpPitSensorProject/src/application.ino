@@ -144,6 +144,8 @@ SYSTEM_MODE(MANUAL);
 #define EEPROM_WATER_HIGH_VALUE (sizeof(int) * 4)
 #define EEPROM_WATER_LOW_IN (sizeof(int) * 5)
 #define EEPROM_WATER_HIGH_IN (sizeof(int) * 6)
+#define EEPROM_WATER_CRITICAL_PERCENT (sizeof(int) * 7)
+
 #define EEPROM_THE_ONLY_VALID_VALUE 112
 
 int deviceId;
@@ -180,12 +182,14 @@ int waterLow;
 int waterHigh;
 int waterLowIn;
 int waterHighIn;
+int waterPercentCritical;
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
   EEPROM.put(EEPROM_WATER_HIGH_VALUE, (int)waterHigh);
   EEPROM.put(EEPROM_WATER_LOW_IN, (int)waterLowIn);
   EEPROM.put(EEPROM_WATER_HIGH_IN, (int)waterHighIn);
+  EEPROM.put(EEPROM_WATER_CRITICAL_PERCENT, (int)waterPercentCritical);
 }
 
 // setup() runs once, when the device is first turned on.
@@ -194,17 +198,17 @@ void setup() {
   int validation;
   EEPROM.get(EEPROM_VALID, validation);
   if (validation != EEPROM_THE_ONLY_VALID_VALUE) {
-    EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)WATER_DIST_LOW);
-    EEPROM.put(EEPROM_WATER_HIGH_VALUE, (int)WATER_DIST_HIGH);
-    EEPROM.put(EEPROM_WATER_LOW_IN, (int )15);
-    EEPROM.put(EEPROM_WATER_HIGH_IN, (int)75);
+    for (int i=EEPROM_VALID; i<32; ++i) {
+      EEPROM.put(i, (int)-1);
+    }
     EEPROM.put(EEPROM_VALID, (int)EEPROM_THE_ONLY_VALID_VALUE);
   }
-  EEPROM.get(EEPROM_DEVICE_ID, deviceId);
-  EEPROM.get(EEPROM_WATER_LOW_VALUE, waterLow);
-  EEPROM.get(EEPROM_WATER_HIGH_VALUE, waterHigh);
-  EEPROM.get(EEPROM_WATER_LOW_IN, waterLowIn);
-  EEPROM.get(EEPROM_WATER_HIGH_IN, waterHighIn);
+  deviceId = getEepromInt(EEPROM_DEVICE_ID, -1);
+  waterLow = getEepromInt(EEPROM_WATER_LOW_VALUE, WATER_DIST_LOW);
+  waterHigh = getEepromInt(EEPROM_WATER_HIGH_VALUE, WATER_DIST_HIGH);
+  waterLowIn = getEepromInt(EEPROM_WATER_LOW_IN, 15);
+  waterHighIn = getEepromInt(EEPROM_WATER_HIGH_IN, 75);
+  waterPercentCritical = getEepromInt(EEPROM_WATER_CRITICAL_PERCENT, SPN_WATER_CRITICAL);
 
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
@@ -219,7 +223,7 @@ void setup() {
   disarmButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_3);
   shutoffValve = new RealShutoffValve();
   waterLevelSensor = new AnalogWaterLevelSensor(
-    PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn);
+    PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn, waterPercentCritical);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
   rpmSensor1 = new RealRpmSensor(PIN_PUMP_RPM_1, systemTime);
   rpmSensor2 = new RealRpmSensor(PIN_PUMP_RPM_2, systemTime);
@@ -261,6 +265,7 @@ void setup() {
     success = Particle.function("setWaterHigh", setWaterHigh);
     success = Particle.function("setWaterLowIn", setWaterLowIn);
     success = Particle.function("setWaterHighIn", setWaterHighIn);
+    success = Particle.function("setWaterCriPer", setWaterCriticalPercent);
     success = Particle.function("reboot", reboot);
     success = Particle.function("clearCalib", clearCalibration);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
@@ -269,6 +274,7 @@ void setup() {
     Particle.variable("waterHigh", waterHigh);
     Particle.variable("waterLowIn", waterLowIn);
     Particle.variable("waterHighIn", waterHighIn);
+    Particle.variable("waterCriPer", waterPercentCritical);
 
     Particle.variable("deviceId", deviceId);
     Particle.variable("mode", node->state.mode);
@@ -430,7 +436,13 @@ int setWaterLowIn(String extra) {
   }
   return waterLow;
 }
-
+int setWaterCriticalPercent(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    waterPercentCritical = extraInt;
+  }
+  return waterPercentCritical;
+}
 void connectToCloud() {
   if (CLOUD_ENABLED) {
     int attempt = 0;
@@ -527,4 +539,13 @@ void sendFullStatus(State* state) {
   Particle.publish("status", publishString, PRIVATE);
 
   lastStatus = state->alarmReason;
+}
+
+int getEepromInt(int address, int def) {
+  int tmp = -1;
+  EEPROM.get(address, tmp);
+  if (tmp > -1) {
+    return tmp;
+  }
+  return def;
 }

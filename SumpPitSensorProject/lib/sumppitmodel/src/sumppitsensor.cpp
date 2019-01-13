@@ -58,7 +58,7 @@ int SumpPitSensor::checkState(State* outstate)
     }
   }
 
-  if (waterLevel >= SPN_WATER_CRITICAL) {
+  if (waterLevel >= waterLevelSensors->getWaterPercentCritical()) {
     expectedPumpState = SPN_MULTIPUMP_TURBO;
     if (!pump->isTurnedOn(0) || !pump->isTurnedOn(1)) {
       state |= SPN_ALARM_PUMP_FAILED_CRITICAL;
