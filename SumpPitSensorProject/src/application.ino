@@ -35,20 +35,7 @@ SYSTEM_MODE(MANUAL);
 
 // Electron platform from here
 #elif PLATFORM == PLATFORM_ELECTRON
-/*#define PIN_LED_GREEN B0
-#define PIN_LED_YELLOW B1
-#define PIN_LED_RED B2
-#define PIN_LEAK_1 C5
-#define PIN_LEAK_2 C4
-// TODO: rename butons.
-#define PIN_BUTTON_1 A0
-#define PIN_BUTTON_2 B5
-#define PIN_BUTTON_3 B4
-#define PIN_BUZZER D2
-#define PIN_SIREN B3*/
-//#define PIN_WATERLEVEL A0
-//#define PIN_PUMP_VOLTAGE_1 A4
-//#define PIN_PUMP_VOLTAGE_2 A3
+
 #endif
 /////////////////////////
 // fallback to no pin when something is not defined.
@@ -183,6 +170,13 @@ int waterHigh;
 int waterLowIn;
 int waterHighIn;
 int waterPercentCritical;
+
+int lastStatus = -1;
+long lastStatusTime = 0L;
+char statusString[SPN_STATUS_BITS + 1];
+char publishString[256];
+long syncPeriod = SYNC_PERIOD_MIN;
+bool sendStatus = false;
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
@@ -321,12 +315,6 @@ int lcdInit(String extra) {
   return 0;
 }
 
-int lastStatus = -1;
-long lastStatusTime = 0L;
-char statusString[SPN_STATUS_BITS + 1];
-char publishString[256];
-long syncPeriod = SYNC_PERIOD_MIN;
-bool sendStatus = false;
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   if (CLOUD_ENABLED) {
@@ -456,21 +444,6 @@ void connectToCloud() {
       long start = systemTime->nowMillis();
       Particle.connect();
       long wait = 0;
-      //delay(1000);
-      // while (!Particle.connected()
-      //     && wait < 60000L) {
-      //   delay(500);
-      // }
-      // wait = systemTime->nowMillis() - start;
-      // int len = 0;
-      // if (Particle.connected()) {
-      //   len = sprintf(message, "Connected after %ds", wait / 1000);
-      // } else {
-      //   len = sprintf(message, "Cannot connect\n after %ds", wait / 1000);
-      // }
-      // message[len] = '\0';
-      // display->displayMessage(message);
-      // delay(1000);
     }
   }
 }
