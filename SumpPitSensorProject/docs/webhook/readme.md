@@ -96,7 +96,12 @@ Event name: lcdtext
 
 Disply lcd html
 ---------------
-
+- Open ubidots dashboard: https://industrial.ubidots.com/app/dashboards/
+- Add 'Metric'
+- Set variable to lcdtext
+- Enable 'Use HTML editor'
+- Open Editor
+- Paste text:
 ```
 <div style="background-image:url('https://i.imgur.com/AQ9AxYG.jpg');background-size: cover;background-repeat: no-repeat; padding: 60px 60px 45px 60px;">
 <pre style="display:block;width:230px;line-height: 22px; overflow:hidden; font-size: 20px; font-family: monospace;word-break: break-all;white-space: pre-wrap; color: #C6FAFF; ">
