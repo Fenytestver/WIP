@@ -49,6 +49,14 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
         pinMode(pin, INPUT);
       }
     }
+
+    int readRaw() {
+      if (pin != PIN_NO_PIN) {
+        return analogRead(pin);
+      } else {
+        return SPN_WATER_LOW + 1;
+      }
+    }
   private:
     int pin;
     int min;

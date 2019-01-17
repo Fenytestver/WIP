@@ -255,6 +255,7 @@ void setup() {
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
     success = Particle.function("setDeviceId", setDeviceId);
+    success = Particle.function("getRawLevel", getRawLevel);
     success = Particle.function("setWaterLow", setWaterLow);
     success = Particle.function("setWaterHigh", setWaterHigh);
     success = Particle.function("setWaterLowIn", setWaterLowIn);
@@ -521,4 +522,8 @@ int getEepromInt(int address, int def) {
     return tmp;
   }
   return def;
+}
+
+int getRawLevel(String extra) {
+  return waterLevelSensor->readRaw();
 }
