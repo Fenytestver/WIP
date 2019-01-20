@@ -21,6 +21,7 @@ class Button
 
     virtual void press();
     virtual void update();
+    virtual bool isPressed();
   protected:
     OnButtonPressListener* onPressListener;
     OnButtonPressListener* onLongPressListener;

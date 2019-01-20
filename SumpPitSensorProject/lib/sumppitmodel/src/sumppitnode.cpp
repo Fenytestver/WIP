@@ -107,7 +107,9 @@ void SumpPitNode::updateArmed() {
   // check system status
   if (isCritical(state.alarmReason)) {
     if (state.mode != SPN_MAINTENANCE) {
-      if (!isSnoozed()) {
+      if (!isSnoozed()
+          && !inputs->maintenanceButton->isPressed()
+          && !inputs->armResetButton->isPressed()) {
         siren->on();
       } else {
         siren->off();
@@ -122,7 +124,9 @@ void SumpPitNode::updateArmed() {
   } else if (isTechnical(state.alarmReason)) {
     // TODO: do we need this?
     if (state.mode != SPN_MAINTENANCE) {
-      if (!isSnoozed()) {
+      if (!isSnoozed()
+          && !inputs->maintenanceButton->isPressed()
+          && !inputs->armResetButton->isPressed()) {
         siren->on();
       } else {
         siren->off();

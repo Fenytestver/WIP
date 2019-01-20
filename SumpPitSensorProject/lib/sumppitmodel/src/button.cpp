@@ -21,6 +21,10 @@ void Button::setup() {
 
 }
 
+bool Button::isPressed() {
+  return pressed;
+}
+
 void Button::setPressed(bool _pressed)
 {
   if (!pressed && _pressed) {
