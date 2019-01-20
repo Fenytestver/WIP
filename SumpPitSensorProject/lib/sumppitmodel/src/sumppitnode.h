@@ -14,6 +14,7 @@
 #include "localview.h"
 #include "state.h"
 #include "floatswitch.h"
+#include "systemtime.h"
 
 using namespace spn;
 
@@ -21,7 +22,9 @@ class SumpPitNode
 {
   public:
     /** Default constructor */
-    SumpPitNode(Siren* _siren,
+    SumpPitNode(
+    SystemTime* _systemTime,
+    Siren* _siren,
     Buzzer* _buzzer,
     LocalView* _localView,
     SumpPitSensor* _sensor,
@@ -51,11 +54,15 @@ class SumpPitNode
     virtual void alarm();
 
     virtual int getAlarmReason();
+    virtual int snooze(long duration);
+    virtual long snoozeRemaining();
   private: // methods
     void updateArmed();
     void alarmOff();
+    bool isSnoozed();
 
   protected:
+    SystemTime* systemTime;
     Siren* siren;
     LocalView* localView;
     SumpPitSensor* sensor;
@@ -63,6 +70,8 @@ class SumpPitNode
     ShutoffValve* shutoffValve;
     Buzzer* buzzer;
     FloatSwitch* floatSwitch;
+    long snoozeAt;
+    long snoozeDuration;
 
     void showState(State stateCopy);
   private: // variables

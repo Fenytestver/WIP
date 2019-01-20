@@ -245,7 +245,7 @@ void setup() {
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
   localView = new LocalView(display, systemTime, ledRed, ledGreen, ledYellow);
   floatSwitch = new RealFloatSwitch(PIN_FLOAT_SWITCH_1, PIN_FLOAT_SWITCH_2);
-  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
+  node = new SumpPitNode(systemTime, siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
   node->setup();
 
   if (PIN_PUMP_RPM_1 != PIN_NO_PIN) {
@@ -277,6 +277,7 @@ void setup() {
     success = Particle.function("setWaterCriPer", setWaterCriticalPercent);
     success = Particle.function("reboot", reboot);
     success = Particle.function("clearCalib", clearCalibration);
+    success = Particle.function("snooze", snooze);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
 
     Particle.variable("waterLow", waterLow);
@@ -552,4 +553,12 @@ int getEepromInt(int address, int def) {
 
 int getRawLevel(String extra) {
   return waterLevelSensor->readRaw();
+}
+
+int snooze(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    return node->snooze(extraInt);
+  }
+  return node->snoozeRemaining();
 }

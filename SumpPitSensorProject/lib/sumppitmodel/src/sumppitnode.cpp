@@ -1,6 +1,8 @@
 #include "sumppitnode.h"
 
-SumpPitNode::SumpPitNode(Siren* _siren,
+SumpPitNode::SumpPitNode(
+    SystemTime* _systemTime,
+    Siren* _siren,
     Buzzer* _buzzer,
     LocalView* _localView,
     SumpPitSensor* _sensor,
@@ -9,6 +11,7 @@ SumpPitNode::SumpPitNode(Siren* _siren,
     FloatSwitch* _floatSwitch)
 {
   //ctor
+  systemTime = _systemTime;
   siren = _siren;
   buzzer = _buzzer;
   localView = _localView;
@@ -16,7 +19,8 @@ SumpPitNode::SumpPitNode(Siren* _siren,
   inputs = _inputs;
   shutoffValve = _shutoffValve;
   floatSwitch = _floatSwitch;
-
+  snoozeAt = 0L;
+  snoozeDuration = 0L;
   state.mode = SPN_INITIALIZING;
   mainrenancePressListener = new OnMaintenancePress(this);
   disarmPressListener = new OnDisarmPress(this);
@@ -103,7 +107,11 @@ void SumpPitNode::updateArmed() {
   // check system status
   if (isCritical(state.alarmReason)) {
     if (state.mode != SPN_MAINTENANCE) {
-      siren->on();
+      if (!isSnoozed()) {
+        siren->on();
+      } else {
+        siren->off();
+      }
       // take care of the critical water level
       if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
         shutoffValve->activate();
@@ -114,7 +122,11 @@ void SumpPitNode::updateArmed() {
   } else if (isTechnical(state.alarmReason)) {
     // TODO: do we need this?
     if (state.mode != SPN_MAINTENANCE) {
-      siren->on();
+      if (!isSnoozed()) {
+        siren->on();
+      } else {
+        siren->off();
+      }
     }
   } else {
     siren->off();
@@ -135,4 +147,18 @@ void SumpPitNode::alarmOff() {
 int SumpPitNode::getAlarmReason()
 {
   return state.alarmReason;
+}
+
+int SumpPitNode::snooze(long duration) {
+  snoozeAt = systemTime->nowMillis();
+  snoozeDuration = duration;
+  return snoozeRemaining();
+}
+
+long SumpPitNode::snoozeRemaining() {
+  return snoozeAt + snoozeDuration - systemTime->nowMillis();
+}
+
+bool SumpPitNode::isSnoozed() {
+  return snoozeRemaining() > 0L;
 }

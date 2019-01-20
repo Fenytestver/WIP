@@ -84,7 +84,11 @@ Sensor node
     "reboot",
     // Clears the saved calibration values and reboots.
     // no parameters; returns 0;
-    "clearCalib"
+    "clearCalib",
+    // Snoozes the alarm; integer parameter: time to sleep in milliseconds;
+    // returns the remaining snooze time; no or invalid parameter will not change the
+    // remaining time.
+    "snooze"
   ]
 }
 ```
