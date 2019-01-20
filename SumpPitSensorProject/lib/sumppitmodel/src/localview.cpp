@@ -45,6 +45,7 @@ void LocalView::render(State state)
   ledYellow->setState(state.mode == Mode::SPN_MAINTENANCE);
   int len;
   switch (state.mode) {
+    case Mode::SPN_MAINTENANCE:
     case Mode::SPN_ARMED:
       renderArmed(state);
       break;
@@ -55,20 +56,6 @@ void LocalView::render(State state)
       break;
     case Mode::SPN_INITIALIZING:
       len = sprintf(message, SPN_DISPLAY_WELCOME);
-      message[len] = '\0';
-      display->displayMessage(message);
-      break;
-    case Mode::SPN_MAINTENANCE:
-      int levelInches = state.levelIn;
-      int levelPercent = state.levelPercent;
-      const char* pump1Status = state.pump1On == 0 ? "OFF" : " ON";
-      const char* pump2Status = state.pump2On == 0 ? "OFF" : " ON";
-
-      sprintf(pump1Rpm, "%d", state.pump1Rpm);
-      sprintf(pump2Rpm, "%d", state.pump2Rpm);
-      statusToString(state.alarmReason, statusString);
-      len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_MAINTENANCE_MODE_TEXT, levelInches, levelPercent,
-                pump1Status, pump1Rpm, pump2Status, pump2Rpm);
       message[len] = '\0';
       display->displayMessage(message);
       break;
@@ -193,7 +180,10 @@ void LocalView::renderArmed(State state)
         isCritical(state.alarmReason) ? "ALRT" : "WARN", statusString,
         lines[startLine], lines[(startLine + 1) % lineIndex], lines[(startLine + 2) % lineIndex]);
   } else {
-    len = sprintf(message, SPN_DISPLAY_NORMAL, SPN_DISPLAY_NORMAL_MODE_TEXT, levelInches, levelPercent,
+    len = sprintf(message, SPN_DISPLAY_NORMAL,
+        (state.mode == SPN_ARMED) ?
+            SPN_DISPLAY_NORMAL_MODE_TEXT : SPN_DISPLAY_MAINTENANCE_MODE_TEXT,
+        levelInches, levelPercent,
                 pump1Status, pump1Rpm, pump2Status, pump2Rpm);
   }
   message[len] = '\0';

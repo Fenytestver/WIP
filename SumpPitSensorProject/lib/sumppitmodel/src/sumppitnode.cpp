@@ -80,13 +80,9 @@ State* SumpPitNode::update()
   state.alarmReason = SPN_ALARM_NO_ALARM;
   inputs->update();
   switch (getMode()) {
+  case SPN_MAINTENANCE:
   case SPN_ARMED:
     updateArmed();
-    break;
-  case SPN_MAINTENANCE:
-    sensor->checkWaterLevelState(&state);
-    sensor->updatePump(&state);
-    showState(state);
     break;
   default:
     showState(state);
@@ -105,16 +101,20 @@ void SumpPitNode::updateArmed() {
 
   // check system status
   if (isCritical(state.alarmReason)) {
-    siren->on();
-    // take care of the critical water level
-    if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
-      shutoffValve->activate();
-    } else {
-      shutoffValve->deactivate();
+    if (state.mode != SPN_MAINTENANCE) {
+      siren->on();
+      // take care of the critical water level
+      if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
+        shutoffValve->activate();
+      } else {
+        shutoffValve->deactivate();
+      }
     }
   } else if (isTechnical(state.alarmReason)) {
     // TODO: do we need this?
-    siren->on();
+    if (state.mode != SPN_MAINTENANCE) {
+      siren->on();
+    }
   } else {
     siren->off();
   }
