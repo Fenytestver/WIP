@@ -1,6 +1,7 @@
 Sensor node
 ===========
 
+```
 "variables": {
     // Returns the current waterLow value; see setWaterLow function
 		"waterLow": "int32",
@@ -75,3 +76,4 @@ Sensor node
     "clearCalib"
   ]
 }
+```
