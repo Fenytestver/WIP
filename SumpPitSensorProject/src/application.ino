@@ -177,6 +177,20 @@ char statusString[SPN_STATUS_BITS + 1];
 char publishString[256];
 long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;
+// local staus variable copies
+int mode;
+int rpm1;
+int rpm2;
+bool pump1On;
+bool pump2On;
+long alarmReason;
+int pump1Uptime;
+int pump2Uptime;
+int levelIn;
+int levelPercent;
+bool leak;
+bool shutoffValveState;
+bool floatSwitchState;
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
@@ -272,20 +286,20 @@ void setup() {
     Particle.variable("waterCriPer", waterPercentCritical);
 
     Particle.variable("deviceId", deviceId);
-    Particle.variable("mode", node->state.mode);
-    Particle.variable("rpm1", node->state.pump1Rpm);
-    Particle.variable("rpm2", node->state.pump2Rpm);
-    Particle.variable("pump1On", node->state.pump1On);
-    Particle.variable("pump2On", node->state.pump2On);
+    Particle.variable("mode", mode);
+    Particle.variable("rpm1", rpm1);
+    Particle.variable("rpm2", rpm2);
+    Particle.variable("pump1On", pump1On);
+    Particle.variable("pump2On", pump2On);
     Particle.variable("status", localView->statusString);
 
-    Particle.variable("p1Uptime", node->state.pump1Uptime);
-    Particle.variable("p2Uptime", node->state.pump2Uptime);
-    Particle.variable("levelIn", node->state.levelIn);
-    Particle.variable("levelP", node->state.levelPercent);
-    Particle.variable("leak", node->state.leak);
-    Particle.variable("shutoffValve", node->state.shutoffValve);
-    Particle.variable("floatSwitch", node->state.floatSwitch);
+    Particle.variable("p1Uptime", pump1Uptime);
+    Particle.variable("p2Uptime", pump2Uptime);
+    Particle.variable("levelIn", levelIn);
+    Particle.variable("levelP", levelPercent);
+    Particle.variable("leak", leak);
+    Particle.variable("shutoffValve", shutoffValveState);
+    Particle.variable("floatSwitch", floatSwitchState);
   }
 
   Serial.begin(115200);
@@ -322,6 +336,18 @@ void loop() {
     Particle.process();
   }
   State* state = node->update();
+  mode = state->mode;
+  rpm1 = state->pump1Rpm;
+  rpm2 = state->pump2Rpm;
+  pump1Uptime = state->pump1Uptime;
+  pump2Uptime = state->pump2Uptime;
+  levelIn = state->levelIn;
+  levelPercent = state->levelPercent;
+  leak = state->leak;
+  shutoffValveState = state->shutoffValve;
+  floatSwitchState = state->floatSwitch;
+  pump1On = state->pump1On;
+  pump2On = state->pump2On;
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
     if (state->alarmReason != lastStatus) {
