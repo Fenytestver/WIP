@@ -19,18 +19,29 @@ Sensor node
     // 0,1,2...:
     // SPN_INITIALIZING, SPN_DISARMED, SPN_ARMED, SPN_MAINTENANCE, SPN_SYS_ERROR
 		"mode": "int32",
-
+    // Pump 1 RPM
 		"rpm1": "int32",
+    // Pump 2 RPM
 		"rpm2": "int32",
+    // If pump 1 is on
 		"pump1On": "int32",
+    // If pump 2 is on
 		"pump2On": "int32",
+    // The current status string
 		"status": "string",
+    // Pump 1 uptime in milliseconds
 		"p1Uptime": "int32",
+    // Pump 2 uptime in milliseconds
 		"p2Uptime": "int32",
+    // Water level in inches
 		"levelIn": "int32",
+    // Water level percentage
 		"levelP": "int32",
+    // If leak is detected
 		"leak": "bool",
+    // If shutoff valve is on
 		"shutoffValve": "bool",
+    // If the float switch is triggered
 		"floatSwitch": "bool"
 	},
 	"functions": [
