@@ -13,7 +13,7 @@ Sensor node
 		"waterHighIn": "int32",
     // Returns the current waterCriPer value; see setWaterCriPer function
 		"waterCriPer": "int32",
-    // Returns the current waterHigh value; see setWaterHigh function
+    // Returns the current device id value; see setDeviceId function
 		"deviceId": "int32",
     // Returns the current system mode;
     // 0,1,2...:
@@ -66,7 +66,7 @@ Sensor node
     // Sets the value (analogRead result) where 'water low' is
     // integer parameter; returns the saved value
     "setWaterLow",
-    // Sets the value (analogRead result) where 'high low' is
+    // Sets the value (analogRead result) where 'water high' is
     // integer parameter; returns the saved value
     "setWaterHigh",
     // Sets the value (inches) to return at 'water low'
