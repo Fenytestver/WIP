@@ -236,21 +236,18 @@ class RealBuzzer : public Buzzer {
     }
 
     void beep() {
-      Buzzer:beep();
       on();
       delay(50);
       off();
     }
 
     void on() {
-      Buzzer::on();
       if (pin != PIN_NO_PIN) {
         digitalWrite(pin, HIGH);
       }
     }
 
     void off() {
-      Buzzer::off();
       if (pin != PIN_NO_PIN) {
         digitalWrite(pin, LOW);
       }
