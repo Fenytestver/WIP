@@ -14,6 +14,7 @@ class Siren
     virtual void on();
     /** Turn off the alarm. */
     virtual void off();
+    virtual void update();
   protected:
 
   private:

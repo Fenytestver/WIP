@@ -220,7 +220,7 @@ void setup() {
 
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
-  siren = new RealSiren(PIN_SIREN);
+  siren = new RealSiren(systemTime, PIN_SIREN);
   buzzer = new RealBuzzer(PIN_BUZZER);
   leakSensor = new RealLeakSensor(PIN_LEAK_1, PIN_LEAK_2, PIN_LEAK_3);
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);

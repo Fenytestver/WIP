@@ -79,6 +79,7 @@ State* SumpPitNode::update()
 {
   state.alarmReason = SPN_ALARM_NO_ALARM;
   inputs->update();
+  siren->update();
   switch (getMode()) {
   case SPN_MAINTENANCE:
   case SPN_ARMED:

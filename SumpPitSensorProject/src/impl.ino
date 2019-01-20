@@ -151,40 +151,47 @@ class HardwarePinLed : public Led {
     int _pin;
 };
 
-class RealSiren : public Buzzer {
+class RealSiren : public Siren {
   public:
-    RealSiren(int _pin) : Buzzer() {
+    RealSiren(SystemTime* _systemTime, int _pin) : Siren() {
       pin = _pin;
+      turnedOn = false;
+      systemTime = _systemTime;
     }
 
     void setup() {
-      Buzzer::setup();
+      Siren::setup();
       if (pin != PIN_NO_PIN) {
         pinMode(pin, OUTPUT);
       }
     }
 
     void on() {
-      Buzzer::on();
-      if (pin != PIN_NO_PIN) {
-        digitalWrite(pin, HIGH);
-      }
+      Siren::on();
+      turnedOn = true;
     }
 
     void off() {
-      Buzzer::off();
+      turnedOn = false;
+      Siren::off();
       if (pin != PIN_NO_PIN) {
         digitalWrite(pin, LOW);
       }
     }
-
-    void beep() {
-      on();
-      delay(50);
-      off();
+    void update() {
+      Siren::update();
+      if (pin != PIN_NO_PIN && turnedOn) {
+        digitalWrite(pin, isTime() ? HIGH : LOW);
+      }
     }
   private:
     int pin;
+    bool turnedOn;
+    SystemTime* systemTime;
+    bool isTime() {
+      long now = systemTime->nowMillis();
+      return ((now / 1000) % 2) == 0;
+    }
 };
 
 class RealShutoffValve : public ShutoffValve {
@@ -215,11 +222,41 @@ class RealShutoffValve : public ShutoffValve {
     bool active;
 };
 
-class RealBuzzer : public RealSiren {
+class RealBuzzer : public Buzzer {
   public:
-    RealBuzzer(int _pin) : RealSiren(_pin) {
-
+    RealBuzzer(int _pin) : Buzzer() {
+      pin = _pin;
     }
+
+    void setup() {
+      Buzzer::setup();
+      if (pin != PIN_NO_PIN) {
+        pinMode(pin, OUTPUT);
+      }
+    }
+
+    void beep() {
+      Buzzer:beep();
+      on();
+      delay(50);
+      off();
+    }
+
+    void on() {
+      Buzzer::on();
+      if (pin != PIN_NO_PIN) {
+        digitalWrite(pin, HIGH);
+      }
+    }
+
+    void off() {
+      Buzzer::off();
+      if (pin != PIN_NO_PIN) {
+        digitalWrite(pin, LOW);
+      }
+    }
+  private:
+    int pin;
 };
 
 class RealSystemTime : public SystemTime {

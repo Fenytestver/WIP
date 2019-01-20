@@ -14,7 +14,9 @@ void Siren::setup()
 {
 
 }
-
+void Siren::update() {
+  
+}
 void Siren::on()
 {
 
