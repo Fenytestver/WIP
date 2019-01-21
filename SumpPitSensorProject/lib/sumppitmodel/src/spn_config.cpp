@@ -21,6 +21,11 @@ bool spn::isCritical(int reason)
   return (reason & SPN_ALERT_ALL_CRITICAL) != SPN_ALERT_NO_ALERT;
 }
 
+bool spn::isCriticalShutoff(int reason)
+{
+  return (reason & SPN_ALERT_ALL_CRITICAL_SHUTOFF) != SPN_ALERT_NO_ALERT;
+}
+
 bool spn::isTechnical(int reason)
 {
   return (reason & SPN_ALERT_ALL_TECHNICAL) != SPN_ALERT_NO_ALERT;

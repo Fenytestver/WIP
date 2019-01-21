@@ -79,11 +79,17 @@
    | SPN_ALARM_PUMP_OVERWHELMED_CRITICAL \
    | SPN_ALARM_PUMP_FAILED_CRITICAL)
 
+   #define SPN_ALERT_ALL_CRITICAL_SHUTOFF \
+     (SPN_ALARM_WATER_CRITICAL \
+      | SPN_ALARM_PUMP_OVERWHELMED_CRITICAL)
+
+
 namespace spn {
   int abso(int a);
   void sb(int& flag, int mask, bool condition);
   bool isTechnical(int reason);
   bool isCritical(int reason);
+  bool isCriticalShutoff(int reason);
   long mapp(long x, long in_min, long in_max, long out_min, long out_max);
   void statusToString(int status, char* out);
   long millisToSec(long millis);

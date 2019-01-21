@@ -120,7 +120,7 @@ void SumpPitNode::updateArmed() {
         siren->off();
       }
       // take care of the critical water level
-      if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
+      if (isCriticalShutoff(state.alarmReason)) {
         shutoffValve->activate();
       } else {
         shutoffValve->deactivate();
@@ -132,7 +132,7 @@ void SumpPitNode::updateArmed() {
       if (!isSnoozed()
           && !inputs->maintenanceButton->isPressed()
           && !inputs->armResetButton->isPressed()) {
-        // no siren for technical.    
+        // no siren for technical.
         //siren->on();
       } else {
         siren->off();
