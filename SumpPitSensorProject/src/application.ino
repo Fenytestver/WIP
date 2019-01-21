@@ -131,9 +131,9 @@ SYSTEM_MODE(MANUAL);
 #define EEPROM_WATER_HIGH_VALUE (sizeof(int) * 4)
 #define EEPROM_WATER_LOW_IN (sizeof(int) * 5)
 #define EEPROM_WATER_HIGH_IN (sizeof(int) * 6)
-#define EEPROM_WATER_CRITICAL_PERCENT (sizeof(int) * 7)
+#define EEPROM_WATER_HIGH_PERCENT (sizeof(int) * 7)
 
-#define EEPROM_THE_ONLY_VALID_VALUE 112
+#define EEPROM_THE_ONLY_VALID_VALUE 113
 
 int deviceId;
 RealSiren* siren;
@@ -169,7 +169,7 @@ int waterLow;
 int waterHigh;
 int waterLowIn;
 int waterHighIn;
-int waterPercentCritical;
+int waterPercentHigh;
 
 int lastStatus = -1;
 long lastStatusTime = 0L;
@@ -197,7 +197,7 @@ void saveEeprom() {
   EEPROM.put(EEPROM_WATER_HIGH_VALUE, (int)waterHigh);
   EEPROM.put(EEPROM_WATER_LOW_IN, (int)waterLowIn);
   EEPROM.put(EEPROM_WATER_HIGH_IN, (int)waterHighIn);
-  EEPROM.put(EEPROM_WATER_CRITICAL_PERCENT, (int)waterPercentCritical);
+  EEPROM.put(EEPROM_WATER_HIGH_PERCENT, (int)waterPercentHigh);
 }
 
 // setup() runs once, when the device is first turned on.
@@ -216,7 +216,7 @@ void setup() {
   waterHigh = getEepromInt(EEPROM_WATER_HIGH_VALUE, WATER_DIST_HIGH);
   waterLowIn = getEepromInt(EEPROM_WATER_LOW_IN, 15);
   waterHighIn = getEepromInt(EEPROM_WATER_HIGH_IN, 75);
-  waterPercentCritical = getEepromInt(EEPROM_WATER_CRITICAL_PERCENT, SPN_WATER_CRITICAL);
+  waterPercentHigh = getEepromInt(EEPROM_WATER_HIGH_PERCENT, SPN_WATER_HIGH);
 
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
@@ -231,7 +231,7 @@ void setup() {
   disarmButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_3);
   shutoffValve = new RealShutoffValve();
   waterLevelSensor = new AnalogWaterLevelSensor(
-    PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn, waterPercentCritical);
+    PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn, waterPercentHigh);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
   rpmSensor1 = new RealRpmSensor(PIN_PUMP_RPM_1, systemTime);
   rpmSensor2 = new RealRpmSensor(PIN_PUMP_RPM_2, systemTime);
@@ -274,8 +274,9 @@ void setup() {
     success = Particle.function("setWaterHigh", setWaterHigh);
     success = Particle.function("setWaterLowIn", setWaterLowIn);
     success = Particle.function("setWaterHighIn", setWaterHighIn);
-    success = Particle.function("setWaterCriPer", setWaterCriticalPercent);
+    success = Particle.function("setWaterLevels", setWaterLevels);
     success = Particle.function("reboot", reboot);
+    success = Particle.function("calibrate", startCalib);
     success = Particle.function("clearCalib", clearCalibration);
     success = Particle.function("snooze", snooze);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
@@ -284,7 +285,7 @@ void setup() {
     Particle.variable("waterHigh", waterHigh);
     Particle.variable("waterLowIn", waterLowIn);
     Particle.variable("waterHighIn", waterHighIn);
-    Particle.variable("waterCriPer", waterPercentCritical);
+    Particle.variable("waterHighP", waterPercentHigh);
 
     Particle.variable("deviceId", deviceId);
     Particle.variable("mode", mode);
@@ -331,6 +332,11 @@ int lcdInit(String extra) {
   return 0;
 }
 
+int startCalib(String extra) {
+  calibrate();
+  return 0;
+}
+
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   if (CLOUD_ENABLED) {
@@ -371,6 +377,15 @@ void loop() {
       sendFullStatus(state);
       sendStatus = false;
     }
+  }
+  if (armButton->isPressed() && disarmButton->isPressed() && maintenanceButton->isPressed()) {
+    while (armButton->isPressed() || disarmButton->isPressed() || maintenanceButton->isPressed()) {
+      armButton->update();
+      disarmButton->update();
+      maintenanceButton->update();
+      Particle.process();
+    }
+    calibrate();
   }
 
   /*Serial.print("-----@");
@@ -452,12 +467,25 @@ int setWaterLowIn(String extra) {
   }
   return waterLowIn;
 }
-int setWaterCriticalPercent(String extra) {
-  int extraInt = stringToInt(extra);
-  if (extraInt > 0) {
-    waterPercentCritical = extraInt;
+int setWaterLevels(String extra) {
+  if (extra == nullptr) {
+    return -1;
   }
-  return waterPercentCritical;
+  int comma = extra.indexOf(',');
+  if (comma == -1) {
+    return -2;
+  }
+  int first = stringToInt(extra.substring(0, comma));
+  int second = stringToInt(extra.substring(comma + 1));
+
+  if (first > 0 && second > 0) {
+    int diffToSplit = SPN_WATER_CRITICAL - SPN_WATER_LOW;
+    double center = (double)SPN_WATER_LOW +
+      ((double)first)*((double)diffToSplit / (double)(first + second));
+    waterPercentHigh = (int)center + SPN_WATER_VARIANCE;
+    return waterPercentHigh;
+  }
+  return -3;
 }
 void connectToCloud() {
   if (CLOUD_ENABLED) {
@@ -561,4 +589,141 @@ int snooze(String extra) {
     return node->snooze(extraInt);
   }
   return node->snoozeRemaining();
+}
+
+class BoolOnPress : public OnButtonPressListener {
+  public:
+    BoolOnPress(bool& _b) {
+      b = _b;
+      b = false;
+    }
+    void onPress() {
+      b=true;
+    }
+  private:
+    bool b;
+};
+
+#define C_NONE -1
+#define C_START 0
+#define C_STAGE_1 1
+#define C_STAGE_2 2
+int calibState=C_NONE;
+// bool armPressed = false;
+// bool disarmPressed = false;
+// BoolOnPress okOnPress(armPressed);
+// BoolOnPress cancelOnPress(disarmPressed);
+
+void calibrate() {
+  bool finished = false;
+
+  display->displayMessage(
+    "Calibration\n"
+    "Press arm to start.\nDisarm to cancel");
+  Button* button = getPressedButton(armButton, disarmButton);
+  if (button == disarmButton) {
+    return;
+  }
+  // display->displayMessage(
+  //   "Move sensor to bottom,\n"
+  //   "then mount in place."
+  //   "Press arm to save.\nDisarm to cancel");
+  // button = getPressedButton(armButton, disarmButton);
+  // if (button == disarmButton) {
+  //   return;
+  // }
+  int highest = -1;
+  char msg[22*4];
+  while (!isPressed(armButton)) {
+    int current = waterLevelSensor->readRaw();
+    if (current > highest) {
+      highest = current;
+    }
+    sprintf(msg, "Bottom: %d\nPress arm to save.", highest);
+    display->displayMessage(msg);
+    Particle.process();
+  }
+  int mountpoint = waterLevelSensor->readRaw();
+  int offset = highest - mountpoint;
+  int pumpOnAt;
+  int pumpOffAt;
+  finished = false;
+  display->displayMessage("Waiting for pump to turn on.");
+  while (!finished) {
+    pump1->update();
+    pump2->update();
+    if (multiPump->isTurnedOn(0) || multiPump->isTurnedOn(1)) {
+      pumpOnAt = waterLevelSensor->readRaw();
+      sprintf(msg, "Pump turned on at:\n%d\n"
+          "Waiting for pump to\nturn off.");
+      display->displayMessage(msg);
+      while (!finished
+          && (multiPump->isTurnedOn(0) || multiPump->isTurnedOn(1))) {
+            pump1->update();
+            pump2->update();
+        Particle.process();
+      }
+      if (!multiPump->isTurnedOn(0) && !multiPump->isTurnedOn(1)) {
+        pumpOffAt = waterLevelSensor->readRaw();
+        finished = true;
+      } else {
+        return;
+      }
+    }
+    Particle.process();
+  }
+  sprintf(msg, "Bottom: %d Mnt:%d\n"
+      "POn: %d POff: %d\n"
+      "Press arm to save.\nDisarm to cancel", highest, mountpoint, pumpOnAt, pumpOffAt);
+  display->displayMessage(msg);
+  button = getPressedButton(armButton, disarmButton);
+  if (button == disarmButton) {
+    return;
+  }
+  finished = true;
+  waterLow = (pumpOffAt);
+  waterHigh = (pumpOnAt);
+  double inchesLowHigh = 20.0;
+  double inchesHighCritical = 15.0;
+  double inchPerInt = (double)inchesLowHigh / (double)(pumpOnAt - pumpOffAt);
+  double inchOffset = (int)((double)offset * inchPerInt);
+  waterLowIn = (inchOffset + (int)((double)pumpOffAt * inchPerInt));
+  waterHighIn = (inchOffset + (int)((double)pumpOnAt * inchPerInt));
+
+  display->displayMessage("Settings saved");
+  reboot("");
+}
+void waitForButton(Button* b1) {
+  getPressedButton(b1, nullptr);
+}
+bool isPressed(Button *b) {
+  b->update();
+  bool pressed = b->isPressed();
+  while (b->isPressed()) {
+    b->update();
+    Particle.process();
+  }
+  return pressed;
+}
+Button* getPressedButton(Button* b1, Button*b2) {
+  bool pressed = false;
+  while (!pressed) {
+    b1->update();
+    b2->update();
+    if (b1 != nullptr && b1->isPressed()) {
+      while (b1->isPressed()){
+        b1->update();
+        Particle.process();
+      }
+      return b1;
+    }
+    if (b2 != nullptr && b2->isPressed()) {
+      while (b2->isPressed()){
+        b2->update();
+        Particle.process();
+      }
+      return b2;
+    }
+    Particle.process();
+  }
 }

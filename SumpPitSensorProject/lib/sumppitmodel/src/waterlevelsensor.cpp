@@ -1,16 +1,16 @@
 #include "waterlevelsensor.h"
 
-WaterLevelSensor::WaterLevelSensor(int _waterLowIn, int _waterHighIn, int _waterPercentCritical)
+WaterLevelSensor::WaterLevelSensor(int _waterLowIn, int _waterHighIn, int _waterPercentHigh)
 {
   //ctor
   lastAlarm = SPN_ALARM_NO_ALARM;
   waterLowIn = _waterLowIn;
   waterHighIn = _waterHighIn;
-  waterPercentCritical = _waterPercentCritical;
+  waterPercentHigh = _waterPercentHigh;
 }
 
-int WaterLevelSensor::getWaterPercentCritical() {
-  return waterPercentCritical;
+int WaterLevelSensor::getWaterPercentHigh() {
+  return waterPercentHigh;
 }
 
 WaterLevelSensor::~WaterLevelSensor()
@@ -25,7 +25,7 @@ short WaterLevelSensor::measureLevel()
 int WaterLevelSensor::checkState(State* state)
 {
   int level = measureLevel();
-  state->levelIn = spn::mapp((long)level, SPN_WATER_LOW, SPN_WATER_HIGH, waterLowIn, waterHighIn);
+  state->levelIn = spn::mapp((long)level, SPN_WATER_LOW, waterPercentHigh, waterLowIn, waterHighIn);
   state->levelPercent = level;
 
   if (state->mode != SPN_ARMED) {
@@ -42,7 +42,7 @@ int WaterLevelSensor::checkState(State* state)
     lastAlarm = currentAlarm;
   } else if (lastAlarm == SPN_ALARM_WATER_CRITICAL
              // alarm wants to turn off, but it needs to reach a threshold
-             && level < waterPercentCritical - SPN_WATER_VARIANCE) {
+             && level < SPN_WATER_CRITICAL - SPN_WATER_VARIANCE) {
     lastAlarm = currentAlarm;
   } else if (lastAlarm == SPN_ALARM_WATER_LOW
              && level > SPN_WATER_LOW + SPN_WATER_VARIANCE) {

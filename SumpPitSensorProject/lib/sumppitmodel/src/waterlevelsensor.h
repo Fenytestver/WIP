@@ -12,20 +12,20 @@ class WaterLevelSensor
 {
   public:
     /** Default constructor */
-    WaterLevelSensor(int _waterLowIn, int _waterHighIn, int _waterPercentCritical);
+    WaterLevelSensor(int _waterLowIn, int _waterHighIn, int _waterPercentHigh);
     /** Default destructor */
     virtual ~WaterLevelSensor();
     /** @return the water level in percentage. */
     virtual short measureLevel();
     virtual int checkState(State* state);
-    virtual int getWaterPercentCritical();
+    virtual int getWaterPercentHigh();
   protected:
 
   private:
     int lastAlarm;
     int waterLowIn;
     int waterHighIn;
-    int waterPercentCritical;
+    int waterPercentHigh;
 };
 
 #endif // WATERLEVELSENSOR_H

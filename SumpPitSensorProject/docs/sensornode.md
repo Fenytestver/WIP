@@ -75,10 +75,9 @@ Sensor node
     // Sets the value (inches) to return at 'water high'
     // integer parameter; returns the saved value
     "setWaterHighIn",
-    // Sets the value (percent) where the 'critical water level' will be placed
-    // integer parameter; returns the saved value.
-    // See SPN_WATER_LOW, SPN_WATER_HIGH, SPN_WATER_CRITICAL values is spn_config.h
-    "setWaterCriPer",
+    // Required for calibration. Set "[low-high distance],[high-critical distance]" values as
+    // 2 comma separated int. Calculated high percentage is returned when values are accepted.
+    "setWaterLevels",
     // Saves current settings to EEPROM and reboots the system.
     // no parameters; does not return any value, request will fail.
     "reboot",

@@ -28,15 +28,16 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
     @param _waterHighIn maximum water in inches
     */
     AnalogWaterLevelSensor(int _pin, double _min, double _max,
-      int _waterLowIn, int _waterHighIn, int _waterPercentCritical)
-        : WaterLevelSensor(_waterLowIn, _waterHighIn, _waterPercentCritical){
+      int _waterLowIn, int _waterHighIn, int _waterPercentHigh)
+        : WaterLevelSensor(_waterLowIn, _waterHighIn, _waterPercentHigh){
       min = _min;
       max = _max;
       pin = _pin;
+      waterPercentHigh = _waterPercentHigh;
     }
     short measureLevel() {
       if (pin != PIN_NO_PIN) {
-        return (int) map(analogRead(pin), (double)min, (double)max, (double)SPN_WATER_LOW, (double)SPN_WATER_HIGH);
+        return (int) map(analogRead(pin), (double)min, (double)max, (double)SPN_WATER_LOW, (double)waterPercentHigh);
       } else {
         return SPN_WATER_LOW + 1;
       }
@@ -61,7 +62,7 @@ class AnalogWaterLevelSensor : public WaterLevelSensor {
     int pin;
     int min;
     int max;
-
+    int waterPercentHigh;
 };
 
 class RealVoltageSensor : public VoltageSensor {
