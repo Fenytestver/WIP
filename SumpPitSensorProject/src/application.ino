@@ -132,8 +132,9 @@ SYSTEM_MODE(MANUAL);
 #define EEPROM_WATER_LOW_IN (sizeof(int) * 5)
 #define EEPROM_WATER_HIGH_IN (sizeof(int) * 6)
 #define EEPROM_WATER_HIGH_PERCENT (sizeof(int) * 7)
+#define EEPROM_WATER_LOW_HIGH_DIST (sizeof(int) * 9)
 
-#define EEPROM_THE_ONLY_VALID_VALUE 113
+#define EEPROM_THE_ONLY_VALID_VALUE 115
 
 int deviceId;
 RealSiren* siren;
@@ -173,6 +174,7 @@ int waterHigh;
 int waterLowIn;
 int waterHighIn;
 int waterPercentHigh;
+float waterLowHighDist;
 
 int lastStatus = -1;
 long lastStatusTime = 0L;
@@ -202,6 +204,7 @@ void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_IN, (int)waterLowIn);
   EEPROM.put(EEPROM_WATER_HIGH_IN, (int)waterHighIn);
   EEPROM.put(EEPROM_WATER_HIGH_PERCENT, (int)waterPercentHigh);
+  EEPROM.put(EEPROM_WATER_LOW_HIGH_DIST, (float)waterLowHighDist);
 }
 
 // setup() runs once, when the device is first turned on.
@@ -221,6 +224,7 @@ void setup() {
   waterLowIn = getEepromInt(EEPROM_WATER_LOW_IN, 15);
   waterHighIn = getEepromInt(EEPROM_WATER_HIGH_IN, 75);
   waterPercentHigh = getEepromInt(EEPROM_WATER_HIGH_PERCENT, SPN_WATER_HIGH);
+  waterLowHighDist = getEepromFloat(EEPROM_WATER_LOW_HIGH_DIST, (float)20.0);
 
   systemTime = new RealSystemTime();
   display = new LcdDisplay(DISPLAY_I2C_ADDR, DISPLAY_COLS, DISPLAY_ROWS);
@@ -507,6 +511,7 @@ int setWaterLevels(String extra) {
     int diffToSplit = SPN_WATER_CRITICAL - SPN_WATER_LOW;
     double center = (double)SPN_WATER_LOW +
       ((double)first)*((double)diffToSplit / (double)(first + second));
+    waterLowHighDist = first;
     waterPercentHigh = (int)center + SPN_WATER_VARIANCE;
     return waterPercentHigh;
   }
@@ -597,6 +602,15 @@ void sendFullStatus(State* state) {
 
 int getEepromInt(int address, int def) {
   int tmp = -1;
+  EEPROM.get(address, tmp);
+  if (tmp > -1) {
+    return tmp;
+  }
+  return def;
+}
+
+float getEepromFloat(int address, float def) {
+  float tmp = -1;
   EEPROM.get(address, tmp);
   if (tmp > -1) {
     return tmp;
@@ -708,8 +722,7 @@ void calibrate() {
   finished = true;
   waterLow = (pumpOffAt);
   waterHigh = (pumpOnAt);
-  double inchesLowHigh = 20.0;
-  double inchesHighCritical = 15.0;
+  double inchesLowHigh = waterLowHighDist;
   double inchPerInt = (double)inchesLowHigh / (double)(pumpOnAt - pumpOffAt);
   double inchOffset = (int)((double)offset * inchPerInt);
   waterLowIn = (inchOffset + (int)((double)pumpOffAt * inchPerInt));
