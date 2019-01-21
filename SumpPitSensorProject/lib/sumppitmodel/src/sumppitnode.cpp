@@ -8,7 +8,8 @@ SumpPitNode::SumpPitNode(
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
     ShutoffValve* _shutoffValve,
-    FloatSwitch* _floatSwitch)
+    FloatSwitch* _floatSwitch,
+    VoltageSensor* _systemVoltage)
 {
   //ctor
   systemTime = _systemTime;
@@ -19,6 +20,7 @@ SumpPitNode::SumpPitNode(
   inputs = _inputs;
   shutoffValve = _shutoffValve;
   floatSwitch = _floatSwitch;
+  systemVoltage = _systemVoltage;
   snoozeAt = 0L;
   snoozeDuration = 0L;
   state.mode = SPN_INITIALIZING;
@@ -100,6 +102,9 @@ void SumpPitNode::updateArmed() {
   sensor->updatePump(&state);
   state.floatSwitch = floatSwitch->isTriggered();
   state.alarmReason |= sensor->checkState(&state);
+  if (systemVoltage->getVoltage() < SPN_PUMP_LOW_VOLTAGE_THRESHOLD) {
+    state.alarmReason |= SPN_ALARM_SYSTEM_ERROR;
+  }
   if (state.floatSwitch) {
     state.alarmReason |= SPN_ALARM_FLOAT_SWITCH_CRITICAL;
   }
@@ -127,7 +132,8 @@ void SumpPitNode::updateArmed() {
       if (!isSnoozed()
           && !inputs->maintenanceButton->isPressed()
           && !inputs->armResetButton->isPressed()) {
-        siren->on();
+        // no siren for technical.    
+        //siren->on();
       } else {
         siren->off();
       }

@@ -17,7 +17,18 @@
 
 #define PIN_NO_PIN -1
 #define PUB_SHUTOFF_STATE "shutoffValve"
-
+class PMICVoltageSensor : public VoltageSensor {
+  public:
+    PMICVoltageSensor(PMIC* _pmic) {
+      pmic = _pmic;
+    }
+    float getVoltage() {
+      byte systemStatus = pmic->getSystemStatus();
+	    return ((systemStatus & 0xc0) == 0x40) ? 12.0 : 0.0;
+    }
+  private:
+    PMIC* pmic;
+};
 class AnalogWaterLevelSensor : public WaterLevelSensor {
   public:
     /**

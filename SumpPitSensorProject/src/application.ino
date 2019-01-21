@@ -159,6 +159,9 @@ MultiPump* multiPump;
 LcdDisplay* display;
 LocalView* localView;
 RealFloatSwitch* floatSwitch;
+PMICVoltageSensor* systemVoltage;
+
+PMIC power;
 
 // TODO: 2 leak sensors
 SumpPitSensor* sensor;
@@ -191,6 +194,7 @@ int levelPercent;
 bool leak;
 bool shutoffValveState;
 bool floatSwitchState;
+bool lostVoltage = false;
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
@@ -245,7 +249,8 @@ void setup() {
   sensor = new SumpPitSensor(waterLevelSensor, 1, leakSensor, 1, multiPump);
   localView = new LocalView(display, systemTime, ledRed, ledGreen, ledYellow);
   floatSwitch = new RealFloatSwitch(PIN_FLOAT_SWITCH_1, PIN_FLOAT_SWITCH_2);
-  node = new SumpPitNode(systemTime, siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
+  systemVoltage = new PMICVoltageSensor(&power);
+  node = new SumpPitNode(systemTime, siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch, systemVoltage);
   node->setup();
 
   if (PIN_PUMP_RPM_1 != PIN_NO_PIN) {
@@ -342,6 +347,7 @@ void loop() {
   if (CLOUD_ENABLED) {
     Particle.process();
   }
+
   State* state = node->update();
   mode = state->mode;
   rpm1 = state->pump1Rpm;
@@ -388,6 +394,14 @@ void loop() {
     calibrate();
   }
 
+  if (systemVoltage->getVoltage() < 1.0) {
+    lostVoltage = true;
+  } else if (lostVoltage == true) {
+    delay(500);
+    lcdInit("");
+    lostVoltage = false;
+  }
+
   /*Serial.print("-----@");
   Serial.print(systemTime->nowMillis());
   Serial.println("-----");
@@ -415,6 +429,17 @@ int reboot(String extra) {
 int clearCalibration(String extra) {
   EEPROM.put(EEPROM_VALID, 0);
   reboot("");
+}
+
+double stringToDouble(String extra) {
+  double result = -1;
+  if (extra.length() > 0) {
+    double tmp = extra.toFloat();
+    if (tmp > 0) {
+      result = tmp;
+    }
+  }
+  return result;
 }
 
 int stringToInt(String extra) {
@@ -475,8 +500,8 @@ int setWaterLevels(String extra) {
   if (comma == -1) {
     return -2;
   }
-  int first = stringToInt(extra.substring(0, comma));
-  int second = stringToInt(extra.substring(comma + 1));
+  double first = stringToDouble(extra.substring(0, comma));
+  double second = stringToDouble(extra.substring(comma + 1));
 
   if (first > 0 && second > 0) {
     int diffToSplit = SPN_WATER_CRITICAL - SPN_WATER_LOW;

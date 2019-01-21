@@ -34,7 +34,7 @@
 #define SPN_WATER_HIGH 30
 // Critical water level.
 #define SPN_WATER_CRITICAL 80
-#define SPN_WATER_VARIANCE 2
+#define SPN_WATER_VARIANCE 5
 #define SPN_WATER_LEVEL_TOLERANCE_PERCENT 5
 // Magic, do not touch.
 // Alert levels
@@ -66,7 +66,8 @@
    | SPN_ALARM_WATER_LOW \
    | SPN_ALARM_PUMP_OVERWHELMED_TECHNICAL \
    | SPN_ALARM_PUMP_FAILED_TECHNICAL \
-   | SPN_ALARM_LEAK)
+   | SPN_ALARM_LEAK \
+   | SPN_ALARM_SYSTEM_ERROR)
 
 // all critical alerts
 #define SPN_ALERT_ALL_CRITICAL \

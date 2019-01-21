@@ -30,7 +30,8 @@ class SumpPitNode
     SumpPitSensor* _sensor,
     SumpPitInputs* _inputs,
     ShutoffValve* _shutoffValve,
-    FloatSwitch* _floatSwitch);
+    FloatSwitch* _floatSwitch,
+    VoltageSensor* _systemVoltage);
 
     // :( pls do not edit from outside)
     State state;
@@ -70,6 +71,7 @@ class SumpPitNode
     ShutoffValve* shutoffValve;
     Buzzer* buzzer;
     FloatSwitch* floatSwitch;
+    VoltageSensor* systemVoltage;
     long snoozeAt;
     long snoozeDuration;
 
