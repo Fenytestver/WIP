@@ -121,6 +121,7 @@ void LocalView::renderArmed(State state)
     if ((state.alarmReason & SPN_ALARM_LEAK) != 0) {
       sprintf(lines[lineIndex++], "Leak detected!");
     }
+
     if ((state.alarmReason & SPN_ALARM_WATER_CRITICAL) != 0) {
       sprintf(lines[lineIndex++], "Water alert!%d\"%d%%", state.levelIn, state.levelPercent);
     }
@@ -145,6 +146,10 @@ void LocalView::renderArmed(State state)
       sprintf(lines[lineIndex++], "Pump1 rpm: %d%%", toPercent(state.pump1Rpm, SPN_PUMP_STD_RPM));
     } else if ((state.pump2Alarm & SPN_ALARM_PUMP_RPM_TECHNICAL) != 0) {
       sprintf(lines[lineIndex++], "Pump2 rpm: %d%%", toPercent(state.pump2Rpm, SPN_PUMP_STD_RPM));
+    }
+
+    if ((state.alarmReason & SPN_ALARM_LEAK) != 0) {
+      sprintf(lines[lineIndex++], "Leak detected!");
     }
 
     // too low water
