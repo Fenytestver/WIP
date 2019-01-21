@@ -450,7 +450,7 @@ int setWaterLowIn(String extra) {
   if (extraInt > 0) {
     waterLowIn = extraInt;
   }
-  return waterLow;
+  return waterLowIn;
 }
 int setWaterCriticalPercent(String extra) {
   int extraInt = stringToInt(extra);
