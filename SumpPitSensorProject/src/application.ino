@@ -512,7 +512,7 @@ int setWaterLevels(String extra) {
     double center = (double)SPN_WATER_LOW +
       ((double)first)*((double)diffToSplit / (double)(first + second));
     waterLowHighDist = first;
-    waterPercentHigh = (int)center + SPN_WATER_VARIANCE;
+    waterPercentHigh = (int)center;
     return waterPercentHigh;
   }
   return -3;
