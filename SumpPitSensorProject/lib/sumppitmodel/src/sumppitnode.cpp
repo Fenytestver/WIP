@@ -114,7 +114,8 @@ void SumpPitNode::updateArmed() {
     if (state.mode != SPN_MAINTENANCE) {
       if (!isSnoozed()
           && !inputs->maintenanceButton->isPressed()
-          && !inputs->armResetButton->isPressed()) {
+          && !inputs->armResetButton->isPressed()
+          && !inputs->disarmButton->isPressed()) {
         siren->on();
       } else {
         siren->off();
