@@ -106,7 +106,12 @@ SYSTEM_MODE(MANUAL);
 #ifndef SYNC_PERIOD_MAX
 #define SYNC_PERIOD_MAX 600000L
 #endif
-
+#ifndef SYNC_PERIOD_MAX_TECHNICAL
+#define SYNC_PERIOD_MAX SYNC_PERIOD_MAX
+#endif
+#ifndef SYNC_PERIOD_MAX_CRITICAL
+#define SYNC_PERIOD_MAX SYNC_PERIOD_MAX
+#endif
 #ifndef SPN_BUTTON_LONG_PRESS_TIME
 #define SPN_BUTTON_LONG_PRESS_TIME 30000
 #endif
@@ -367,20 +372,28 @@ void loop() {
   pump2On = state->pump2On;
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
+    long now = systemTime->nowMillis();
     if (state->alarmReason != lastStatus) {
       sendStatus = true;
       // status changed
       syncPeriod = SYNC_PERIOD_MIN;
+      lastStatusTime = now;
     }
-    long now = systemTime->nowMillis();
     if (SYNC_ENABLED && now - lastStatusTime > syncPeriod) {
       sendStatus = true;
       syncPeriod = syncPeriod * 2;
-      if (syncPeriod > SYNC_PERIOD_MAX) {
-        syncPeriod = SYNC_PERIOD_MAX;
+      int maxSyncPeriod;
+      if (isCritical(state->alarmReason)) {
+        maxSyncPeriod = SYNC_PERIOD_MAX_CRITICAL;
+      } else if (isTechnical(state->alarmReason)) {
+        maxSyncPeriod = SYNC_PERIOD_MAX_TECHNICAL;
+      } else {
+        maxSyncPeriod = SYNC_PERIOD_MAX;
       }
-      // only reset update here
-      lastStatusTime = systemTime->nowMillis();
+      if (syncPeriod > maxSyncPeriod) {
+        syncPeriod = maxSyncPeriod;
+      }
+      lastStatusTime = now;
     }
 
     if (sendStatus) {
