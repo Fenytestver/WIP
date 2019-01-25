@@ -306,8 +306,9 @@ class RealRpmSensor : public RpmSensor {
     RealRpmSensor(int _pin, SystemTime* _systemTime) {
       pin = _pin;
       systemTime = _systemTime;
-      count = 0;
+      rpm = 0;
       lastRpm = 0;
+      lastRev = 0;
     }
 
     void setup() {
@@ -320,26 +321,45 @@ class RealRpmSensor : public RpmSensor {
 
     int getRpm() {
       long lastupdate = timestamp;
-      long currentCount = count;
       long now = systemTime->nowMillis();
+      unsigned long mic = micros();
+      // zero out rpm if there was no update.
+      if (mic - lastRev > 1000000L) {
+        lastRpm = 0;
+        rpm = 0;
+      }
       // not the same second
       if (now - lastupdate > 500L) {
-        count = 0;
         timestamp = now;
-        lastRpm = (int)(60.0 * (((float)currentCount) / (((float)(now - lastupdate) / 1000.0))));
+        rpm = lastRpm;
       }
-      return lastRpm;
+
+      return rpm;
     }
     void trigger() {
-      count++;
+      unsigned long now = micros();
+      unsigned long lastRevCache = lastRev;
+      unsigned long thisRevTime = now - lastRev;
+      if (thisRevTime > 1000000) {
+        lastRev = now;
+        lastRpm = 0;
+        return;
+      }
+      if (lastRevCache > 0) {
+        int currRpm = 60*1000000/thisRevTime;
+        if (currRpm < 5000) {
+          lastRpm = currRpm;
+        }
+      }
+      lastRev = now;
     }
   private:
     int pin;
     SystemTime* systemTime;
-    volatile long count;
+    volatile unsigned long lastRev;
+    volatile int lastRpm;
     long timestamp;
-    int lastRpm;
-
+    int rpm;
 };
 
 class LcdDisplay : public Display {
