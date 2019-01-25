@@ -326,7 +326,7 @@ class RealRpmSensor : public RpmSensor {
       if (now - lastupdate > 500L) {
         count = 0;
         timestamp = now;
-        lastRpm = (int)(((float)currentCount) / (((float)(now - lastupdate) / 1000.0)));
+        lastRpm = (int)(60.0 * (((float)currentCount) / (((float)(now - lastupdate) / 1000.0))));
       }
       return lastRpm;
     }
