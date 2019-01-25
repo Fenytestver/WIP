@@ -64,19 +64,25 @@ void loop() {
 
 
 #ifdef PIN_IN_1
-  if (now - lastRead > 500) {
+  if (now - lastRead > 50) {
     rpm1 = map(analogRead(PIN_IN_1), 5, 1024, 0, 3000);
-    if (rpm1 < 10) rpm1 = 0;
-    p1half = rpmToMicros(rpm1);
+    if (rpm1 < 10) {
+      rpm1 = 0; 
+    } else {
+      p1half = rpmToMicros(rpm1);
+    }
     rpm2 = map(analogRead(PIN_IN_2), 5, 1024, 0, 3000);
-    if (rpm2 < 10) rpm2 = 0;
-    p2half = rpmToMicros(rpm2);
+    if (rpm2 < 10) {
+      rpm2 = 0;
+    } else {
+      p2half = rpmToMicros(rpm2);
+    }
     lastRead = now;
   }
 #endif
 }
 
 int rpmToMicros(int rpm) {
-  return round(60.0 * 1000.0 / ((double)rpm)) / 2 /* two times per Hz; up, down */;  
+  return round(60.0 * 1000.0 / ((double)rpm)) / 2; /* two times per Hz; up, down */  
 }
 
