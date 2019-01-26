@@ -31,8 +31,8 @@ void test_normaloperation::test()
   // simulate an additional leak as well.
   leakSensor->setLeaking(true);
   node->update();
-  assert(siren->isOn(), "Siren must be on when leaking.");
-  assert(node->getAlarmReason(), SPN_ALARM_LEAK, "Alarm reason should be leak.");
+  assertFalse(siren->isOn(), "Siren must not be on when leaking.");
+  assertAllFlags(node->getAlarmReason(), SPN_ALARM_LEAK, "Alarm reason should be leak.");
 
   // turn off leak
   leakSensor->setLeaking(false);
@@ -43,18 +43,18 @@ void test_normaloperation::test()
   assertFalse(subPump1->isTurnedOn(), "Pump should turn off at low water.");
   assert(node->getAlarmReason() & SPN_ALARM_WATER_LOW, 0, "Water not low yet.");
   // should start to detect low water
-  waterLevelSensor->setLevel(SPN_WATER_LOW);
+  waterLevelSensor->setLevel(SPN_WATER_LOW - SPN_WATER_VARIANCE);
 
   // turn on pump to detect too-low water.
   voltageSensor1->setVoltage(12.0);
   node->update();
   assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_LOW, "Must detect low water.");
   // move water to low + variance (almost ok, but still not)
-  waterLevelSensor->setLevel(SPN_WATER_LOW + SPN_WATER_VARIANCE);
+  waterLevelSensor->setLevel(SPN_WATER_LOW);
   node->update();
   assertAllFlags(node->getAlarmReason(), SPN_ALARM_WATER_LOW, "Must still detect low water, below variance.");
   // move water to low + variance + a little
-  waterLevelSensor->setLevel(SPN_WATER_LOW + SPN_WATER_VARIANCE + 1);
+  waterLevelSensor->setLevel(SPN_WATER_LOW + 1);
   node->update();
   assertAllFlags(node->getAlarmReason() & SPN_ALARM_WATER_LOW, 0, "Water above minimum + variance.");
   voltageSensor1->setVoltage(0);

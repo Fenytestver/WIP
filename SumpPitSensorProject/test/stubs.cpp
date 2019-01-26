@@ -101,7 +101,7 @@ class StubDisplay : public Display {
         }
         if (// (index > 0 && (index % 20) == 0) ||
             c == '\n') {
-          std:cout << endl;
+          std::cout << endl;
           SPN_DBG_STUB << "#### ";
         }
         index++;
@@ -122,6 +122,9 @@ class StubDisplay : public Display {
 
 class StubWaterLevelSensor : public WaterLevelSensor {
   public:
+    StubWaterLevelSensor(int _waterLowIn, int _waterHighIn, int _waterPercentHigh)
+        : WaterLevelSensor(_waterLowIn, _waterHighIn, _waterPercentHigh) {
+    }
     virtual short measureLevel() {
       return level;
     }
@@ -244,7 +247,7 @@ class StubShutoffValve : public ShutoffValve {
 };
 class StubFloatSwitch : public FloatSwitch {
   public:
-    StubFloatSwitch() {
+    StubFloatSwitch() : FloatSwitch() {
       triggered = false;
     }
     bool isTriggered() {

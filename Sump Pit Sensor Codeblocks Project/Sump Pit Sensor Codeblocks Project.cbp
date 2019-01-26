@@ -30,6 +30,8 @@
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/buzzer.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/display.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/display.h" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/floatswitch.cpp" />
+		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/floatswitch.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/leaksensor.cpp" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/leaksensor.h" />
 		<Unit filename="../SumpPitSensorProject/lib/sumppitmodel/src/led.cpp" />

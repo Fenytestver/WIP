@@ -24,7 +24,7 @@ class PMICVoltageSensor : public VoltageSensor {
     }
     float getVoltage() {
       byte systemStatus = pmic->getSystemStatus();
-	    return ((systemStatus & 0xc0) == 0x40) ? 12.0 : 0.0;
+	    return ((systemStatus & 0x04) != 0) ? 12.0 : 0.0;
     }
   private:
     PMIC* pmic;

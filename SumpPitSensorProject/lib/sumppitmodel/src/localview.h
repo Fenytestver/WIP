@@ -36,7 +36,7 @@ string(max 6) pump2(rpm)
 /**
 warning screen with status, error code and 3 lines for text
 string(?) mode
-int(?) error-code
+string(?) error-code
 string(?) line 1
 string(?) line 2
 string(?) line 3

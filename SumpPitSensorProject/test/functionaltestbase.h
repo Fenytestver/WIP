@@ -26,6 +26,7 @@ class FunctionalTestBase : public TestBase
     StubRpmSensor *rpmSensor;
     StubVoltageSensor* voltageSensor1;
     StubVoltageSensor* voltageSensor2;
+    StubVoltageSensor* systemVoltage;
     MultiPump* pump;
     Pump* subPump1;
     Pump* subPump2;

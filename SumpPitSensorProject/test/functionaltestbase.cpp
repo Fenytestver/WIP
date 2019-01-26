@@ -15,7 +15,7 @@ void FunctionalTestBase::create()
 {
   TestBase::create();
   leakSensor = new StubLeakSensor();
-  waterLevelSensor = new StubWaterLevelSensor();
+  waterLevelSensor = new StubWaterLevelSensor(10, 100, SPN_WATER_HIGH);
   rpmSensor = new StubRpmSensor();
   voltageSensor1 = new StubVoltageSensor();
   voltageSensor2 = new StubVoltageSensor();
@@ -43,7 +43,8 @@ void FunctionalTestBase::create()
   localView = new LocalView(display, systemTime, ledRed, ledGreen, ledYellow);
   shutoffValve = new StubShutoffValve();
   StubBuzzer* buzzer = new StubBuzzer();
-  node = new SumpPitNode(siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch);
+  systemVoltage = new StubVoltageSensor();
+  node = new SumpPitNode(systemTime, siren, buzzer, localView, sensor, inputs, shutoffValve, floatSwitch, systemVoltage);
 }
 
 void FunctionalTestBase::destroy()
