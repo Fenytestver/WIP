@@ -343,13 +343,13 @@ class RealRpmSensor : public RpmSensor {
       count++;
 
       unsigned long thisRevTime = now - lastRev;
-      if (thisRevTime > 2000000) {
+      if (thisRevTime > 1000000) {
         lastRev = now;
         lastRpm = 0;
         count = 0;
         return;
       }
-      if (count >= 3) {
+      if (count >= 3 || (count > 0 && thisRevTime > 100000)) {
         double currRpm = 60.0*1000000.0/((double)thisRevTime);
         if (currRpm < 5000) {
           lastRpm = (int)(currRpm * count);
