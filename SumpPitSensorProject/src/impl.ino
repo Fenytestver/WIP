@@ -309,6 +309,7 @@ class RealRpmSensor : public RpmSensor {
       rpm = 0;
       lastRpm = 0;
       lastRev = 0;
+      count = 0;
     }
 
     void setup() {
@@ -324,7 +325,7 @@ class RealRpmSensor : public RpmSensor {
       long now = systemTime->nowMillis();
       unsigned long mic = micros();
       // zero out rpm if there was no update.
-      if (mic - lastRev > 1000000L) {
+      if (mic - lastRev > 2000000L) {
         lastRpm = 0;
         rpm = 0;
       }
@@ -339,25 +340,30 @@ class RealRpmSensor : public RpmSensor {
     void trigger() {
       unsigned long now = micros();
       unsigned long lastRevCache = lastRev;
+      count++;
+
       unsigned long thisRevTime = now - lastRev;
-      if (thisRevTime > 1000000) {
+      if (thisRevTime > 2000000) {
         lastRev = now;
         lastRpm = 0;
+        count = 0;
         return;
       }
-      if (lastRevCache > 0) {
-        int currRpm = 60*1000000/thisRevTime;
+      if (count >= 3) {
+        double currRpm = 60.0*1000000.0/((double)thisRevTime);
         if (currRpm < 5000) {
-          lastRpm = currRpm;
+          lastRpm = (int)(currRpm * count);
         }
+        count = 0;
+        lastRev = now;
       }
-      lastRev = now;
     }
   private:
     int pin;
     SystemTime* systemTime;
     volatile unsigned long lastRev;
     volatile int lastRpm;
+    volatile int count;
     long timestamp;
     int rpm;
 };
