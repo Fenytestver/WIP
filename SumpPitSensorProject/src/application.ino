@@ -700,19 +700,27 @@ void calibrate() {
   int pumpOnAt;
   int pumpOffAt;
   finished = false;
-  display->displayMessage("Waiting for pump to turn on.");
+  display->displayMessage("Waiting for pump\nto turn on.\n"
+      "Disarm to cancel.");
   while (!finished) {
     pump1->update();
     pump2->update();
+    if (isPressed(disarmButton)) {
+      return;
+    }
     if (multiPump->isTurnedOn(0) || multiPump->isTurnedOn(1)) {
       pumpOnAt = waterLevelSensor->readRaw();
-      sprintf(msg, "Pump turned on at:\n%d\n"
-          "Waiting for pump to\nturn off.");
+      sprintf(msg, "Pump on at: %d\n"
+          "Waiting for pump off\n"
+          "Disarm to cancel.");
       display->displayMessage(msg);
       while (!finished
           && (multiPump->isTurnedOn(0) || multiPump->isTurnedOn(1))) {
             pump1->update();
             pump2->update();
+        if (isPressed(disarmButton)) {
+          return;
+        }
         Particle.process();
       }
       if (!multiPump->isTurnedOn(0) && !multiPump->isTurnedOn(1)) {
@@ -724,9 +732,20 @@ void calibrate() {
     }
     Particle.process();
   }
-  sprintf(msg, "Bottom: %d Mnt:%d\n"
-      "POn: %d POff: %d\n"
-      "Press arm to save.\nDisarm to cancel", highest, mountpoint, pumpOnAt, pumpOffAt);
+  double inchesLowHigh = waterLowHighDist;
+  double inchPerInt = (double)inchesLowHigh / (double)(pumpOnAt - pumpOffAt);
+  double inchOffset = (int)((double)offset * inchPerInt);
+  int wLowInTmp = (inchOffset + (int)((double)pumpOffAt * inchPerInt));
+  int wHighInTmp = (inchOffset + (int)((double)pumpOnAt * inchPerInt));
+  int wCritInTmp = (int)mapp((double)SPN_WATER_CRITICAL, (double)SPN_WATER_LOW, (double)waterPercentHigh, (double)wLowInTmp, (double)wHighInTmp);
+  sprintf(msg, "OK! Arm:save O: %d\"\n"
+      "Low: %d\" %d%% (-%d%%)\n"
+      "Hig: %d\" %d%% (+%d%%)\n"
+      "Cri: %d\" %d%% (+%d%%)",
+      (int) inchOffset,
+       wLowInTmp, SPN_WATER_LOW, SPN_WATER_VARIANCE,
+       wHighInTmp, waterPercentHigh, SPN_WATER_VARIANCE,
+       wCritInTmp, SPN_WATER_CRITICAL, SPN_WATER_VARIANCE);
   display->displayMessage(msg);
   button = getPressedButton(armButton, disarmButton);
   if (button == disarmButton) {
@@ -735,11 +754,8 @@ void calibrate() {
   finished = true;
   waterLow = (pumpOffAt);
   waterHigh = (pumpOnAt);
-  double inchesLowHigh = waterLowHighDist;
-  double inchPerInt = (double)inchesLowHigh / (double)(pumpOnAt - pumpOffAt);
-  double inchOffset = (int)((double)offset * inchPerInt);
-  waterLowIn = (inchOffset + (int)((double)pumpOffAt * inchPerInt));
-  waterHighIn = (inchOffset + (int)((double)pumpOnAt * inchPerInt));
+  waterLowIn = wLowInTmp;
+  waterHighIn = wHighInTmp;
 
   display->displayMessage("Settings saved");
   reboot("");

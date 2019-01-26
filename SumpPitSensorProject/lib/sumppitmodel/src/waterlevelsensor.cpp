@@ -25,7 +25,8 @@ short WaterLevelSensor::measureLevel()
 int WaterLevelSensor::checkState(State* state)
 {
   int level = measureLevel();
-  state->levelIn = spn::mapp((long)level, SPN_WATER_LOW, waterPercentHigh, waterLowIn, waterHighIn);
+  state->levelIn = (int)spn::mapp((double)level, (double)SPN_WATER_LOW, (double)waterPercentHigh,
+      (double)waterLowIn, (double)waterHighIn);
   state->levelPercent = level;
 
   if (state->mode != SPN_ARMED) {

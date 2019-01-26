@@ -90,6 +90,7 @@ namespace spn {
   bool isTechnical(int reason);
   bool isCritical(int reason);
   bool isCriticalShutoff(int reason);
+  double mapp(double x, double in_min, double in_max, double out_min, double out_max);
   long mapp(long x, long in_min, long in_max, long out_min, long out_max);
   void statusToString(int status, char* out);
   long millisToSec(long millis);
