@@ -251,7 +251,7 @@ bool isCriticalShutoff(long alarm) {
 }
 
 void renderCriticalLeds(long duration, bool shutoff, long nowBits) {
-  long sec = duration / 100;
+  long sec = duration / 1000;
   if (shutoff) {
     if (sec > 240) {
       ledRed->setState((nowBits & 2) == 0);
