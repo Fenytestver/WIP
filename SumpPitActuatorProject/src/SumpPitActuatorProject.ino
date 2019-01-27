@@ -29,6 +29,9 @@
 #define PIN_LED_GREEN D5
 #define PIN_LED_YELLOW D4
 #define PIN_LED_RED D6
+#define PIN_LED_OPEN A1
+#define PIN_LED_CLOSED A2
+
 
 SystemTime* systemTime;
 RealButton* openButton;
@@ -39,6 +42,8 @@ RealBuzzer* buzzer;
 HardwarePinLed* ledGreen;
 HardwarePinLed* ledYellow;
 HardwarePinLed* ledRed;
+HardwarePinLed* openLed;
+HardwarePinLed* closedLed;
 RealBuzzer* openRelay;
 RealBuzzer* closeRelay;
 //long alarmReason = SPN_ALARM_NO_ALARM;
@@ -67,6 +72,8 @@ void setup() {
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
   ledRed = new HardwarePinLed(PIN_LED_RED);
+  openLed = new HardwarePinLed(PIN_LED_OPEN);
+  closedLed = new HardwarePinLed(PIN_LED_CLOSED);
   buzzer = new RealBuzzer(PIN_BUZZER, BEEP_TIME);
   openButton = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_BUTTON_OPEN);
   closeButton = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_BUTTON_CLOSE);
@@ -83,6 +90,8 @@ void setup() {
   ledRed->setup();
   ledYellow->setup();
   buzzer->setup();
+  openLed->setup();
+  closedLed->setup();
   openButton->setup();
   closeButton->setup();
   openRelay->setup();
@@ -95,12 +104,12 @@ void setup() {
 
 void loop() {
   long now = systemTime->nowMillis();
-  long nowSec = now / 1000;
+  long nowbit = now / 200;
   switch (mode) {
     case SPN_MODE_UNKNOWN:
-      ledRed->setState((nowSec % 3) == 0);
-      ledGreen->setState((nowSec % 3) == 1);
-      ledYellow->setState((nowSec % 3) == 2);
+      ledRed->setState((nowbit % 3) == 0);
+      ledGreen->setState((nowbit % 3) == 1);
+      ledYellow->setState((nowbit % 3) == 2);
       break;
     case SPN_ARMED:
       ledRed->setState(critical);
@@ -117,6 +126,13 @@ void loop() {
       ledGreen->setState(false);
       ledYellow->setState(true);
       break;
+  }
+  if (stateUnknown) {
+    openLed->setState((nowbit % 2) == 0);
+    closedLed->setState((nowbit % 2) == 1);
+  } else {
+    openLed->setState(!shutoffEnabled);
+    closedLed->setState(shutoffEnabled);
   }
   openButton->update();
   closeButton->update();
