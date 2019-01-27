@@ -296,6 +296,7 @@ void setup() {
     success = Particle.function("clearCalib", clearCalibration);
     success = Particle.function("snooze", snooze);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
+    Particle.subscribe("snoozeAlarm", snoozeHandler);
 
     Particle.variable("waterLow", waterLow);
     Particle.variable("waterHigh", waterHigh);
@@ -572,6 +573,15 @@ void shutoffValveHandler(const char *event, const char *data)
     shutoffValve->activate();
   } else if (strcmp("false", data) == 0) {
     shutoffValve->deactivate();
+  }
+}
+
+void snoozeHandler(const char *event, const char *data) {
+  if (data != nullptr) {
+    int snooze = stringToInt(data);
+    if (snooze > 100) {
+      node->snooze(snooze);
+    }
   }
 }
 

@@ -168,6 +168,9 @@ void snoozeNow() {
 int snooze() {
   unsigned long now = systemTime->nowMillis();
   snoozeAt = now;
+  char snoozeText[10];
+  sprintf(snoozeText, "%d", SPN_SNOOZE_TIME);
+  Particle.publish("snoozeAlarm", snoozeText);
   return SPN_SNOOZE_TIME;
 }
 
