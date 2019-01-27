@@ -29,6 +29,7 @@
 
 // Main system mode. Do not change this!
 SYSTEM_MODE(MANUAL);
+SYSTEM_THREAD(ENABLED);
 
 // Photon platform from here
 #if PLATFORM == PLATFORM_PHOTON
@@ -323,11 +324,15 @@ void setup() {
 }
 
 void triggerRpm1() {
-  rpmSensor1->trigger();
+  ATOMIC_BLOCK() {
+    rpmSensor1->trigger();
+  }
 }
 
 void triggerRpm2() {
-  rpmSensor2->trigger();
+  ATOMIC_BLOCK() {
+    rpmSensor2->trigger();
+  }
 }
 
 int armSystem(String extra) {
