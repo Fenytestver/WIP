@@ -13,7 +13,7 @@
  * Author:
  * Date:
  */
-#define SPN_SNOOZE_TIME (5*60000)
+#define SPN_SNOOZE_TIME (5 * 60000)
 #define BUTTON_LONG_PRESS_TIME 3000
 #define BEEP_TIME 50
 #define SYSTEM_STATUS_TOPIC "spnStatus"
@@ -124,7 +124,7 @@ void loop() {
       break;
   }
 
-  if (critical) {
+  if (critical && (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now)) {
     siren->on();
   } else {
     siren->off();
