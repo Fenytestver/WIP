@@ -104,12 +104,11 @@ void loop() {
       ledGreen->setState((nowbit % 5) == 0);
       ledYellow->setState((nowbit % 5) == 1);
       sirenOn = false;
+      lastCritical = 0L;
       break;
     case SPN_ARMED: {
         if (critical && lastCritical == 0L) {
           lastCritical = now;
-        } else if (critical && lastCritical == 0L) {
-          lastCritical = 0L;
         }
         long criticalDuration = lastCritical > 0 ?
             now - lastCritical
@@ -135,6 +134,7 @@ void loop() {
         ledGreen->setState(false);
         ledYellow->setState(true);
         sirenOn = false;
+        lastCritical = 0L;
       }
       break;
     case SPN_MAINTENANCE:
@@ -144,6 +144,7 @@ void loop() {
       ledGreen->setState(false);
       ledYellow->setState(true);
       sirenOn = false;
+      lastCritical = 0L;
       break;
   }
 
