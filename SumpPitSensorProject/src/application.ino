@@ -188,6 +188,7 @@ char publishString[256];
 long syncPeriod = SYNC_PERIOD_MIN;
 bool sendStatus = false;
 // local staus variable copies
+int lastMode;
 int mode;
 int rpm1;
 int rpm2;
@@ -395,11 +396,14 @@ void loop() {
       }
       lastStatusTime = now;
     }
-
+    if (lastMode != mode) {
+      sendStatus = true;
+    }
     if (sendStatus) {
       sendFullStatus(state);
       sendStatus = false;
     }
+    lastMode = mode;
   }
   if (armButton->isPressed() && disarmButton->isPressed() && maintenanceButton->isPressed()) {
     while (armButton->isPressed() || disarmButton->isPressed() || maintenanceButton->isPressed()) {
@@ -559,9 +563,9 @@ int sendScreen(String extra) {
 
 void shutoffValveHandler(const char *event, const char *data)
 {
-  if ("true" == data) {
+  if (strcmp("true", data) == 0) {
     shutoffValve->activate();
-  } else if ("false" == data) {
+  } else if (strcmp("false", data) == 0) {
     shutoffValve->deactivate();
   }
 }
@@ -608,7 +612,7 @@ void sendFullStatus(State* state) {
     rssi, bars,
     floatSwitch->isTriggered() ? "1" : "0"
   );
-  Particle.publish("status", publishString, PRIVATE);
+  Particle.publish("spnStatus", publishString, PUBLIC);
 
   lastStatus = state->alarmReason;
 }
