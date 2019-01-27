@@ -122,6 +122,7 @@ void loop() {
           ledRed2->setState(false);
           ledRed3->setState(false);
           sirenOn = false;
+          lastCritical = 0L;
         }
         ledGreen->setState(true);
         ledYellow->setState(technical && ((nowbit % 2) == 0));
