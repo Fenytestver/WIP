@@ -256,22 +256,22 @@ void renderCriticalLeds(long duration, bool shutoff, long nowBits) {
   long sec = duration / 1000;
   if (shutoff) {
     if (sec > 240) {
-      ledRed->setState((nowBits & 2) == 0);
-      ledRed2->setState((nowBits & 2) == 0);
-      ledRed3->setState((nowBits & 2) == 0);
+      ledRed->setState(true);
+      ledRed2->setState(true);
+      ledRed3->setState(true);
       sirenOn = true;
     } else if (sec > 120) {
       ledRed->setState(true);
       ledRed2->setState(true);
-      ledRed3->setState((nowBits & 2) == 0);
+      ledRed3->setState(true);
       sirenOn = false;
     } else if (sec > 60) {
       ledRed->setState(true);
-      ledRed2->setState((nowBits & 2) == 0);
+      ledRed2->setState(true);
       ledRed3->setState(false);
       sirenOn = false;
     } else {
-      ledRed->setState((nowBits & 2) == 0);
+      ledRed->setState(true);
       ledRed2->setState(false);
       ledRed3->setState(false);
       sirenOn = false;
