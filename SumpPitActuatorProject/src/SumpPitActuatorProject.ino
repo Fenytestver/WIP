@@ -31,11 +31,14 @@
 #define PIN_LED_RED D6
 #define PIN_LED_OPEN A1
 #define PIN_LED_CLOSED A2
-
+#define PIN_DETECT_OPEN A5
+#define PIN_DETECT_CLOSED A0
 
 SystemTime* systemTime;
 RealButton* openButton;
 RealButton* closeButton;
+RealButton* openDetector;
+RealButton* closeDetector;
 FunctionPressListener* openPressListener;
 FunctionPressListener* closePressListener;
 RealBuzzer* buzzer;
@@ -52,6 +55,7 @@ bool critical = false;
 int mode = SPN_MODE_UNKNOWN;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
+unsigned long nothingDetectedSince = 0L;
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -84,6 +88,12 @@ void setup() {
   openButton->setOnButtonLongPressListener(openPressListener);
   closeButton->setOnButtonPressListener(beepPressListener);
   closeButton->setOnButtonLongPressListener(closePressListener);
+  openDetector = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_DETECT_OPEN);
+  closeDetector = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_DETECT_CLOSED);
+  openDetector->setOnButtonPressListener(new FunctionPressListener(openDetected));
+  closeDetector->setOnButtonPressListener(new FunctionPressListener(closeDetected));
+  openDetector->setOnButtonLongPressListener(new OnButtonPressListener());
+  closeDetector->setOnButtonLongPressListener(new OnButtonPressListener());
   openRelay = new RealBuzzer(PIN_SHUTOFF_OFF, SHUTOFF_BEEP_TIME);
   closeRelay = new RealBuzzer(PIN_SHUTOFF_ON, SHUTOFF_BEEP_TIME);
   ledGreen->setup();
@@ -100,6 +110,8 @@ void setup() {
   Particle.function("closeWater", closeWater);
   Particle.function("openWater", openWater);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  // request immediate update.
+  Particle.publish("spnPing", "anyonethere");
 }
 
 void loop() {
@@ -136,6 +148,12 @@ void loop() {
   }
   openButton->update();
   closeButton->update();
+  openDetector->update();
+  closeDetector->update();
+  if (!openDetector->isPressed() && !closeDetector->isPressed()) {
+    nothingDetected();
+  }
+  delay(50);
 }
 
 bool open(bool publish) {
@@ -174,6 +192,25 @@ bool close(bool publish) {
   shutoffEnabled = true;
   stateUnknown = false;
   return result;
+}
+void closeDetected() {
+  stateUnknown = false;
+  shutoffEnabled = true;
+  nothingDetectedSince = 0L;
+}
+void openDetected() {
+  stateUnknown = false;
+  shutoffEnabled = false;
+  nothingDetectedSince = 0L;
+}
+void nothingDetected() {
+  unsigned long now = systemTime->nowMillis();
+  if (nothingDetectedSince == 0L) {
+    nothingDetectedSince = now;
+    buzzer->beep();
+  } else if (now - nothingDetectedSince > 5000) {
+    stateUnknown = true;
+  }
 }
 
 void openPublish() {

@@ -91,6 +91,8 @@ void setup() {
   Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
   Particle.function("snooze", snoozeExtra);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  // request immediate update.
+  Particle.publish("spnPing", "anyonethere");
 }
 
 void loop() {

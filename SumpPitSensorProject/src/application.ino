@@ -296,6 +296,7 @@ void setup() {
     success = Particle.function("clearCalib", clearCalibration);
     success = Particle.function("snooze", snooze);
     Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
+    Particle.subscribe("spnPing", pingStatusHandler);
 
     Particle.variable("waterLow", waterLow);
     Particle.variable("waterHigh", waterHigh);
@@ -564,6 +565,10 @@ int sendStatusNow(String extra) {
 int sendScreen(String extra) {
   Particle.publish("lcdtext", display->getBank(), PRIVATE);
   return 0;
+}
+
+void pingStatusHandler(const char *event, const char *data) {
+  sendStatus = true;
 }
 
 void shutoffValveHandler(const char *event, const char *data)
