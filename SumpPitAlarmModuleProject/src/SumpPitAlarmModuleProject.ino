@@ -40,12 +40,19 @@ HardwarePinLed* ledRed2;
 HardwarePinLed* ledRed3;
 RealSiren* siren;
 
-bool technical = false;
-bool critical = false;
-int mode = SPN_MODE_UNKNOWN;
-long alarmReason = SPN_ALARM_NO_ALARM;
+typedef struct DeviceStatus {
+  int id;
+  bool technical;
+  bool critical;
+  int mode;
+  long alarmReason;
+};
+
+#define MAX_DEVICE_COUNT 5
+DeviceStatus statusArray[MAX_DEVICE_COUNT];
+int numDevices = 0;
+
 char* dataCpy = new char[1024];
-bool stateUnknown = true;
 unsigned long snoozeAt = 0L;
 unsigned long lastCritical = 0L;
 bool sirenOn = false;
@@ -90,62 +97,69 @@ void setup() {
 
   Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
   Particle.function("snooze", snoozeExtra);
+  Particle.function("reboot", reboot);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  // request immediate update.
+  Particle.publish("spnPing", "anyonethere");
 }
 
 void loop() {
   unsigned long now = systemTime->nowMillis();
   long nowbit = now / 200;
-  switch (mode) {
-    case SPN_MODE_UNKNOWN:
-      ledRed->setState((nowbit % 5) == 2);
-      ledRed2->setState((nowbit % 5) == 3);
-      ledRed3->setState((nowbit % 5) == 4);
-      ledGreen->setState((nowbit % 5) == 0);
-      ledYellow->setState((nowbit % 5) == 1);
-      sirenOn = false;
-      lastCritical = 0L;
-      break;
-    case SPN_ARMED: {
-        if (critical && lastCritical == 0L) {
-          lastCritical = now;
-        }
-        long criticalDuration = lastCritical > 0 ?
-            now - lastCritical
-            : 0L;
-        if (isCriticalShutoff(alarmReason)) {
-          renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
-        } else if (critical) {
-          renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
-        } else {
-          ledRed->setState(false);
-          ledRed2->setState(false);
-          ledRed3->setState(false);
-          sirenOn = false;
-        }
-        ledGreen->setState(true);
-        ledYellow->setState(technical && ((nowbit % 2) == 0));
-      }
-      break;
-    case SPN_DISARMED: {
-        ledRed->setState(true);
-        ledRed2->setState(true);
-        ledRed3->setState(true);
-        ledGreen->setState(false);
-        ledYellow->setState(true);
-        sirenOn = false;
-        lastCritical = 0L;
-      }
-      break;
-    case SPN_MAINTENANCE:
+  bool technical = isTechnical();
+  bool critical = isCritical();
+
+  long alarmReason = getAlarmReason();
+
+  int armed = 0;
+  int disarmed = 0;
+  int maintenance = 0;
+  for (int i = 0; i < numDevices; ++i) {
+    switch (statusArray[i].mode) {
+      case SPN_ARMED:
+        armed++;
+        break;
+      case SPN_DISARMED:
+        disarmed++;
+        break;
+      case SPN_MAINTENANCE:
+      default:
+        maintenance++;
+        break;
+    }
+  }
+
+  if (numDevices > 0) {
+    ledGreen->setState(!technical && !critical && armed > 0 && maintenance == 0);
+    ledYellow->setState(maintenance > 0
+        || (armed == 0)
+        || (technical && ((nowbit % 2) == 0)));
+
+    if (critical && lastCritical == 0L) {
+      lastCritical = now;
+    }
+    long criticalDuration = lastCritical > 0 ?
+        now - lastCritical
+        : 0L;
+    if (critical && isCriticalShutoff(alarmReason)) {
+      renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
+    } else if (critical) {
+      renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
+    } else {
       ledRed->setState(false);
       ledRed2->setState(false);
       ledRed3->setState(false);
-      ledGreen->setState(false);
-      ledYellow->setState(true);
       sirenOn = false;
       lastCritical = 0L;
-      break;
+    }
+  } else {
+    ledRed->setState(false);
+    ledRed2->setState(false);
+    ledRed3->setState(false);
+    ledGreen->setState((nowbit % 2) == 0);
+    ledYellow->setState((nowbit % 2) == 1);
+    sirenOn = false;
+    lastCritical = 0L;
   }
 
   if (sirenOn && (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now)) {
@@ -183,39 +197,6 @@ void shutoffValveHandler(const char *event, const char *data)
   } else if (strcmp("false", data) == 0) {
     shutoffEnabled = false;
   }
-}
-
-void statusHandler(const char* event, const char* data) {
-
-  Serial.print("event: ");
-  Serial.println(event);
-  Serial.print("update: ");
-  Serial.print(data);
-  Serial.println();
-  strcpy(dataCpy, data);
-
-  Serial.print("Mode ");
-  bool isValid = false;
-  jsmnrtype_t objType = JSMNR_UNDEFINED;
-  int objSize = 0;
-  String mStr = RdJson::getString("mode", "", isValid, objType, objSize, dataCpy);
-  Serial.println(mStr);
-  mode = stringToInt(mStr, SPN_MODE_UNKNOWN);
-
-  String alarmStr =
-      RdJson::getString("alarm", "", isValid, objType, objSize, dataCpy);
-  alarmReason = binaryStringToInt(alarmStr, SPN_ALARM_NO_ALARM);
-  Serial.print("alarmStr:");
-  Serial.print(alarmStr);
-  Serial.print("-");
-  Serial.println(alarmReason);
-
-  technical = RdJson::getString("technical", "", isValid, objType, objSize, dataCpy) == "1";
-  critical = RdJson::getString("critical", "", isValid, objType, objSize, dataCpy) == "1";
-  Serial.print("technical");
-  Serial.println(technical);
-  Serial.print("critical");
-  Serial.println(critical);
 }
 
 long binaryStringToInt(String extra, long defaultInt) {
@@ -258,22 +239,22 @@ void renderCriticalLeds(long duration, bool shutoff, long nowBits) {
   long sec = duration / 1000;
   if (shutoff) {
     if (sec > 240) {
-      ledRed->setState((nowBits & 2) == 0);
-      ledRed2->setState((nowBits & 2) == 0);
-      ledRed3->setState((nowBits & 2) == 0);
+      ledRed->setState(true);
+      ledRed2->setState(true);
+      ledRed3->setState(true);
       sirenOn = true;
     } else if (sec > 120) {
       ledRed->setState(true);
       ledRed2->setState(true);
-      ledRed3->setState((nowBits & 2) == 0);
+      ledRed3->setState(true);
       sirenOn = false;
     } else if (sec > 60) {
       ledRed->setState(true);
-      ledRed2->setState((nowBits & 2) == 0);
+      ledRed2->setState(true);
       ledRed3->setState(false);
       sirenOn = false;
     } else {
-      ledRed->setState((nowBits & 2) == 0);
+      ledRed->setState(true);
       ledRed2->setState(false);
       ledRed3->setState(false);
       sirenOn = false;
@@ -296,4 +277,101 @@ void renderCriticalLeds(long duration, bool shutoff, long nowBits) {
       ledRed3->setState(false);
     }
   }
+}
+
+int reboot(String extra) {
+  System.reset();
+  return 1;
+}
+
+DeviceStatus* getStatusById(int id) {
+  for (int i=0; i<numDevices; ++i) {
+    if (statusArray[i].id = id) {
+      return &statusArray[i];
+    }
+  }
+  if (numDevices < MAX_DEVICE_COUNT) {
+    DeviceStatus status;
+    status.id = id;
+    status.technical = false;
+    status.critical = false;
+    status.mode = SPN_MODE_UNKNOWN;
+    status.alarmReason = SPN_ALARM_NO_ALARM;
+    statusArray[numDevices] = status;
+    numDevices++;
+    return &statusArray[numDevices];
+  }
+  // FIXME: what if there's another device?
+  return nullptr;
+}
+bool isTechnical() {
+  for (int i = 0; i < numDevices; ++i) {
+    if (statusArray[i].technical) {
+      return true;
+    }
+  }
+  return false;
+}
+bool isCritical() {
+  for (int i = 0; i < numDevices; ++i) {
+    if (statusArray[i].critical) {
+      return true;
+    }
+  }
+  return false;
+}
+
+long getAlarmReason() {
+  long alarmReason = SPN_ALARM_NO_ALARM;
+  for (int i = 0; i < numDevices; ++i) {
+    alarmReason |= statusArray[i].alarmReason;
+  }
+  return alarmReason;
+}
+
+void statusHandler(const char* event, const char* data) {
+  Serial.print("event: ");
+  Serial.println(event);
+  Serial.print("update: ");
+  Serial.print(data);
+  Serial.println();
+  strcpy(dataCpy, data);
+  Serial.print("Mode ");
+  bool isValid = false;
+  jsmnrtype_t objType = JSMNR_UNDEFINED;
+  int objSize = 0;
+  String mStr = RdJson::getString("mode", "", isValid, objType, objSize, dataCpy);
+  Serial.println(mStr);
+  String alarmStr =
+      RdJson::getString("alarm", "", isValid, objType, objSize, dataCpy);
+
+  String idStr = RdJson::getString("id", "", isValid, objType, objSize, dataCpy);
+  int id = stringToInt(idStr, -1);
+  DeviceStatus* thisStatus = getStatusById(id);
+  if (thisStatus == nullptr) {
+    Serial.print("unaccepted id ");
+    Serial.println(id);
+    return;
+  }
+  thisStatus->mode = stringToInt(mStr, SPN_MODE_UNKNOWN);
+  thisStatus->alarmReason = binaryStringToInt(alarmStr, SPN_ALARM_NO_ALARM);
+  thisStatus->technical = RdJson::getString("technical", "", isValid, objType, objSize, dataCpy) == "1";
+  thisStatus->critical = RdJson::getString("critical", "", isValid, objType, objSize, dataCpy) == "1";
+
+  Serial.print("alarmStr:");
+  Serial.print(alarmStr);
+  Serial.print("-");
+  Serial.println(thisStatus->alarmReason);
+  Serial.print("technical");
+  Serial.println(thisStatus->technical);
+  Serial.print("critical");
+  Serial.println(thisStatus->critical);
+  Serial.println("SumStat:");
+  Serial.print("technical:");
+  Serial.println(isTechnical());
+  Serial.print("critical:");
+  Serial.println(isCritical());
+  Serial.print("alarmReason:");
+  Serial.println(getAlarmReason());
+
 }
