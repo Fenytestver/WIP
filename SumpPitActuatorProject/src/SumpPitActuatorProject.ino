@@ -130,29 +130,35 @@ void loop() {
   long nowbit = now / 200;
   bool technical = isTechnical();
   bool critical = isCritical();
-  int mode = getMode();
   long alarmReason = getAlarmReason();
-  switch (mode) {
-    case SPN_MODE_UNKNOWN:
-      ledRed->setState((nowbit % 3) == 0);
-      ledGreen->setState((nowbit % 3) == 1);
-      ledYellow->setState((nowbit % 3) == 2);
-      break;
-    case SPN_ARMED:
-      ledRed->setState(critical);
-      ledGreen->setState(true);
-      ledYellow->setState(technical && ((nowbit % 2) == 0));
-      break;
-    case SPN_DISARMED:
-      ledRed->setState(true);
-      ledGreen->setState(false);
-      ledYellow->setState(true);
-      break;
-    case SPN_MAINTENANCE:
-      ledRed->setState(false);
-      ledGreen->setState(false);
-      ledYellow->setState(true);
-      break;
+  int armed = 0;
+  int disarmed = 0;
+  int maintenance = 0;
+  for (int i = 0; i < numDevices; ++i) {
+    switch (statusArray[i].mode) {
+      case SPN_ARMED:
+        armed++;
+        break;
+      case SPN_DISARMED:
+        disarmed++;
+        break;
+      case SPN_MAINTENANCE:
+      default:
+        maintenance++;
+        break;
+    }
+  }
+
+  if (numDevices > 0) {
+    ledGreen->setState(!technical && !critical && armed > 0 && maintenance == 0);
+    ledYellow->setState(maintenance > 0
+        || (armed == 0)
+        || (technical && ((nowbit % 2) == 0)));
+    ledRed->setState(critical);
+  } else {
+    ledRed->setState(false);
+    ledGreen->setState((nowbit % 2) == 0);
+    ledYellow->setState((nowbit % 2) == 1);
   }
   if (stateUnknown) {
     openLed->setState((nowbit % 2) == 0);
@@ -314,16 +320,6 @@ long getAlarmReason() {
     alarmReason |= statusArray[i].alarmReason;
   }
   return alarmReason;
-}
-
-int getMode() {
-  int mode = SPN_MODE_UNKNOWN;
-  for (int i = 0; i < numDevices; ++i) {
-    if (statusArray[i].mode > mode) {
-      mode = statusArray[i].mode;
-    }
-  }
-  return mode;
 }
 
 void statusHandler(const char* event, const char* data) {

@@ -108,59 +108,58 @@ void loop() {
   long nowbit = now / 200;
   bool technical = isTechnical();
   bool critical = isCritical();
-  int mode = getMode();
+
   long alarmReason = getAlarmReason();
-  switch (mode) {
-    case SPN_MODE_UNKNOWN:
-      ledRed->setState((nowbit % 5) == 2);
-      ledRed2->setState((nowbit % 5) == 3);
-      ledRed3->setState((nowbit % 5) == 4);
-      ledGreen->setState((nowbit % 5) == 0);
-      ledYellow->setState((nowbit % 5) == 1);
-      sirenOn = false;
-      lastCritical = 0L;
-      break;
-    case SPN_ARMED: {
-        if (critical && lastCritical == 0L) {
-          lastCritical = now;
-        }
-        long criticalDuration = lastCritical > 0 ?
-            now - lastCritical
-            : 0L;
-        if (critical && isCriticalShutoff(alarmReason)) {
-          renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
-        } else if (critical) {
-          renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
-        } else {
-          ledRed->setState(false);
-          ledRed2->setState(false);
-          ledRed3->setState(false);
-          sirenOn = false;
-          lastCritical = 0L;
-        }
-        ledGreen->setState(true);
-        ledYellow->setState(technical && ((nowbit % 2) == 0));
-      }
-      break;
-    case SPN_DISARMED: {
-        ledRed->setState(true);
-        ledRed2->setState(true);
-        ledRed3->setState(true);
-        ledGreen->setState(false);
-        ledYellow->setState(true);
-        sirenOn = false;
-        lastCritical = 0L;
-      }
-      break;
-    case SPN_MAINTENANCE:
+
+  int armed = 0;
+  int disarmed = 0;
+  int maintenance = 0;
+  for (int i = 0; i < numDevices; ++i) {
+    switch (statusArray[i].mode) {
+      case SPN_ARMED:
+        armed++;
+        break;
+      case SPN_DISARMED:
+        disarmed++;
+        break;
+      case SPN_MAINTENANCE:
+      default:
+        maintenance++;
+        break;
+    }
+  }
+
+  if (numDevices > 0) {
+    ledGreen->setState(!technical && !critical && armed > 0 && maintenance == 0);
+    ledYellow->setState(maintenance > 0
+        || (armed == 0)
+        || (technical && ((nowbit % 2) == 0)));
+
+    if (critical && lastCritical == 0L) {
+      lastCritical = now;
+    }
+    long criticalDuration = lastCritical > 0 ?
+        now - lastCritical
+        : 0L;
+    if (critical && isCriticalShutoff(alarmReason)) {
+      renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
+    } else if (critical) {
+      renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
+    } else {
       ledRed->setState(false);
       ledRed2->setState(false);
       ledRed3->setState(false);
-      ledGreen->setState(false);
-      ledYellow->setState(true);
       sirenOn = false;
       lastCritical = 0L;
-      break;
+    }
+  } else {
+    ledRed->setState(false);
+    ledRed2->setState(false);
+    ledRed3->setState(false);
+    ledGreen->setState((nowbit % 2) == 0);
+    ledYellow->setState((nowbit % 2) == 1);
+    sirenOn = false;
+    lastCritical = 0L;
   }
 
   if (sirenOn && (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now)) {
@@ -318,6 +317,7 @@ bool isCritical() {
   }
   return false;
 }
+
 long getAlarmReason() {
   long alarmReason = SPN_ALARM_NO_ALARM;
   for (int i = 0; i < numDevices; ++i) {
@@ -326,25 +326,13 @@ long getAlarmReason() {
   return alarmReason;
 }
 
-int getMode() {
-  int mode = SPN_MODE_UNKNOWN;
-  for (int i = 0; i < numDevices; ++i) {
-    if (statusArray[i].mode > mode) {
-      mode = statusArray[i].mode;
-    }
-  }
-  return mode;
-}
-
 void statusHandler(const char* event, const char* data) {
-
   Serial.print("event: ");
   Serial.println(event);
   Serial.print("update: ");
   Serial.print(data);
   Serial.println();
   strcpy(dataCpy, data);
-
   Serial.print("Mode ");
   bool isValid = false;
   jsmnrtype_t objType = JSMNR_UNDEFINED;
