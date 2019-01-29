@@ -49,10 +49,20 @@ HardwarePinLed* openLed;
 HardwarePinLed* closedLed;
 RealBuzzer* openRelay;
 RealBuzzer* closeRelay;
+
+typedef struct DeviceStatus {
+  int id;
+  bool technical;
+  bool critical;
+  int mode;
+  long alarmReason;
+};
+
+#define MAX_DEVICE_COUNT 5
+DeviceStatus statusArray[MAX_DEVICE_COUNT];
+int numDevices = 0;
+
 //long alarmReason = SPN_ALARM_NO_ALARM;
-bool technical = false;
-bool critical = false;
-int mode = SPN_MODE_UNKNOWN;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
 unsigned long nothingDetectedSince = 0L;
@@ -109,6 +119,7 @@ void setup() {
   Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
   Particle.function("closeWater", closeWater);
   Particle.function("openWater", openWater);
+  Particle.function("reboot", reboot);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
   // request immediate update.
   Particle.publish("spnPing", "anyonethere");
@@ -117,6 +128,10 @@ void setup() {
 void loop() {
   long now = systemTime->nowMillis();
   long nowbit = now / 200;
+  bool technical = isTechnical();
+  bool critical = isCritical();
+  int mode = getMode();
+  long alarmReason = getAlarmReason();
   switch (mode) {
     case SPN_MODE_UNKNOWN:
       ledRed->setState((nowbit % 3) == 0);
@@ -126,7 +141,7 @@ void loop() {
     case SPN_ARMED:
       ledRed->setState(critical);
       ledGreen->setState(true);
-      ledYellow->setState(technical);
+      ledYellow->setState(technical && ((nowbit % 2) == 0));
       break;
     case SPN_DISARMED:
       ledRed->setState(true);
@@ -233,34 +248,6 @@ void shutoffValveHandler(const char *event, const char *data)
   }
 }
 
-void statusHandler(const char* event, const char* data) {
-
-  Serial.print("event: ");
-  Serial.println(event);
-  Serial.print("update: ");
-  Serial.print(data);
-  Serial.println();
-  strcpy(dataCpy, data);
-  Serial.print(dataCpy);
-  Serial.println();
-
-  Serial.print("Mode ");
-  bool isValid = false;
-  jsmnrtype_t objType = JSMNR_UNDEFINED;
-  int objSize = 0;
-
-  String mStr = RdJson::getString("mode", "", isValid, objType, objSize, dataCpy);
-  Serial.println(mStr);
-  mode = stringToInt(mStr, SPN_MODE_UNKNOWN);
-
-  technical = RdJson::getString("technical", "", isValid, objType, objSize, dataCpy) == "1";
-  critical = RdJson::getString("critical", "", isValid, objType, objSize, dataCpy) == "1";
-  Serial.print("technical");
-  Serial.println(technical);
-  Serial.print("critical");
-  Serial.println(critical);
-}
-
 int openWater(String extra) {
   return open(true) ? 1 : 0;
 }
@@ -277,4 +264,102 @@ int stringToInt(String extra, int defaultInt) {
     }
   }
   return result;
+}
+
+int reboot(String extra) {
+  System.reset();
+  return 1;
+}
+
+
+DeviceStatus* getStatusById(int id) {
+  for (int i=0; i<numDevices; ++i) {
+    if (statusArray[i].id = id) {
+      return &statusArray[i];
+    }
+  }
+  if (numDevices < MAX_DEVICE_COUNT) {
+    DeviceStatus status;
+    status.id = id;
+    status.technical = false;
+    status.critical = false;
+    status.mode = SPN_MODE_UNKNOWN;
+    status.alarmReason = SPN_ALARM_NO_ALARM;
+    statusArray[numDevices] = status;
+    numDevices++;
+    return &statusArray[numDevices];
+  }
+  // FIXME: what if there's another device?
+  return nullptr;
+}
+bool isTechnical() {
+  for (int i = 0; i < numDevices; ++i) {
+    if (statusArray[i].technical) {
+      return true;
+    }
+  }
+  return false;
+}
+bool isCritical() {
+  for (int i = 0; i < numDevices; ++i) {
+    if (statusArray[i].critical) {
+      return true;
+    }
+  }
+  return false;
+}
+long getAlarmReason() {
+  long alarmReason = SPN_ALARM_NO_ALARM;
+  for (int i = 0; i < numDevices; ++i) {
+    alarmReason |= statusArray[i].alarmReason;
+  }
+  return alarmReason;
+}
+
+int getMode() {
+  int mode = SPN_MODE_UNKNOWN;
+  for (int i = 0; i < numDevices; ++i) {
+    if (statusArray[i].mode > mode) {
+      mode = statusArray[i].mode;
+    }
+  }
+  return mode;
+}
+
+void statusHandler(const char* event, const char* data) {
+
+  Serial.print("event: ");
+  Serial.println(event);
+  Serial.print("update: ");
+  Serial.print(data);
+  Serial.println();
+  strcpy(dataCpy, data);
+  Serial.print(dataCpy);
+  Serial.println();
+
+  Serial.print("Mode ");
+  bool isValid = false;
+  jsmnrtype_t objType = JSMNR_UNDEFINED;
+  int objSize = 0;
+
+  String idStr = RdJson::getString("id", "", isValid, objType, objSize, dataCpy);
+  int id = stringToInt(idStr, -1);
+  DeviceStatus* thisStatus = getStatusById(id);
+  if (thisStatus == nullptr) {
+    Serial.print("unaccepted id ");
+    Serial.println(id);
+    return;
+  }
+
+  String mStr = RdJson::getString("mode", "", isValid, objType, objSize, dataCpy);
+
+  thisStatus->mode = stringToInt(mStr, SPN_MODE_UNKNOWN);
+  thisStatus->technical = RdJson::getString("technical", "", isValid, objType, objSize, dataCpy) == "1";
+  thisStatus->critical = RdJson::getString("critical", "", isValid, objType, objSize, dataCpy) == "1";
+
+  Serial.println(mStr);
+  Serial.print("technical");
+  Serial.println(thisStatus->technical);
+  Serial.print("critical");
+  Serial.println(thisStatus->critical);
 }
