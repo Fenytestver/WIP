@@ -176,6 +176,7 @@ int snoozeExtra(String extra) {
 }
 
 void snoozeNow() {
+  buzzer->beep();
   snooze();
 }
 
