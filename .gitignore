@@ -7,3 +7,8 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# Ignore local dependency copies
+SumpPitActuatorProject/lib/sumppitmodel
+SumpPitSensorProject/lib/sumppitmodel
+SumpPitAlarmModuleProject/lib/sumppitmodel
