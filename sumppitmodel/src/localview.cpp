@@ -40,10 +40,9 @@ void LocalView::setup()
 
 void LocalView::render(State state)
 {
-  ledRed->setState(false);
+  ledRed->setState(state.mode == Mode::SPN_DISARMED);
   ledGreen->setState(state.mode == Mode::SPN_ARMED);
-  ledYellow->setState(state.mode == Mode::SPN_DISARMED
-      || state.mode == Mode::SPN_MAINTENANCE);
+  ledYellow->setState(state.mode == Mode::SPN_MAINTENANCE);
   int len;
   switch (state.mode) {
     case Mode::SPN_MAINTENANCE:
