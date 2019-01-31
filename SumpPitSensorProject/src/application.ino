@@ -116,6 +116,10 @@ SYSTEM_THREAD(ENABLED);
 #ifndef SPN_BUTTON_LONG_PRESS_TIME
 #define SPN_BUTTON_LONG_PRESS_TIME 30000
 #endif
+#ifndef DISPLAY_I2C_ADDR
+#define DISPLAY_I2C_ADDR 0x27
+#endif
+
 
 // end of fallback definitions.
 
@@ -126,8 +130,6 @@ SYSTEM_THREAD(ENABLED);
 #define WATER_DIST_LOW 300
 #define WATER_DIST_HIGH 1000
 
-
-#define DISPLAY_I2C_ADDR 0x27
 #define DISPLAY_COLS 20
 #define DISPLAY_ROWS 4
 

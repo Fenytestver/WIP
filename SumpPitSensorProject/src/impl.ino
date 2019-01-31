@@ -374,6 +374,10 @@ class LcdDisplay : public Display {
     char bank[20*4 + 1];
   public:
     LcdDisplay(int address, int cols, int rows) : Display() {
+      if (address == 0x00) {
+        lcd = nullptr;
+        return;
+      }
       lcd = new LiquidCrystal_I2C(address, cols, rows);
       for (int i=0; i<bankSize; ++i) {
         bank[i] = ' ';
@@ -383,6 +387,9 @@ class LcdDisplay : public Display {
 
     void setup() {
       Display::setup();
+      if (lcd == nullptr) {
+        return;
+      }
       lcd->init();
       lcd->backlight();
       lcd->clear();
@@ -396,6 +403,9 @@ class LcdDisplay : public Display {
 
     void displayMessage(char* message) {
       Display::displayMessage(message);
+      if (lcd == nullptr) {
+        return;
+      }
       //lcd->setCursor(0,0);
       //lcd->write('a');
     //  return;
@@ -460,10 +470,13 @@ class LcdDisplay : public Display {
 
     void clear() {
       Display::clear();
+      if (lcd == nullptr) {
+        return;
+      }
       for (int i=0; bankSize; ++i) {
         bank[i] = ' ';
       }
-      bank[bankSize - 1]='\0';
+      bank[bankSize - 1] = '\0';
       lcd->clear();
     }
 
