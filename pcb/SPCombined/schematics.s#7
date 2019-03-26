@@ -7711,8 +7711,8 @@ No silk outline, but tDocu layer shows pin location.
 <part name="T_SW_R2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 <part name="T_LCD1" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 <part name="T_LCD2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
-<part name="T_FLOAT1" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
-<part name="T_FLOAT2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
+<part name="T_FDESK1" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
+<part name="T_FDESK2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 </parts>
 <sheets>
 <sheet>
@@ -7911,8 +7911,8 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="T_SW_R2" gate="G$1" x="-83.82" y="55.88"/>
 <instance part="T_LCD1" gate="G$1" x="-81.28" y="43.18"/>
 <instance part="T_LCD2" gate="G$1" x="-81.28" y="30.48"/>
-<instance part="T_FLOAT1" gate="G$1" x="-73.66" y="-33.02"/>
-<instance part="T_FLOAT2" gate="G$1" x="-73.66" y="-43.18"/>
+<instance part="T_FDESK1" gate="G$1" x="-73.66" y="-33.02"/>
+<instance part="T_FDESK2" gate="G$1" x="-73.66" y="-43.18"/>
 </instances>
 <busses>
 </busses>
@@ -8891,8 +8891,8 @@ No silk outline, but tDocu layer shows pin location.
 <wire x1="-66.04" y1="-43.18" x2="-55.88" y2="-43.18" width="0.1524" layer="91"/>
 <label x="-66.04" y="-43.18" size="1.778" layer="95"/>
 <wire x1="-48.26" y1="-43.18" x2="-55.88" y2="-43.18" width="0.1524" layer="91"/>
-<pinref part="T_FLOAT1" gate="G$1" pin="1"/>
-<pinref part="T_FLOAT2" gate="G$1" pin="1"/>
+<pinref part="T_FDESK1" gate="G$1" pin="1"/>
+<pinref part="T_FDESK2" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -8946,14 +8946,14 @@ No silk outline, but tDocu layer shows pin location.
 <segment>
 <wire x1="-66.04" y1="-40.64" x2="-55.88" y2="-40.64" width="0.1524" layer="91"/>
 <label x="-66.04" y="-40.64" size="1.778" layer="95"/>
-<pinref part="T_FLOAT2" gate="G$1" pin="2"/>
+<pinref part="T_FDESK2" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="FDESK_12V" class="0">
 <segment>
 <wire x1="-66.04" y1="-30.48" x2="-55.88" y2="-30.48" width="0.1524" layer="91"/>
 <label x="-66.04" y="-30.48" size="1.778" layer="95"/>
-<pinref part="T_FLOAT1" gate="G$1" pin="2"/>
+<pinref part="T_FDESK1" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="R12" gate="G$1" pin="1"/>

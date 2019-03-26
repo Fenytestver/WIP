@@ -7545,7 +7545,7 @@ No silk outline, but tDocu layer shows pin location.
 <part name="OOA1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0207/7" package3d_urn="urn:adsk.eagle:package:25942/1"/>
 <part name="OOA0" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
-<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
+<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0207/7" package3d_urn="urn:adsk.eagle:package:25942/1"/>
 <part name="P+14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
