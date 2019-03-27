@@ -24110,9 +24110,9 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <part name="R12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1" value="470"/>
 <part name="R13" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1" value="470"/>
 <part name="GND24" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="LEDG_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
-<part name="LEDY_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
-<part name="LEDR_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
+<part name="G_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
+<part name="Y_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
+<part name="R_TR" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="2N3904" device="" package3d_urn="urn:adsk.eagle:package:29893/2"/>
 <part name="GND25" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="BIGLED_G" library="SparkFun-Connectors" deviceset="CONN_02" device=""/>
 <part name="BIGLED_Y" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1"/>
@@ -24191,9 +24191,9 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <instance part="R12" gate="G$1" x="0" y="15.24"/>
 <instance part="R13" gate="G$1" x="0" y="22.86"/>
 <instance part="GND24" gate="1" x="0" y="33.02" rot="R180"/>
-<instance part="LEDG_TR" gate="G1" x="-93.98" y="12.7" rot="R180"/>
-<instance part="LEDY_TR" gate="G1" x="-106.68" y="12.7" rot="R180"/>
-<instance part="LEDR_TR" gate="G1" x="-119.38" y="12.7" rot="R180"/>
+<instance part="G_TR" gate="G1" x="-93.98" y="12.7" rot="R180"/>
+<instance part="Y_TR" gate="G1" x="-106.68" y="12.7" rot="R180"/>
+<instance part="R_TR" gate="G1" x="-119.38" y="12.7" rot="R180"/>
 <instance part="GND25" gate="1" x="-124.46" y="2.54"/>
 <instance part="BIGLED_G" gate="G$1" x="-149.86" y="27.94"/>
 <instance part="BIGLED_Y" gate="G$1" x="-149.86" y="15.24"/>
@@ -24358,10 +24358,10 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <pinref part="GND24" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="LEDG_TR" gate="G1" pin="C"/>
-<pinref part="LEDY_TR" gate="G1" pin="C"/>
+<pinref part="G_TR" gate="G1" pin="C"/>
+<pinref part="Y_TR" gate="G1" pin="C"/>
 <wire x1="-96.52" y1="7.62" x2="-109.22" y2="7.62" width="0.1524" layer="91"/>
-<pinref part="LEDR_TR" gate="G1" pin="C"/>
+<pinref part="R_TR" gate="G1" pin="C"/>
 <wire x1="-109.22" y1="7.62" x2="-121.92" y2="7.62" width="0.1524" layer="91"/>
 <junction x="-109.22" y="7.62"/>
 <wire x1="-121.92" y1="7.62" x2="-124.46" y2="7.62" width="0.1524" layer="91"/>
@@ -24398,7 +24398,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <wire x1="-101.6" y1="53.34" x2="-101.6" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="-101.6" y1="20.32" x2="-114.3" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="-114.3" y1="20.32" x2="-114.3" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="LEDR_TR" gate="G1" pin="B"/>
+<pinref part="R_TR" gate="G1" pin="B"/>
 <wire x1="-114.3" y1="12.7" x2="-116.84" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -24528,7 +24528,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <wire x1="-88.9" y1="40.64" x2="-88.9" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-88.9" y1="45.72" x2="-99.06" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-99.06" y1="45.72" x2="-99.06" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="LEDY_TR" gate="G1" pin="B"/>
+<pinref part="Y_TR" gate="G1" pin="B"/>
 <wire x1="-99.06" y1="12.7" x2="-104.14" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -24536,7 +24536,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <wire x1="-76.2" y1="38.1" x2="-91.44" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="LEDG_TR" gate="G1" pin="B"/>
+<pinref part="G_TR" gate="G1" pin="B"/>
 <wire x1="-91.44" y1="38.1" x2="-91.44" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -24821,7 +24821,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 </net>
 <net name="N$13" class="0">
 <segment>
-<pinref part="LEDG_TR" gate="G1" pin="E"/>
+<pinref part="G_TR" gate="G1" pin="E"/>
 <wire x1="-96.52" y1="17.78" x2="-96.52" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="-96.52" y1="27.94" x2="-124.46" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="-124.46" y1="27.94" x2="-124.46" y2="30.48" width="0.1524" layer="91"/>
@@ -24831,7 +24831,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 </net>
 <net name="N$29" class="0">
 <segment>
-<pinref part="LEDY_TR" gate="G1" pin="E"/>
+<pinref part="Y_TR" gate="G1" pin="E"/>
 <wire x1="-109.22" y1="17.78" x2="-109.22" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="-109.22" y1="25.4" x2="-124.46" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="-124.46" y1="25.4" x2="-132.08" y2="25.4" width="0.1524" layer="91"/>
@@ -24842,7 +24842,7 @@ The Slot footprint only works if the mill layer is transmitted to the PCB fab ho
 </net>
 <net name="N$30" class="0">
 <segment>
-<pinref part="LEDR_TR" gate="G1" pin="E"/>
+<pinref part="R_TR" gate="G1" pin="E"/>
 <wire x1="-121.92" y1="17.78" x2="-121.92" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-121.92" y1="22.86" x2="-124.46" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-124.46" y1="22.86" x2="-129.54" y2="22.86" width="0.1524" layer="91"/>
