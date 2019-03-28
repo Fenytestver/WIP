@@ -9643,13 +9643,13 @@ No silk outline, but tDocu layer shows pin location.
 <label x="-73.66" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$6" class="0">
+<net name="+12VIN" class="0">
 <segment>
-<wire x1="-119.38" y1="81.28" x2="-119.38" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-114.3" y1="81.28" x2="-114.3" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="T_12VIN" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="78.74" x2="-124.46" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-114.3" y1="78.74" x2="-124.46" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="FUSE" gate="1" pin="1"/>
-<wire x1="-119.38" y1="81.28" x2="-114.3" y2="81.28" width="0.1524" layer="91"/>
+<label x="-124.46" y="78.74" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
