@@ -1,7 +1,7 @@
 {
     "author": {
-        "email": "support.eagle@autodesk.com",
-        "name": "Autodesk EAGLE"
+        "email": "kovmarci86@gmail.com",
+        "name": "Marcell Kovacs"
     },
     "description": {
         "EN": "CAM job description goes here."
@@ -119,7 +119,9 @@
                     },
                     "filename_format": ".GTO",
                     "layers": [
-                        21
+                        21,
+                        25,
+                        27
                     ],
                     "milling": false,
                     "name": "Top Silkscreen",
@@ -246,7 +248,7 @@
             ]
         }
     ],
-    "timestamp": "2018-09-15T00:00:00",
+    "timestamp": "2019-03-30T10:24:00",
     "type": "EAGLE CAM job",
     "units": "metric",
     "version": "9.2.0"
