@@ -7545,7 +7545,7 @@ No silk outline, but tDocu layer shows pin location.
 <part name="OOA1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0207/7" package3d_urn="urn:adsk.eagle:package:25942/1"/>
 <part name="OOA0" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
-<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
+<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0207/7" package3d_urn="urn:adsk.eagle:package:25942/1"/>
 <part name="P+14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
@@ -8474,6 +8474,122 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="T_12VIN" gate="G$1" pin="1"/>
 <pinref part="GNDI14" gate="1" pin="GND"/>
 <wire x1="-124.46" y1="76.2" x2="-111.76" y2="76.2" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="OOD4" gate="A" pin="EMIT"/>
+<wire x1="137.16" y1="45.72" x2="132.08" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="GNDI4" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="OOD3" gate="A" pin="EMIT"/>
+<wire x1="134.62" y1="20.32" x2="129.54" y2="20.32" width="0.1524" layer="91"/>
+<pinref part="GNDI8" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="OID2" gate="A" pin="EMIT"/>
+<wire x1="134.62" y1="-5.08" x2="129.54" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="GNDI11" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="OIC3" gate="A" pin="EMIT"/>
+<wire x1="86.36" y1="-22.86" x2="86.36" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="GNDI12" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_LEAK2" gate="G$1" pin="2"/>
+<wire x1="-119.38" y1="91.44" x2="-124.46" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="GNDI15" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_LEAK1" gate="G$1" pin="2"/>
+<wire x1="-119.38" y1="104.14" x2="-124.46" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="GNDI16" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_RPM2" gate="J$1" pin="1"/>
+<wire x1="-101.6" y1="-25.4" x2="-91.44" y2="-25.4" width="0.1524" layer="91"/>
+<pinref part="GNDI20" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_LCD_5V" gate="G$1" pin="2"/>
+<wire x1="-119.38" y1="33.02" x2="-124.46" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="GNDI19" gate="1" pin="GND"/>
+<wire x1="-119.38" y1="35.56" x2="-119.38" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="T_12TO5_O" gate="G$1" pin="2"/>
+<wire x1="-119.38" y1="60.96" x2="-124.46" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="GNDI17" gate="1" pin="GND"/>
+<wire x1="-119.38" y1="63.5" x2="-119.38" y2="60.96" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="T_12TO5_I" gate="G$1" pin="2"/>
+<wire x1="-119.38" y1="48.26" x2="-124.46" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="GNDI18" gate="1" pin="GND"/>
+<wire x1="-119.38" y1="50.8" x2="-119.38" y2="48.26" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="T_CONV" gate="J$1" pin="1"/>
+<wire x1="-101.6" y1="-40.64" x2="-91.44" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="GNDI21" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_MOT_SW1" gate="G$1" pin="2"/>
+<wire x1="-101.6" y1="104.14" x2="-93.98" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="GNDI23" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="T_MOT_SW2" gate="G$1" pin="2"/>
+<wire x1="-101.6" y1="91.44" x2="-93.98" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="GNDI22" gate="1" pin="GND"/>
+<wire x1="-93.98" y1="93.98" x2="-93.98" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<wire x1="-73.66" y1="30.48" x2="-63.5" y2="30.48" width="0.1524" layer="91"/>
+<pinref part="GNDI25" gate="1" pin="GND"/>
+<pinref part="T_LCD2" gate="G$1" pin="1"/>
+</segment>
+<segment>
+<wire x1="-76.2" y1="58.42" x2="-66.04" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="-76.2" y1="55.88" x2="-66.04" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="58.42" x2="-66.04" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="GNDI24" gate="1" pin="GND"/>
+<junction x="-66.04" y="55.88"/>
+<pinref part="T_SW_R2" gate="G$1" pin="1"/>
+<pinref part="T_SW_R2" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="OOA0" gate="A" pin="EMIT"/>
+<wire x1="-15.24" y1="76.2" x2="-15.24" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="GNDI26" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="OOA1" gate="A" pin="EMIT"/>
+<wire x1="10.16" y1="76.2" x2="10.16" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="GNDI27" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="OOD5" gate="A" pin="EMIT"/>
+<wire x1="137.16" y1="71.12" x2="132.08" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="GNDI7" gate="1" pin="GND"/>
+</segment>
+<segment>
+<wire x1="-76.2" y1="78.74" x2="-66.04" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-76.2" y1="76.2" x2="-66.04" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="78.74" x2="-66.04" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="GNDI2" gate="1" pin="GND"/>
+<junction x="-66.04" y="76.2"/>
+<pinref part="T_SW_Y2" gate="G$1" pin="1"/>
+<pinref part="T_SW_Y2" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<wire x1="-76.2" y1="99.06" x2="-66.04" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="-76.2" y1="96.52" x2="-66.04" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="-66.04" y1="99.06" x2="-66.04" y2="96.52" width="0.1524" layer="91"/>
+<pinref part="GNDI3" gate="1" pin="GND"/>
+<junction x="-66.04" y="96.52"/>
+<pinref part="T_SW_G2" gate="G$1" pin="1"/>
+<pinref part="T_SW_G2" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -9525,124 +9641,6 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="T_LCD1" gate="G$1" pin="2"/>
 <wire x1="-73.66" y1="45.72" x2="-66.04" y2="45.72" width="0.1524" layer="91"/>
 <label x="-73.66" y="45.72" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="GNDA" class="0">
-<segment>
-<pinref part="OOD4" gate="A" pin="EMIT"/>
-<wire x1="137.16" y1="45.72" x2="132.08" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="GNDI4" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="OOD3" gate="A" pin="EMIT"/>
-<wire x1="134.62" y1="20.32" x2="129.54" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="GNDI8" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="OID2" gate="A" pin="EMIT"/>
-<wire x1="134.62" y1="-5.08" x2="129.54" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="GNDI11" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="OIC3" gate="A" pin="EMIT"/>
-<wire x1="86.36" y1="-22.86" x2="86.36" y2="-17.78" width="0.1524" layer="91"/>
-<pinref part="GNDI12" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_LEAK2" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="91.44" x2="-124.46" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="GNDI15" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_LEAK1" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="104.14" x2="-124.46" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="GNDI16" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_RPM2" gate="J$1" pin="1"/>
-<wire x1="-101.6" y1="-25.4" x2="-91.44" y2="-25.4" width="0.1524" layer="91"/>
-<pinref part="GNDI20" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_LCD_5V" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="33.02" x2="-124.46" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="GNDI19" gate="1" pin="GND"/>
-<wire x1="-119.38" y1="35.56" x2="-119.38" y2="33.02" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="T_12TO5_O" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="60.96" x2="-124.46" y2="60.96" width="0.1524" layer="91"/>
-<pinref part="GNDI17" gate="1" pin="GND"/>
-<wire x1="-119.38" y1="63.5" x2="-119.38" y2="60.96" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="T_12TO5_I" gate="G$1" pin="2"/>
-<wire x1="-119.38" y1="48.26" x2="-124.46" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="GNDI18" gate="1" pin="GND"/>
-<wire x1="-119.38" y1="50.8" x2="-119.38" y2="48.26" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="T_CONV" gate="J$1" pin="1"/>
-<wire x1="-101.6" y1="-40.64" x2="-91.44" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="GNDI21" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_MOT_SW1" gate="G$1" pin="2"/>
-<wire x1="-101.6" y1="104.14" x2="-93.98" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="GNDI23" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="T_MOT_SW2" gate="G$1" pin="2"/>
-<wire x1="-101.6" y1="91.44" x2="-93.98" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="GNDI22" gate="1" pin="GND"/>
-<wire x1="-93.98" y1="93.98" x2="-93.98" y2="91.44" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<wire x1="-73.66" y1="30.48" x2="-63.5" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="GNDI25" gate="1" pin="GND"/>
-<pinref part="T_LCD2" gate="G$1" pin="1"/>
-</segment>
-<segment>
-<wire x1="-76.2" y1="58.42" x2="-66.04" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="-76.2" y1="55.88" x2="-66.04" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="-66.04" y1="58.42" x2="-66.04" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="GNDI24" gate="1" pin="GND"/>
-<junction x="-66.04" y="55.88"/>
-<pinref part="T_SW_R2" gate="G$1" pin="1"/>
-<pinref part="T_SW_R2" gate="G$1" pin="2"/>
-</segment>
-<segment>
-<pinref part="OOA0" gate="A" pin="EMIT"/>
-<wire x1="-15.24" y1="76.2" x2="-15.24" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="GNDI26" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="OOA1" gate="A" pin="EMIT"/>
-<wire x1="10.16" y1="76.2" x2="10.16" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="GNDI27" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="OOD5" gate="A" pin="EMIT"/>
-<wire x1="137.16" y1="71.12" x2="132.08" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="GNDI7" gate="1" pin="GND"/>
-</segment>
-<segment>
-<wire x1="-76.2" y1="78.74" x2="-66.04" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="-76.2" y1="76.2" x2="-66.04" y2="76.2" width="0.1524" layer="91"/>
-<wire x1="-66.04" y1="78.74" x2="-66.04" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="GNDI2" gate="1" pin="GND"/>
-<junction x="-66.04" y="76.2"/>
-<pinref part="T_SW_Y2" gate="G$1" pin="1"/>
-<pinref part="T_SW_Y2" gate="G$1" pin="2"/>
-</segment>
-<segment>
-<wire x1="-76.2" y1="99.06" x2="-66.04" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="-76.2" y1="96.52" x2="-66.04" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-66.04" y1="99.06" x2="-66.04" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="GNDI3" gate="1" pin="GND"/>
-<junction x="-66.04" y="96.52"/>
-<pinref part="T_SW_G2" gate="G$1" pin="1"/>
-<pinref part="T_SW_G2" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$6" class="0">

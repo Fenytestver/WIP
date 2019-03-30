@@ -7457,53 +7457,53 @@ No silk outline, but tDocu layer shows pin location.
 </classes>
 <parts>
 <part name="ELECTRON" library="Particle" deviceset="ELECTRON" device="DUALROW"/>
-<part name="OK1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOD3" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R3" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK2" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOD4" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R6" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK3" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOD5" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK5" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OID2" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R15" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK6" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIC3" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R18" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="+3V7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="OK12" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOB5" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R34" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R35" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R36" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK13" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIB4" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R37" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R38" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R39" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK14" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIB3" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R40" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R41" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R42" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK15" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIB2" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R43" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R44" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R45" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK16" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIB1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R46" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R47" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R48" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK17" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIB0" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R49" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R50" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R51" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
@@ -7540,9 +7540,9 @@ No silk outline, but tDocu layer shows pin location.
 <part name="T_RPM1" library="SparkFun-Connectors" deviceset="CONN_03" device="-SCREW-5MM"/>
 <part name="T_RPM2" library="SparkFun-Connectors" deviceset="CONN_03" device="-SCREW-5MM"/>
 <part name="T_CONV" library="SparkFun-Connectors" deviceset="CONN_03" device="-SCREW-5MM"/>
-<part name="OK9" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOA1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK10" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OOA0" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="P+14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
@@ -7563,28 +7563,28 @@ No silk outline, but tDocu layer shows pin location.
 <part name="P+26" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P+27" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="R8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
-<part name="OK8" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OID6" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R10" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R11" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="OK11" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIC0" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R4" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R13" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK4" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIC1" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R1" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R19" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R20" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="GND21" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="P+28" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="OK7" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
+<part name="OIC2" library="optocoupler" library_urn="urn:adsk.eagle:library:320" deviceset="PC817" device="" package3d_urn="urn:adsk.eagle:package:21938/1"/>
 <part name="R2" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R16" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
 <part name="R17" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="0204/5" package3d_urn="urn:adsk.eagle:package:25955/1"/>
@@ -7649,7 +7649,7 @@ No silk outline, but tDocu layer shows pin location.
 <part name="T_LCD2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 <part name="T_FDESK1" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 <part name="T_FDESK2" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
-<part name="T_SW_G3" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
+<part name="T_BUZZ" library="SparkFun-Connectors" deviceset="CONN_02" device="5MM"/>
 </parts>
 <sheets>
 <sheet>
@@ -7659,7 +7659,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="ELECTRON" gate="G$1" x="73.66" y="48.26" smashed="yes">
 <attribute name="NAME" x="66.294" y="71.882" size="1.778" layer="95"/>
 </instance>
-<instance part="OK1" gate="A" x="127" y="12.7" smashed="yes" rot="R90">
+<instance part="OOD3" gate="A" x="127" y="12.7" smashed="yes" rot="R90">
 <attribute name="NAME" x="121.285" y="5.715" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="134.62" y="5.715" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -7667,7 +7667,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="115.57" y="4.0386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="115.57" y="-0.762" size="1.778" layer="96"/>
 </instance>
-<instance part="OK2" gate="A" x="129.54" y="38.1" smashed="yes" rot="R90">
+<instance part="OOD4" gate="A" x="129.54" y="38.1" smashed="yes" rot="R90">
 <attribute name="NAME" x="123.825" y="31.115" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="137.16" y="31.115" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -7675,7 +7675,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="118.11" y="29.4386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="118.11" y="24.638" size="1.778" layer="96"/>
 </instance>
-<instance part="OK3" gate="A" x="129.54" y="63.5" smashed="yes" rot="R90">
+<instance part="OOD5" gate="A" x="129.54" y="63.5" smashed="yes" rot="R90">
 <attribute name="NAME" x="123.825" y="56.515" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="137.16" y="56.515" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -7683,7 +7683,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="118.11" y="54.8386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="118.11" y="50.038" size="1.778" layer="96"/>
 </instance>
-<instance part="OK5" gate="A" x="127" y="-12.7" smashed="yes" rot="R90">
+<instance part="OID2" gate="A" x="127" y="-12.7" smashed="yes" rot="R90">
 <attribute name="NAME" x="121.285" y="-19.685" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="134.62" y="-19.685" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -7691,7 +7691,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="115.57" y="-21.3614" size="1.778" layer="95"/>
 <attribute name="VALUE" x="115.57" y="-26.162" size="1.778" layer="96"/>
 </instance>
-<instance part="OK6" gate="A" x="78.74" y="-15.24" smashed="yes">
+<instance part="OIC3" gate="A" x="78.74" y="-15.24" smashed="yes">
 <attribute name="NAME" x="71.755" y="-9.525" size="1.778" layer="95"/>
 <attribute name="VALUE" x="71.755" y="-22.86" size="1.778" layer="96"/>
 </instance>
@@ -7702,7 +7702,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="+3V7" gate="G$1" x="93.98" y="68.58" smashed="yes" rot="R270">
 <attribute name="VALUE" x="88.9" y="71.12" size="1.778" layer="96"/>
 </instance>
-<instance part="OK12" gate="A" x="-10.16" y="99.06" smashed="yes" rot="R180">
+<instance part="OOB5" gate="A" x="-10.16" y="99.06" smashed="yes" rot="R180">
 <attribute name="NAME" x="-3.175" y="93.345" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="-3.175" y="106.68" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -7727,7 +7727,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+6" gate="1" x="0" y="83.82" smashed="yes" rot="R180">
 <attribute name="VALUE" x="2.54" y="88.9" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="OK13" gate="A" x="-45.72" y="93.98" smashed="yes" rot="R270">
+<instance part="OIB4" gate="A" x="-45.72" y="93.98" smashed="yes" rot="R270">
 <attribute name="NAME" x="-40.005" y="100.965" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-53.34" y="100.965" size="1.778" layer="96" rot="R270"/>
 </instance>
@@ -7752,7 +7752,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+7" gate="1" x="-30.48" y="104.14" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-35.56" y="106.68" size="1.778" layer="96"/>
 </instance>
-<instance part="OK14" gate="A" x="-45.72" y="66.04" smashed="yes" rot="R270">
+<instance part="OIB3" gate="A" x="-45.72" y="66.04" smashed="yes" rot="R270">
 <attribute name="NAME" x="-40.005" y="73.025" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-53.34" y="73.025" size="1.778" layer="96" rot="R270"/>
 </instance>
@@ -7777,7 +7777,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+8" gate="1" x="-30.48" y="76.2" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-35.56" y="78.74" size="1.778" layer="96"/>
 </instance>
-<instance part="OK15" gate="A" x="-45.72" y="38.1" smashed="yes" rot="R270">
+<instance part="OIB2" gate="A" x="-45.72" y="38.1" smashed="yes" rot="R270">
 <attribute name="NAME" x="-40.005" y="45.085" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-53.34" y="45.085" size="1.778" layer="96" rot="R270"/>
 </instance>
@@ -7802,7 +7802,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+9" gate="1" x="-30.48" y="48.26" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-35.56" y="50.8" size="1.778" layer="96"/>
 </instance>
-<instance part="OK16" gate="A" x="-35.56" y="10.16" smashed="yes" rot="R270">
+<instance part="OIB1" gate="A" x="-35.56" y="10.16" smashed="yes" rot="R270">
 <attribute name="NAME" x="-29.845" y="17.145" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-43.18" y="17.145" size="1.778" layer="96" rot="R270"/>
 </instance>
@@ -7827,7 +7827,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+10" gate="1" x="-20.32" y="20.32" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-25.4" y="22.86" size="1.778" layer="96"/>
 </instance>
-<instance part="OK17" gate="A" x="-35.56" y="-17.78" smashed="yes" rot="R270">
+<instance part="OIB0" gate="A" x="-35.56" y="-17.78" smashed="yes" rot="R270">
 <attribute name="NAME" x="-29.845" y="-10.795" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-43.18" y="-10.795" size="1.778" layer="96" rot="R270"/>
 </instance>
@@ -7965,7 +7965,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="VALUE" x="-111.76" y="-45.466" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="-111.76" y="-32.512" size="1.778" layer="95" font="vector"/>
 </instance>
-<instance part="OK9" gate="A" x="17.78" y="71.12" smashed="yes" rot="R180">
+<instance part="OOA1" gate="A" x="17.78" y="71.12" smashed="yes" rot="R180">
 <attribute name="NAME" x="24.765" y="65.405" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="24.765" y="78.74" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -7973,7 +7973,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="26.4414" y="59.69" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="31.242" y="59.69" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="OK10" gate="A" x="-7.62" y="71.12" smashed="yes" rot="R180">
+<instance part="OOA0" gate="A" x="-7.62" y="71.12" smashed="yes" rot="R180">
 <attribute name="NAME" x="-0.635" y="65.405" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="-0.635" y="78.74" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -8039,7 +8039,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="NAME" x="105.6386" y="69.85" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="100.838" y="69.85" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="OK8" gate="A" x="121.92" y="101.6" smashed="yes" rot="R180">
+<instance part="OID6" gate="A" x="121.92" y="101.6" smashed="yes" rot="R180">
 <attribute name="NAME" x="128.905" y="95.885" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="128.905" y="109.22" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -8064,7 +8064,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="GND18" gate="1" x="99.06" y="63.5" smashed="yes" rot="R180">
 <attribute name="VALUE" x="101.6" y="66.04" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="OK11" gate="A" x="5.08" y="-15.24" smashed="yes" rot="R90">
+<instance part="OIC0" gate="A" x="5.08" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="-0.635" y="-22.225" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="12.7" y="-22.225" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -8089,7 +8089,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+2" gate="1" x="-10.16" y="-25.4" smashed="yes" rot="R90">
 <attribute name="VALUE" x="-5.08" y="-27.94" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="OK4" gate="A" x="30.48" y="-15.24" smashed="yes" rot="R90">
+<instance part="OIC1" gate="A" x="30.48" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="24.765" y="-22.225" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="38.1" y="-22.225" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -8114,7 +8114,7 @@ No silk outline, but tDocu layer shows pin location.
 <instance part="P+28" gate="1" x="15.24" y="-25.4" smashed="yes" rot="R90">
 <attribute name="VALUE" x="20.32" y="-27.94" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="OK7" gate="A" x="55.88" y="-15.24" smashed="yes" rot="R90">
+<instance part="OIC2" gate="A" x="55.88" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="50.165" y="-22.225" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="63.5" y="-22.225" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -8335,7 +8335,7 @@ No silk outline, but tDocu layer shows pin location.
 <attribute name="VALUE" x="-76.2" y="-48.006" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="-76.2" y="-37.592" size="1.778" layer="95" font="vector"/>
 </instance>
-<instance part="T_SW_G3" gate="G$1" x="91.44" y="104.14" smashed="yes" rot="R270">
+<instance part="T_BUZZ" gate="G$1" x="91.44" y="104.14" smashed="yes" rot="R270">
 <attribute name="VALUE" x="86.614" y="106.68" size="1.778" layer="96" font="vector" rot="R270"/>
 <attribute name="NAME" x="97.028" y="106.68" size="1.778" layer="95" font="vector" rot="R270"/>
 </instance>
@@ -8345,38 +8345,38 @@ No silk outline, but tDocu layer shows pin location.
 <nets>
 <net name="N$1" class="0">
 <segment>
-<pinref part="OK1" gate="A" pin="A"/>
+<pinref part="OOD3" gate="A" pin="A"/>
 <pinref part="R3" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="GND" class="0">
 <segment>
-<pinref part="OK12" gate="A" pin="EMIT"/>
+<pinref part="OOB5" gate="A" pin="EMIT"/>
 <pinref part="GND12" gate="1" pin="GND"/>
 <wire x1="-17.78" y1="104.14" x2="-17.78" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK13" gate="A" pin="EMIT"/>
+<pinref part="OIB4" gate="A" pin="EMIT"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="-50.8" y1="86.36" x2="-48.26" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK14" gate="A" pin="EMIT"/>
+<pinref part="OIB3" gate="A" pin="EMIT"/>
 <pinref part="GND14" gate="1" pin="GND"/>
 <wire x1="-50.8" y1="58.42" x2="-48.26" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK15" gate="A" pin="EMIT"/>
+<pinref part="OIB2" gate="A" pin="EMIT"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="-50.8" y1="30.48" x2="-48.26" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK16" gate="A" pin="EMIT"/>
+<pinref part="OIB1" gate="A" pin="EMIT"/>
 <pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="-40.64" y1="2.54" x2="-38.1" y2="2.54" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK17" gate="A" pin="EMIT"/>
+<pinref part="OIB0" gate="A" pin="EMIT"/>
 <pinref part="GND17" gate="1" pin="GND"/>
 <wire x1="-40.64" y1="-25.4" x2="-38.1" y2="-25.4" width="0.1524" layer="91"/>
 </segment>
@@ -8409,7 +8409,7 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="GND31" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK8" gate="A" pin="EMIT"/>
+<pinref part="OID6" gate="A" pin="EMIT"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="114.3" y1="106.68" x2="114.3" y2="104.14" width="0.1524" layer="91"/>
 </segment>
@@ -8419,52 +8419,52 @@ No silk outline, but tDocu layer shows pin location.
 <wire x1="86.36" y1="60.96" x2="99.06" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK11" gate="A" pin="EMIT"/>
+<pinref part="OIC0" gate="A" pin="EMIT"/>
 <pinref part="GND23" gate="1" pin="GND"/>
 <wire x1="10.16" y1="-7.62" x2="7.62" y2="-7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK4" gate="A" pin="EMIT"/>
+<pinref part="OIC1" gate="A" pin="EMIT"/>
 <pinref part="GND21" gate="1" pin="GND"/>
 <wire x1="33.02" y1="-5.08" x2="33.02" y2="-7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="OK5" gate="A" pin="C"/>
+<pinref part="OID2" gate="A" pin="C"/>
 <wire x1="132.08" y1="-22.86" x2="129.54" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK2" gate="A" pin="C"/>
+<pinref part="OOD4" gate="A" pin="C"/>
 <wire x1="134.62" y1="27.94" x2="132.08" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK6" gate="A" pin="C"/>
+<pinref part="OIC3" gate="A" pin="C"/>
 <wire x1="68.58" y1="-20.32" x2="68.58" y2="-17.78" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK9" gate="A" pin="C"/>
+<pinref part="OOA1" gate="A" pin="C"/>
 <wire x1="27.94" y1="76.2" x2="27.94" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK10" gate="A" pin="C"/>
+<pinref part="OOA0" gate="A" pin="C"/>
 <wire x1="2.54" y1="76.2" x2="2.54" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK1" gate="A" pin="C"/>
+<pinref part="OOD3" gate="A" pin="C"/>
 <wire x1="132.08" y1="2.54" x2="129.54" y2="2.54" width="0.1524" layer="91"/>
 <pinref part="GND10" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK3" gate="A" pin="C"/>
+<pinref part="OOD5" gate="A" pin="C"/>
 <wire x1="134.62" y1="53.34" x2="132.08" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="GND11" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK7" gate="A" pin="EMIT"/>
+<pinref part="OIC2" gate="A" pin="EMIT"/>
 <wire x1="58.42" y1="-5.08" x2="58.42" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="GND22" gate="1" pin="GND"/>
 </segment>
@@ -8539,25 +8539,25 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="N$3" class="0">
 <segment>
-<pinref part="OK2" gate="A" pin="A"/>
+<pinref part="OOD4" gate="A" pin="A"/>
 <pinref part="R6" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="OK3" gate="A" pin="A"/>
+<pinref part="OOD5" gate="A" pin="A"/>
 <pinref part="R9" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
-<pinref part="OK5" gate="A" pin="A"/>
+<pinref part="OID2" gate="A" pin="A"/>
 <pinref part="R15" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$15" class="0">
 <segment>
-<pinref part="OK6" gate="A" pin="A"/>
+<pinref part="OIC3" gate="A" pin="A"/>
 <pinref part="R18" gate="G$1" pin="2"/>
 </segment>
 </net>
@@ -8693,7 +8693,7 @@ No silk outline, but tDocu layer shows pin location.
 <segment>
 <pinref part="P+1" gate="1" pin="+12V"/>
 <wire x1="83.82" y1="96.52" x2="83.82" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="T_SW_G3" gate="G$1" pin="1"/>
+<pinref part="T_BUZZ" gate="G$1" pin="1"/>
 <wire x1="83.82" y1="96.52" x2="91.44" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -8704,73 +8704,73 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="N$23" class="0">
 <segment>
-<pinref part="OK12" gate="A" pin="A"/>
+<pinref part="OOB5" gate="A" pin="A"/>
 <pinref part="R36" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$24" class="0">
 <segment>
-<pinref part="OK12" gate="A" pin="COL"/>
+<pinref part="OOB5" gate="A" pin="COL"/>
 <pinref part="R34" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$25" class="0">
 <segment>
-<pinref part="OK13" gate="A" pin="A"/>
+<pinref part="OIB4" gate="A" pin="A"/>
 <pinref part="R39" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$26" class="0">
 <segment>
-<pinref part="OK13" gate="A" pin="COL"/>
+<pinref part="OIB4" gate="A" pin="COL"/>
 <pinref part="R37" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
-<pinref part="OK14" gate="A" pin="A"/>
+<pinref part="OIB3" gate="A" pin="A"/>
 <pinref part="R42" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$28" class="0">
 <segment>
-<pinref part="OK14" gate="A" pin="COL"/>
+<pinref part="OIB3" gate="A" pin="COL"/>
 <pinref part="R40" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$29" class="0">
 <segment>
-<pinref part="OK15" gate="A" pin="A"/>
+<pinref part="OIB2" gate="A" pin="A"/>
 <pinref part="R45" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$30" class="0">
 <segment>
-<pinref part="OK15" gate="A" pin="COL"/>
+<pinref part="OIB2" gate="A" pin="COL"/>
 <pinref part="R43" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$31" class="0">
 <segment>
-<pinref part="OK16" gate="A" pin="A"/>
+<pinref part="OIB1" gate="A" pin="A"/>
 <pinref part="R48" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$32" class="0">
 <segment>
-<pinref part="OK16" gate="A" pin="COL"/>
+<pinref part="OIB1" gate="A" pin="COL"/>
 <pinref part="R46" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$33" class="0">
 <segment>
-<pinref part="OK17" gate="A" pin="A"/>
+<pinref part="OIB0" gate="A" pin="A"/>
 <pinref part="R51" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$34" class="0">
 <segment>
-<pinref part="OK17" gate="A" pin="COL"/>
+<pinref part="OIB0" gate="A" pin="COL"/>
 <pinref part="R49" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -8842,7 +8842,7 @@ No silk outline, but tDocu layer shows pin location.
 <net name="OUT_LY" class="0">
 <segment>
 <wire x1="116.84" y1="45.72" x2="111.76" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="OK2" gate="A" pin="COL"/>
+<pinref part="OOD4" gate="A" pin="COL"/>
 <wire x1="127" y1="45.72" x2="116.84" y2="45.72" width="0.1524" layer="91"/>
 <label x="114.3" y="45.72" size="1.778" layer="95"/>
 </segment>
@@ -8880,7 +8880,7 @@ No silk outline, but tDocu layer shows pin location.
 <net name="OUT_LR2" class="0">
 <segment>
 <wire x1="114.3" y1="-5.08" x2="109.22" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="OK5" gate="A" pin="COL"/>
+<pinref part="OID2" gate="A" pin="COL"/>
 <wire x1="114.3" y1="-5.08" x2="124.46" y2="-5.08" width="0.1524" layer="91"/>
 <label x="111.76" y="-5.08" size="1.778" layer="95"/>
 </segment>
@@ -8893,7 +8893,7 @@ No silk outline, but tDocu layer shows pin location.
 <net name="OUT_LG" class="0">
 <segment>
 <wire x1="124.46" y1="71.12" x2="119.38" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="OK3" gate="A" pin="COL"/>
+<pinref part="OOD5" gate="A" pin="COL"/>
 <wire x1="127" y1="71.12" x2="124.46" y2="71.12" width="0.1524" layer="91"/>
 <label x="119.38" y="71.12" size="1.778" layer="95"/>
 </segment>
@@ -8906,7 +8906,7 @@ No silk outline, but tDocu layer shows pin location.
 <net name="OUT_LR" class="0">
 <segment>
 <wire x1="114.3" y1="20.32" x2="109.22" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="OK1" gate="A" pin="COL"/>
+<pinref part="OOD3" gate="A" pin="COL"/>
 <wire x1="124.46" y1="20.32" x2="114.3" y2="20.32" width="0.1524" layer="91"/>
 <label x="111.76" y="20.32" size="1.778" layer="95"/>
 </segment>
@@ -8935,7 +8935,7 @@ No silk outline, but tDocu layer shows pin location.
 <segment>
 <wire x1="86.36" y1="-2.54" x2="86.36" y2="2.54" width="0.1524" layer="91"/>
 <label x="88.9" y="-10.16" size="1.778" layer="95" rot="R90"/>
-<pinref part="OK6" gate="A" pin="COL"/>
+<pinref part="OIC3" gate="A" pin="COL"/>
 <wire x1="86.36" y1="-2.54" x2="86.36" y2="-12.7" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -8960,7 +8960,7 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="T_SW_G1" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="OK7" gate="A" pin="C"/>
+<pinref part="OIC2" gate="A" pin="C"/>
 <wire x1="58.42" y1="-25.4" x2="58.42" y2="-33.02" width="0.1524" layer="91"/>
 <label x="60.96" y="-33.02" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -8972,14 +8972,14 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="T_SW_Y1" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="OK4" gate="A" pin="C"/>
+<pinref part="OIC1" gate="A" pin="C"/>
 <wire x1="33.02" y1="-25.4" x2="33.02" y2="-33.02" width="0.1524" layer="91"/>
 <label x="35.56" y="-33.02" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="IN_SWR" class="0">
 <segment>
-<pinref part="OK11" gate="A" pin="C"/>
+<pinref part="OIC0" gate="A" pin="C"/>
 <wire x1="7.62" y1="-25.4" x2="7.62" y2="-33.02" width="0.1524" layer="91"/>
 <label x="10.16" y="-33.02" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -9048,7 +9048,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_RPM2" class="0">
 <segment>
-<pinref part="OK13" gate="A" pin="C"/>
+<pinref part="OIB4" gate="A" pin="C"/>
 <wire x1="-50.8" y1="104.14" x2="-48.26" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="-48.26" y1="104.14" x2="-55.88" y2="104.14" width="0.1524" layer="91"/>
 <junction x="-48.26" y="104.14"/>
@@ -9076,7 +9076,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_RPM1" class="0">
 <segment>
-<pinref part="OK12" gate="A" pin="C"/>
+<pinref part="OOB5" gate="A" pin="C"/>
 <wire x1="0" y1="104.14" x2="0" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="0" y1="101.6" x2="0" y2="106.68" width="0.1524" layer="91"/>
 <junction x="0" y="101.6"/>
@@ -9142,7 +9142,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_MOT1" class="0">
 <segment>
-<pinref part="OK14" gate="A" pin="C"/>
+<pinref part="OIB3" gate="A" pin="C"/>
 <wire x1="-50.8" y1="76.2" x2="-48.26" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="-48.26" y1="76.2" x2="-55.88" y2="76.2" width="0.1524" layer="91"/>
 <junction x="-48.26" y="76.2"/>
@@ -9156,7 +9156,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_MOT2" class="0">
 <segment>
-<pinref part="OK15" gate="A" pin="C"/>
+<pinref part="OIB2" gate="A" pin="C"/>
 <wire x1="-50.8" y1="48.26" x2="-48.26" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="-48.26" y1="48.26" x2="-53.34" y2="48.26" width="0.1524" layer="91"/>
 <junction x="-48.26" y="48.26"/>
@@ -9170,7 +9170,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_LEA1" class="0">
 <segment>
-<pinref part="OK16" gate="A" pin="C"/>
+<pinref part="OIB1" gate="A" pin="C"/>
 <wire x1="-40.64" y1="20.32" x2="-38.1" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="-38.1" y1="20.32" x2="-43.18" y2="20.32" width="0.1524" layer="91"/>
 <junction x="-38.1" y="20.32"/>
@@ -9184,7 +9184,7 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="IN_LEA2" class="0">
 <segment>
-<pinref part="OK17" gate="A" pin="C"/>
+<pinref part="OIB0" gate="A" pin="C"/>
 <wire x1="-40.64" y1="-7.62" x2="-38.1" y2="-7.62" width="0.1524" layer="91"/>
 <wire x1="-38.1" y1="-7.62" x2="-43.18" y2="-7.62" width="0.1524" layer="91"/>
 <junction x="-38.1" y="-7.62"/>
@@ -9247,20 +9247,20 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="N$12" class="0">
 <segment>
-<pinref part="OK9" gate="A" pin="A"/>
+<pinref part="OOA1" gate="A" pin="A"/>
 <pinref part="R5" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$16" class="0">
 <segment>
-<pinref part="OK10" gate="A" pin="A"/>
+<pinref part="OOA0" gate="A" pin="A"/>
 <pinref part="R7" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="OUT_LCLO" class="0">
 <segment>
 <wire x1="10.16" y1="58.42" x2="10.16" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="OK9" gate="A" pin="COL"/>
+<pinref part="OOA1" gate="A" pin="COL"/>
 <wire x1="10.16" y1="68.58" x2="10.16" y2="58.42" width="0.1524" layer="91"/>
 <label x="10.16" y="55.88" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -9273,7 +9273,7 @@ No silk outline, but tDocu layer shows pin location.
 <net name="OUT_LOPE" class="0">
 <segment>
 <wire x1="-15.24" y1="58.42" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="OK10" gate="A" pin="COL"/>
+<pinref part="OOA0" gate="A" pin="COL"/>
 <wire x1="-15.24" y1="68.58" x2="-15.24" y2="58.42" width="0.1524" layer="91"/>
 <label x="-15.24" y="55.88" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -9331,13 +9331,13 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="N$11" class="0">
 <segment>
-<pinref part="OK8" gate="A" pin="A"/>
+<pinref part="OID6" gate="A" pin="A"/>
 <pinref part="R12" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$13" class="0">
 <segment>
-<pinref part="OK8" gate="A" pin="COL"/>
+<pinref part="OID6" gate="A" pin="COL"/>
 <pinref part="R10" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -9358,14 +9358,14 @@ No silk outline, but tDocu layer shows pin location.
 <segment>
 <pinref part="BUZ_TR" gate="G1" pin="C"/>
 <wire x1="109.22" y1="78.74" x2="93.98" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="T_SW_G3" gate="G$1" pin="2"/>
+<pinref part="T_BUZZ" gate="G$1" pin="2"/>
 <wire x1="93.98" y1="93.98" x2="93.98" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="96.52" x2="93.98" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="IN_FLO_VCC" class="0">
 <segment>
-<pinref part="OK8" gate="A" pin="C"/>
+<pinref part="OID6" gate="A" pin="C"/>
 <wire x1="132.08" y1="106.68" x2="132.08" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="104.14" x2="132.08" y2="109.22" width="0.1524" layer="91"/>
 <junction x="132.08" y="104.14"/>
@@ -9391,37 +9391,37 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="N$10" class="0">
 <segment>
-<pinref part="OK11" gate="A" pin="A"/>
+<pinref part="OIC0" gate="A" pin="A"/>
 <pinref part="R14" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$14" class="0">
 <segment>
-<pinref part="OK11" gate="A" pin="COL"/>
+<pinref part="OIC0" gate="A" pin="COL"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="OK4" gate="A" pin="A"/>
+<pinref part="OIC1" gate="A" pin="A"/>
 <pinref part="R20" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="OK4" gate="A" pin="COL"/>
+<pinref part="OIC1" gate="A" pin="COL"/>
 <pinref part="R1" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="OK7" gate="A" pin="A"/>
+<pinref part="OIC2" gate="A" pin="A"/>
 <pinref part="R17" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$17" class="0">
 <segment>
-<pinref part="OK7" gate="A" pin="COL"/>
+<pinref part="OIC2" gate="A" pin="COL"/>
 <pinref part="R2" gate="G$1" pin="1"/>
 </segment>
 </net>
@@ -9527,22 +9527,22 @@ No silk outline, but tDocu layer shows pin location.
 </net>
 <net name="GNDA" class="0">
 <segment>
-<pinref part="OK2" gate="A" pin="EMIT"/>
+<pinref part="OOD4" gate="A" pin="EMIT"/>
 <wire x1="137.16" y1="45.72" x2="132.08" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="GNDI4" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK1" gate="A" pin="EMIT"/>
+<pinref part="OOD3" gate="A" pin="EMIT"/>
 <wire x1="134.62" y1="20.32" x2="129.54" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="GNDI8" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK5" gate="A" pin="EMIT"/>
+<pinref part="OID2" gate="A" pin="EMIT"/>
 <wire x1="134.62" y1="-5.08" x2="129.54" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="GNDI11" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK6" gate="A" pin="EMIT"/>
+<pinref part="OIC3" gate="A" pin="EMIT"/>
 <wire x1="86.36" y1="-22.86" x2="86.36" y2="-17.78" width="0.1524" layer="91"/>
 <pinref part="GNDI12" gate="1" pin="GND"/>
 </segment>
@@ -9610,17 +9610,17 @@ No silk outline, but tDocu layer shows pin location.
 <pinref part="T_SW_R2" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="OK10" gate="A" pin="EMIT"/>
+<pinref part="OOA0" gate="A" pin="EMIT"/>
 <wire x1="-15.24" y1="76.2" x2="-15.24" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GNDI26" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK9" gate="A" pin="EMIT"/>
+<pinref part="OOA1" gate="A" pin="EMIT"/>
 <wire x1="10.16" y1="76.2" x2="10.16" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="GNDI27" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="OK3" gate="A" pin="EMIT"/>
+<pinref part="OOD5" gate="A" pin="EMIT"/>
 <wire x1="137.16" y1="71.12" x2="132.08" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="GNDI7" gate="1" pin="GND"/>
 </segment>
