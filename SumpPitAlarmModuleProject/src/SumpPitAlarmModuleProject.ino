@@ -18,6 +18,7 @@
 #define BEEP_TIME 50
 #define SYSTEM_STATUS_TOPIC "spnStatus"
 #define SHUTOFF_VALVE_TOPIC "shutoffValve"
+#define SHUTOFF_ANOMALY_TOPIC "shutoffAnomaly"
 #define SPN_MODE_UNKNOWN -1
 
 #define PIN_BUTTON_SNOOZE A4
@@ -56,6 +57,7 @@ char* dataCpy = new char[1024];
 unsigned long snoozeAt = 0L;
 unsigned long lastCritical = 0L;
 bool sirenOn = false;
+bool shutoffAnomaly = false;
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -99,6 +101,7 @@ void setup() {
   Particle.function("snooze", snoozeExtra);
   Particle.function("reboot", reboot);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler);
   // request immediate update.
   Particle.publish("spnPing", "anyonethere");
 }
@@ -127,6 +130,9 @@ void loop() {
         maintenance++;
         break;
     }
+  }
+  if (shutoffAnomaly) {
+    critical = true;
   }
 
   if (numDevices > 0) {
@@ -187,6 +193,17 @@ int snooze() {
   sprintf(snoozeText, "%d", SPN_SNOOZE_TIME);
   Particle.publish("snoozeAlarm", snoozeText);
   return SPN_SNOOZE_TIME;
+}
+
+void shutoffAnomalyHandler(const char *event, const char *data)
+{
+  Serial.print("shutoff anomaly changed to: ");
+  Serial.println(data);
+  if (strcmp("true", data) == 0) {
+    shutoffAnomaly = true;
+  } else if (strcmp("false", data) == 0) {
+    shutoffAnomaly = false;
+  }
 }
 
 void shutoffValveHandler(const char *event, const char *data)
