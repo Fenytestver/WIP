@@ -16,7 +16,7 @@
 #include "floatswitch.h"
 
 #define PIN_NO_PIN -1
-#define PUB_SHUTOFF_STATE "shutoffValve"
+#define PUB_SHUTOFF_STATE "shutoffExpected"
 class PMICVoltageSensor : public VoltageSensor {
   public:
     PMICVoltageSensor(PMIC* _pmic) {

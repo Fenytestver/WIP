@@ -206,6 +206,7 @@ bool leak;
 bool shutoffValveState;
 bool floatSwitchState;
 bool lostVoltage = false;
+int lastPumpsOn = 0;
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
@@ -379,6 +380,16 @@ void loop() {
   floatSwitchState = state->floatSwitch;
   pump1On = state->pump1On;
   pump2On = state->pump2On;
+  int currPumpsOn = (pump1On ? 1 : 0) + (pump2On ? 1 : 0);
+  if (lastPumpsOn != currPumpsOn) {
+    sprintf(publishString, "{"
+      "\"id\":\"%d\","
+      "\"pumpsOn\":\"%d\"}",
+      deviceId,
+      currPumpsOn);
+    Particle.publish("pumpStatus", publishString);
+    lastPumpsOn = currPumpsOn;
+  }
 
   if (CLOUD_ENABLED && Particle.connected() == 1) {
     long now = systemTime->nowMillis();

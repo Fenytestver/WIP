@@ -14,11 +14,15 @@
  * Date:
  */
 
-#define BUTTON_LONG_PRESS_TIME 3000
+#define BUTTON_LONG_PRESS_TIME 5000
+#define ACTUATOR_CYCLE_TIME 33000
 #define BEEP_TIME 50
 #define SHUTOFF_BEEP_TIME 300
 #define SYSTEM_STATUS_TOPIC "spnStatus"
 #define SHUTOFF_VALVE_TOPIC "shutoffValve"
+#define SHUTOFF_VALVE_EXPECTED_TOPIC "shutoffExpected"
+#define SHUTOFF_ANOMALY_TOPIC "shutoffAnomaly"
+#define POWER_ALARM_TOPIC "shutoffPwrCrit"
 #define SPN_MODE_UNKNOWN -1
 
 #define PIN_SHUTOFF_ON D1
@@ -33,12 +37,18 @@
 #define PIN_LED_CLOSED A2
 #define PIN_DETECT_OPEN A5
 #define PIN_DETECT_CLOSED A0
-
+#ifdef B3
+// ELECTRON ONLY
+#define PIN_ACTUATOR_POWER B3
+#else
+#define PIN_ACTUATOR_POWER D0
+#endif
 SystemTime* systemTime;
 RealButton* openButton;
 RealButton* closeButton;
 RealButton* openDetector;
 RealButton* closeDetector;
+RealButton* powerDetector;
 FunctionPressListener* openPressListener;
 FunctionPressListener* closePressListener;
 RealBuzzer* buzzer;
@@ -78,6 +88,10 @@ class OnAnyPress : public OnButtonPressListener {
     } *beepPressListener;
 
 bool shutoffEnabled = false;
+bool shutoffExpected = false;
+long expectedAt = 0L;
+bool powerAlarm = true;
+bool shutoffAnomaly = false;
  //SerialDebugOutput debugOutput(115200);
 
 void setup() {
@@ -91,9 +105,12 @@ void setup() {
   buzzer = new RealBuzzer(PIN_BUZZER, BEEP_TIME);
   openButton = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_BUTTON_OPEN);
   closeButton = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_BUTTON_CLOSE);
+  powerDetector = new RealButton(systemTime, BUTTON_LONG_PRESS_TIME, PIN_ACTUATOR_POWER);
   openPressListener = new FunctionPressListener(openPublish);
   closePressListener = new FunctionPressListener(closePublish);
   beepPressListener = new OnAnyPress(buzzer);
+  powerDetector->setOnButtonPressListener(new FunctionPressListener(powerChange));
+  powerDetector->setOnButtonLongPressListener(new FunctionPressListener(powerChange));
   openButton->setOnButtonPressListener(beepPressListener);
   openButton->setOnButtonLongPressListener(openPressListener);
   closeButton->setOnButtonPressListener(beepPressListener);
@@ -109,6 +126,7 @@ void setup() {
   ledGreen->setup();
   ledRed->setup();
   ledYellow->setup();
+  powerDetector->setup();
   buzzer->setup();
   openLed->setup();
   closedLed->setup();
@@ -116,11 +134,12 @@ void setup() {
   closeButton->setup();
   openRelay->setup();
   closeRelay->setup();
-  Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
+  Particle.subscribe(SHUTOFF_VALVE_EXPECTED_TOPIC, shutoffValveHandler);
   Particle.function("closeWater", closeWater);
   Particle.function("openWater", openWater);
   Particle.function("reboot", reboot);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
   // request immediate update.
   Particle.publish("spnPing", "anyonethere");
 }
@@ -160,10 +179,29 @@ void loop() {
     ledGreen->setState((nowbit % 2) == 0);
     ledYellow->setState((nowbit % 2) == 1);
   }
-  if (stateUnknown) {
+  if (!powerDetector->isPressed()) {
+    ledRed->setState(true);
+    if (!powerAlarm) {
+      powerAlarm = true;
+      Particle.publish(POWER_ALARM_TOPIC, "true", PUBLIC);
+    }
+  } else if (powerAlarm) {
+    powerAlarm = false;
+    Particle.publish(POWER_ALARM_TOPIC, "false", PUBLIC);
+  }
+  if (stateUnknown || (shutoffEnabled != shutoffExpected)) {
+    unsigned long now = systemTime->nowMillis();
+    if (!shutoffAnomaly && (expectedAt > 0 && now - expectedAt > ACTUATOR_CYCLE_TIME)) {
+      shutoffAnomaly = true;
+      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PUBLIC);
+    }
     openLed->setState((nowbit % 2) == 0);
     closedLed->setState((nowbit % 2) == 1);
   } else {
+    if (shutoffAnomaly) {
+      shutoffAnomaly = false;
+      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
+    }
     openLed->setState(!shutoffEnabled);
     closedLed->setState(shutoffEnabled);
   }
@@ -171,65 +209,79 @@ void loop() {
   closeButton->update();
   openDetector->update();
   closeDetector->update();
+  powerDetector->update();
   if (!openDetector->isPressed() && !closeDetector->isPressed()) {
     nothingDetected();
+  } else if (stateUnknown) {
+    if (openDetector->isPressed()) {
+      openDetected();
+    } else if (closeDetector->isPressed()) {
+      closeDetected();
+    }
   }
   delay(50);
 }
 
 bool open(bool publish) {
   bool result = false;
-  if (shutoffEnabled || stateUnknown) {
+  if (shutoffExpected || stateUnknown) {
     buzzer->beep();
     openRelay->beep();
+    stateUnknown = true;
     if (publish) {
-      shutoffEnabled = false;
-      stateUnknown = false;
-      Particle.publish(SHUTOFF_VALVE_TOPIC, "false", PUBLIC);
+      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "false", PUBLIC);
     }
     result = true;
   } else {
     Serial.println("Not opening, already open");
   }
-  shutoffEnabled = false;
-  stateUnknown = false;
+  expectedAt = systemTime->nowMillis();
+  shutoffExpected = false;
   return result;
 }
 
 bool close(bool publish) {
   bool result = false;
-  if (!shutoffEnabled || stateUnknown) {
+  if (!shutoffExpected || stateUnknown) {
     buzzer->beep();
     closeRelay->beep();
+    stateUnknown = true;
     if (publish) {
-      shutoffEnabled = true;
-      stateUnknown = false;
-      Particle.publish(SHUTOFF_VALVE_TOPIC, "true", PUBLIC);
+      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "true", PUBLIC);
     } else {
       Serial.println("Not closing, already closed");
     }
     result = true;
   }
-  shutoffEnabled = true;
-  stateUnknown = false;
+  expectedAt = systemTime->nowMillis();
+  shutoffExpected = true;
+
   return result;
 }
 void closeDetected() {
   stateUnknown = false;
   shutoffEnabled = true;
   nothingDetectedSince = 0L;
+  if (shutoffExpected) {
+    Particle.publish(SHUTOFF_VALVE_TOPIC, "true", PUBLIC);
+  }
 }
 void openDetected() {
   stateUnknown = false;
   shutoffEnabled = false;
   nothingDetectedSince = 0L;
+  if (!shutoffExpected) {
+    Particle.publish(SHUTOFF_VALVE_TOPIC, "false", PUBLIC);
+  }
+}
+void powerChange() {
 }
 void nothingDetected() {
   unsigned long now = systemTime->nowMillis();
   if (nothingDetectedSince == 0L) {
     nothingDetectedSince = now;
     buzzer->beep();
-  } else if (now - nothingDetectedSince > 5000) {
+  } else if (now - nothingDetectedSince > ACTUATOR_CYCLE_TIME) {
     stateUnknown = true;
   }
 }
