@@ -43,7 +43,8 @@ void LocalView::render(State state)
   long nowBit = systemTime->nowMillis() / 200;
 
   ledRed->setState(state.mode == Mode::SPN_DISARMED
-      || isCritical(state.alarmReason));
+      || (state.mode == Mode::SPN_ARMED && isCritical(state.alarmReason))
+          && !state.snoozed);
   ledGreen->setState(state.mode == Mode::SPN_ARMED
       && !isTechnical(state.alarmReason) && !isCritical(state.alarmReason));
   ledYellow->setState(state.mode == Mode::SPN_MAINTENANCE

@@ -70,6 +70,7 @@ class OnAnyPress : public OnButtonPressListener {
     } *beepPressListener;
 
 bool shutoffEnabled = false;
+Timer keepAliveTimer(120000, sendKeepAlivePacket);
  //SerialDebugOutput debugOutput(115200);
 
 void setup() {
@@ -104,6 +105,7 @@ void setup() {
   Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler);
   // request immediate update.
   Particle.publish("spnPing", "anyonethere");
+  keepAliveTimer.start();
 }
 
 void loop() {
@@ -113,6 +115,7 @@ void loop() {
   bool critical = isCritical();
 
   long alarmReason = getAlarmReason();
+  bool snoozed = isSnoozed(now);
 
   int armed = 0;
   int disarmed = 0;
@@ -147,16 +150,18 @@ void loop() {
     long criticalDuration = lastCritical > 0 ?
         now - lastCritical
         : 0L;
-    if (critical && isCriticalShutoff(alarmReason)) {
+    if (critical && isCriticalShutoff(alarmReason) && !snoozed) {
       renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
-    } else if (critical) {
+    } else if (critical && !snoozed) {
       renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
     } else {
       ledRed->setState(false);
       ledRed2->setState(false);
       ledRed3->setState(false);
       sirenOn = false;
-      lastCritical = 0L;
+      if (!isCritical) {
+        lastCritical = 0L;
+      }
     }
   } else {
     ledRed->setState(false);
@@ -168,13 +173,17 @@ void loop() {
     lastCritical = 0L;
   }
 
-  if (sirenOn && (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now)) {
+  if (sirenOn && !snoozed) {
     siren->on();
   } else {
     siren->off();
   }
   siren->update();
   snoozeButton->update();
+}
+
+bool isSnoozed(long now) {
+  return (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now);
 }
 
 int snoozeExtra(String extra) {
@@ -391,5 +400,10 @@ void statusHandler(const char* event, const char* data) {
   Serial.println(isCritical());
   Serial.print("alarmReason:");
   Serial.println(getAlarmReason());
+}
 
+void sendKeepAlivePacket() {
+  char message[10];
+  sprintf(message, "{\"uptime\": \"%d\"}", systemTime->nowMillis());
+  Particle.publish("spnAlarm/status", message);
 }

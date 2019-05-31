@@ -95,6 +95,7 @@ State* SumpPitNode::update()
     showState(state);
     break;
   }
+  state.snoozed = isSnoozed();
   return &state;
 }
 

@@ -16,5 +16,6 @@ struct State {
   bool leak;
   bool shutoffValve;
   bool floatSwitch;
+  bool snoozed;
 };
 #endif

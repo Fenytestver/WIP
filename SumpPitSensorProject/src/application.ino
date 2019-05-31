@@ -384,9 +384,14 @@ void loop() {
   if (lastPumpsOn != currPumpsOn) {
     sprintf(publishString, "{"
       "\"id\":\"%d\","
-      "\"pumpsOn\":\"%d\"}",
+      "\"pumpsOn\":\"%d\","
+      "\"pump1On\":\"%d\","
+      "\"pump2On\":\"%d\""
+      "}",
       deviceId,
-      currPumpsOn);
+      currPumpsOn,
+      pump1On,
+      pump2On);
     Particle.publish("pumpStatus", publishString);
     lastPumpsOn = currPumpsOn;
   }

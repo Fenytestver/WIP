@@ -76,6 +76,7 @@ int numDevices = 0;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
 unsigned long nothingDetectedSince = 0L;
+Timer keepAliveTimer(120000, sendKeepAlivePacket);
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -142,6 +143,7 @@ void setup() {
   Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
   // request immediate update.
   Particle.publish("spnPing", "anyonethere");
+  keepAliveTimer.start();
 }
 
 void loop() {
@@ -191,7 +193,7 @@ void loop() {
   }
   if (stateUnknown || (shutoffEnabled != shutoffExpected)) {
     unsigned long now = systemTime->nowMillis();
-    if (!shutoffAnomaly && (expectedAt > 0 && now - expectedAt > ACTUATOR_CYCLE_TIME)) {
+    if (!shutoffAnomaly && (shutoffEnabled && expectedAt > 0 && now - expectedAt > ACTUATOR_CYCLE_TIME)) {
       shutoffAnomaly = true;
       Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PUBLIC);
     }
@@ -219,7 +221,7 @@ void loop() {
       closeDetected();
     }
   }
-  delay(50);
+  delay(100);
 }
 
 bool open(bool publish) {
@@ -410,4 +412,10 @@ void statusHandler(const char* event, const char* data) {
   Serial.println(thisStatus->technical);
   Serial.print("critical");
   Serial.println(thisStatus->critical);
+}
+
+void sendKeepAlivePacket() {
+  char message[10];
+  sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%d\"}", systemTime->nowMillis(), powerDetector->isPressed());
+  Particle.publish("spnActuator/status", message);
 }
