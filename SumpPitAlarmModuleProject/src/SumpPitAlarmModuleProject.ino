@@ -183,7 +183,7 @@ void loop() {
 }
 
 bool isSnoozed(long now) {
-  return (snoozeAt == 0 || snoozeAt + SPN_SNOOZE_TIME < now);
+  return (snoozeAt != 0 && snoozeAt + SPN_SNOOZE_TIME > now);
 }
 
 int snoozeExtra(String extra) {

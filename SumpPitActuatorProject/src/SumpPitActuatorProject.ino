@@ -1,3 +1,6 @@
+#include "Particle.h"
+STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
+
 #include "spn_config.h"
 #include "button.h"
 #include "systemtime.h"
@@ -25,18 +28,18 @@
 #define POWER_ALARM_TOPIC "shutoffPwrCrit"
 #define SPN_MODE_UNKNOWN -1
 
-#define PIN_SHUTOFF_ON D2
-#define PIN_SHUTOFF_OFF C3
-#define PIN_BUTTON_OPEN C2
-#define PIN_BUTTON_CLOSE C1
-#define PIN_BUZZER D7
+#define PIN_SHUTOFF_ON D1
+#define PIN_SHUTOFF_OFF D2
+#define PIN_BUTTON_OPEN A4
+#define PIN_BUTTON_CLOSE A3
+#define PIN_BUZZER D3
 #define PIN_LED_GREEN D5
 #define PIN_LED_YELLOW D4
-#define PIN_LED_RED D3
-#define PIN_LED_OPEN A0
-#define PIN_LED_CLOSED A1
-#define PIN_DETECT_OPEN B4
-#define PIN_DETECT_CLOSED B5
+#define PIN_LED_RED D6
+#define PIN_LED_OPEN A1
+#define PIN_LED_CLOSED A2
+#define PIN_DETECT_OPEN A5
+#define PIN_DETECT_CLOSED A0
 #ifdef B3
 // ELECTRON ONLY
 #define PIN_ACTUATOR_POWER B3
@@ -76,7 +79,7 @@ int numDevices = 0;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
 unsigned long nothingDetectedSince = 0L;
-Timer keepAliveTimer(120000, sendKeepAlivePacket);
+Timer keepAliveTimer(12000, sendKeepAlivePacket);
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -93,6 +96,8 @@ bool shutoffExpected = false;
 long expectedAt = 0L;
 bool powerAlarm = true;
 bool shutoffAnomaly = false;
+char message[256];
+bool sendKeepAlive = false;
  //SerialDebugOutput debugOutput(115200);
 
 void setup() {
@@ -181,7 +186,7 @@ void loop() {
     ledGreen->setState((nowbit % 2) == 0);
     ledYellow->setState((nowbit % 2) == 1);
   }
-  if (!powerDetector->isPressed()) {
+  if (shutoffExpected && !powerDetector->isPressed()) {
     ledRed->setState(true);
     if (!powerAlarm) {
       powerAlarm = true;
@@ -221,6 +226,12 @@ void loop() {
       closeDetected();
     }
   }
+  if (sendKeepAlive) {
+    sendKeepAlive = false;
+    sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%s\"}",
+        powerDetector->isPressed() ? "1" : "0");
+    Particle.publish("spnActuator/status", message);
+  }
   delay(100);
 }
 
@@ -257,7 +268,7 @@ bool close(bool publish) {
   }
   expectedAt = systemTime->nowMillis();
   shutoffExpected = true;
-
+  delay(100);
   return result;
 }
 void closeDetected() {
@@ -415,7 +426,6 @@ void statusHandler(const char* event, const char* data) {
 }
 
 void sendKeepAlivePacket() {
-  char message[10];
-  sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%d\"}", systemTime->nowMillis(), powerDetector->isPressed());
-  Particle.publish("spnActuator/status", message);
+  sendKeepAlive = true;
+
 }
