@@ -404,6 +404,7 @@ void statusHandler(const char* event, const char* data) {
 
 void sendKeepAlivePacket() {
   char message[10];
-  sprintf(message, "{\"uptime\": \"%d\"}", systemTime->nowMillis());
+  int seconds = systemTime->nowMillis() / 1000;
+  sprintf(message, "{\"uptime\": \"%d\"}", seconds);
   Particle.publish("spnAlarm/status", message);
 }
