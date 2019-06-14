@@ -58,6 +58,8 @@ unsigned long snoozeAt = 0L;
 unsigned long lastCritical = 0L;
 bool sirenOn = false;
 bool shutoffAnomaly = false;
+bool sendKeepAlive = false;
+char message[256];
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -180,6 +182,12 @@ void loop() {
   }
   siren->update();
   snoozeButton->update();
+  if (sendKeepAlive) {
+    sendKeepAlive = false;
+    int seconds = systemTime->nowMillis() / 1000;
+    sprintf(message, "{\"uptime\": \"%d\"}", seconds);
+    Particle.publish("spnAlarm/status", message);
+  }
 }
 
 bool isSnoozed(long now) {
@@ -403,8 +411,5 @@ void statusHandler(const char* event, const char* data) {
 }
 
 void sendKeepAlivePacket() {
-  char message[10];
-  int seconds = systemTime->nowMillis() / 1000;
-  sprintf(message, "{\"uptime\": \"%d\"}", seconds);
-  Particle.publish("spnAlarm/status", message);
+  sendKeepAlive = true;
 }
