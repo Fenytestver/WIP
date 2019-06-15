@@ -18,7 +18,7 @@ STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
  */
 
 #define BUTTON_LONG_PRESS_TIME 5000
-#define ACTUATOR_CYCLE_TIME 33000
+#define ACTUATOR_CYCLE_TIME 2000
 #define BEEP_TIME 50
 #define SHUTOFF_BEEP_TIME 300
 #define SYSTEM_STATUS_TOPIC "spnStatus"
@@ -93,7 +93,7 @@ class OnAnyPress : public OnButtonPressListener {
 
 bool shutoffEnabled = false;
 bool shutoffExpected = false;
-long expectedAt = 0L;
+unsigned long expectedAt = 0L;
 bool powerAlarm = true;
 bool shutoffAnomaly = false;
 char message[256];
@@ -102,6 +102,7 @@ bool sendKeepAlive = false;
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Start");
   systemTime = new RealSystemTime();
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
@@ -198,15 +199,24 @@ void loop() {
   }
   if (stateUnknown || (shutoffEnabled != shutoffExpected)) {
     unsigned long now = systemTime->nowMillis();
-    if (!shutoffAnomaly && (shutoffEnabled && expectedAt > 0 && now - expectedAt > ACTUATOR_CYCLE_TIME)) {
+    if (!stateUnknown) {
+      Serial.println("shutoffEnabled != shutoffExpected");
+      Serial.print("expectedAt: ");
+      Serial.print(expectedAt);
+      Serial.print(" now: ");
+      Serial.println(now);
+    }
+    if (!shutoffAnomaly && !stateUnknown && (expectedAt > 0) && (now - expectedAt > ACTUATOR_CYCLE_TIME)) {
       shutoffAnomaly = true;
+      Serial.println("ANOMALY!!");
       Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PUBLIC);
     }
     openLed->setState((nowbit % 2) == 0);
     closedLed->setState((nowbit % 2) == 1);
   } else {
-    if (shutoffAnomaly) {
+    if (shutoffAnomaly && shutoffEnabled == shutoffExpected) {
       shutoffAnomaly = false;
+      Serial.println("Off Anomaly");
       Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
     }
     openLed->setState(!shutoffEnabled);
@@ -228,7 +238,9 @@ void loop() {
   }
   if (sendKeepAlive) {
     sendKeepAlive = false;
+    int uptime = systemTime->nowMillis() / 1000;
     sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%s\"}",
+        uptime,
         powerDetector->isPressed() ? "1" : "0");
     Particle.publish("spnActuator/status", message);
   }
@@ -241,6 +253,7 @@ bool open(bool publish) {
     buzzer->beep();
     openRelay->beep();
     stateUnknown = true;
+    Serial.println("Open valve");
     if (publish) {
       Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "false", PUBLIC);
     }
@@ -248,8 +261,10 @@ bool open(bool publish) {
   } else {
     Serial.println("Not opening, already open");
   }
-  expectedAt = systemTime->nowMillis();
-  shutoffExpected = false;
+  if (shutoffExpected) {
+    expectedAt = systemTime->nowMillis();
+    shutoffExpected = false;
+  }
   return result;
 }
 
@@ -259,6 +274,7 @@ bool close(bool publish) {
     buzzer->beep();
     closeRelay->beep();
     stateUnknown = true;
+    Serial.println("Close valve");
     if (publish) {
       Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "true", PUBLIC);
     } else {
@@ -266,13 +282,18 @@ bool close(bool publish) {
     }
     result = true;
   }
-  expectedAt = systemTime->nowMillis();
-  shutoffExpected = true;
+  if (!shutoffExpected) {
+    expectedAt = systemTime->nowMillis();
+    shutoffExpected = true;
+  }
   delay(100);
   return result;
 }
 void closeDetected() {
   stateUnknown = false;
+  if (!shutoffEnabled) {
+    Serial.println("Close detected");
+  }
   shutoffEnabled = true;
   nothingDetectedSince = 0L;
   if (shutoffExpected) {
@@ -280,6 +301,9 @@ void closeDetected() {
   }
 }
 void openDetected() {
+  if (!shutoffEnabled) {
+    Serial.println("Open detected");
+  }
   stateUnknown = false;
   shutoffEnabled = false;
   nothingDetectedSince = 0L;
@@ -308,7 +332,7 @@ void closePublish() {
 
 void shutoffValveHandler(const char *event, const char *data)
 {
-  Serial.print("shutoff changed to: ");
+  Serial.print("[handler]shutoff changed to: ");
   Serial.println(data);
   if (strcmp("true", data) == 0) {
     Serial.println("Closing");
