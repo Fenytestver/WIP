@@ -18,7 +18,7 @@ STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
  */
 
 #define BUTTON_LONG_PRESS_TIME 5000
-#define ACTUATOR_CYCLE_TIME 2000
+#define ACTUATOR_CYCLE_TIME 35000
 #define BEEP_TIME 50
 #define SHUTOFF_BEEP_TIME 300
 #define SYSTEM_STATUS_TOPIC "spnStatus"
@@ -28,18 +28,18 @@ STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
 #define POWER_ALARM_TOPIC "shutoffPwrCrit"
 #define SPN_MODE_UNKNOWN -1
 
-#define PIN_SHUTOFF_ON D1
-#define PIN_SHUTOFF_OFF D2
-#define PIN_BUTTON_OPEN A4
-#define PIN_BUTTON_CLOSE A3
-#define PIN_BUZZER D3
+#define PIN_SHUTOFF_ON D2
+#define PIN_SHUTOFF_OFF C3
+#define PIN_BUTTON_OPEN C2
+#define PIN_BUTTON_CLOSE C1
+#define PIN_BUZZER D7
 #define PIN_LED_GREEN D5
 #define PIN_LED_YELLOW D4
-#define PIN_LED_RED D6
-#define PIN_LED_OPEN A1
-#define PIN_LED_CLOSED A2
-#define PIN_DETECT_OPEN A5
-#define PIN_DETECT_CLOSED A0
+#define PIN_LED_RED D3
+#define PIN_LED_OPEN A0
+#define PIN_LED_CLOSED A1
+#define PIN_DETECT_OPEN B4
+#define PIN_DETECT_CLOSED B5
 #ifdef B3
 // ELECTRON ONLY
 #define PIN_ACTUATOR_POWER B3
@@ -79,7 +79,7 @@ int numDevices = 0;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
 unsigned long nothingDetectedSince = 0L;
-Timer keepAliveTimer(12000, sendKeepAlivePacket);
+Timer keepAliveTimer(120000, sendKeepAlivePacket);
 
 class OnAnyPress : public OnButtonPressListener {
       public:
