@@ -181,7 +181,7 @@ void loop() {
     ledYellow->setState(maintenance > 0
         || (armed == 0)
         || (technical && ((nowbit % 2) == 0)));
-    ledRed->setState(critical);
+    ledRed->setState(critical && maintenance == 0);
   } else {
     ledRed->setState(false);
     ledGreen->setState((nowbit % 2) == 0);
@@ -389,7 +389,7 @@ DeviceStatus* getStatusById(int id) {
 }
 bool isTechnical() {
   for (int i = 0; i < numDevices; ++i) {
-    if (statusArray[i].technical) {
+    if (statusArray[i].mode != SPN_MAINTENANCE && statusArray[i].technical) {
       return true;
     }
   }
@@ -397,7 +397,7 @@ bool isTechnical() {
 }
 bool isCritical() {
   for (int i = 0; i < numDevices; ++i) {
-    if (statusArray[i].critical) {
+    if (statusArray[i].mode != SPN_MAINTENANCE && statusArray[i].critical) {
       return true;
     }
   }

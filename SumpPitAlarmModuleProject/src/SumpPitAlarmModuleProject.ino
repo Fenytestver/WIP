@@ -152,9 +152,9 @@ void loop() {
     long criticalDuration = lastCritical > 0 ?
         now - lastCritical
         : 0L;
-    if (critical && isCriticalShutoff(alarmReason) && !snoozed) {
+    if (maintenance == 0 && critical && isCriticalShutoff(alarmReason) && !snoozed) {
       renderCriticalLeds(criticalDuration, true /* shutoff */, nowbit);
-    } else if (critical && !snoozed) {
+    } else if (maintenance == 0 && critical && !snoozed) {
       renderCriticalLeds(criticalDuration, false /* shutoff */, nowbit);
     } else {
       ledRed->setState(false);
@@ -349,7 +349,7 @@ bool isTechnical() {
 }
 bool isCritical() {
   for (int i = 0; i < numDevices; ++i) {
-    if (statusArray[i].critical) {
+    if (statusArray[i].critical && statusArray[i].mode != SPN_MAINTENANCE) {
       return true;
     }
   }
