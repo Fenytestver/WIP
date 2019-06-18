@@ -98,11 +98,11 @@ bool powerAlarm = true;
 bool shutoffAnomaly = false;
 char message[256];
 bool sendKeepAlive = false;
- //SerialDebugOutput debugOutput(115200);
+SerialDebugOutput debugOutput(115200, ALL_LEVEL);
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Start");
+  INFO("Starting");
   systemTime = new RealSystemTime();
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
@@ -152,8 +152,10 @@ void setup() {
   keepAliveTimer.start();
 }
 
+long count = 0;
+
 void loop() {
-  long now = systemTime->nowMillis();
+  unsigned long now = systemTime->nowMillis();
   long nowbit = now / 200;
   bool technical = isTechnical();
   bool critical = isCritical();
@@ -161,6 +163,10 @@ void loop() {
   int armed = 0;
   int disarmed = 0;
   int maintenance = 0;
+  if ((count++) % 30 == 0) {
+    INFO("### loop: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+        shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
+  }
   for (int i = 0; i < numDevices; ++i) {
     switch (statusArray[i].mode) {
       case SPN_ARMED:
@@ -190,33 +196,34 @@ void loop() {
   if (shutoffExpected && !powerDetector->isPressed()) {
     ledRed->setState(true);
     if (!powerAlarm) {
+      INFO("### power alarm: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+          shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       powerAlarm = true;
       Particle.publish(POWER_ALARM_TOPIC, "true", PUBLIC);
     }
   } else if (powerAlarm) {
     powerAlarm = false;
+    INFO("### off power alarm: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+        shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
     Particle.publish(POWER_ALARM_TOPIC, "false", PUBLIC);
   }
   if (stateUnknown || (shutoffEnabled != shutoffExpected)) {
-    unsigned long now = systemTime->nowMillis();
-    if (!stateUnknown) {
-      Serial.println("shutoffEnabled != shutoffExpected");
-      Serial.print("expectedAt: ");
-      Serial.print(expectedAt);
-      Serial.print(" now: ");
-      Serial.println(now);
-    }
     if (!shutoffAnomaly && !stateUnknown && (expectedAt > 0) && (now - expectedAt > ACTUATOR_CYCLE_TIME)) {
+      INFO("### Enabling anomaly: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+        shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       shutoffAnomaly = true;
       Serial.println("ANOMALY!!");
       Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PUBLIC);
     }
+    INFO("### Blink leds: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+      shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
     openLed->setState((nowbit % 2) == 0);
     closedLed->setState((nowbit % 2) == 1);
   } else {
     if (shutoffAnomaly && shutoffEnabled == shutoffExpected) {
       shutoffAnomaly = false;
-      Serial.println("Off Anomaly");
+      INFO("### off anomaly: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+          shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
     }
     openLed->setState(!shutoffEnabled);
@@ -228,15 +235,23 @@ void loop() {
   closeDetector->update();
   powerDetector->update();
   if (!openDetector->isPressed() && !closeDetector->isPressed()) {
+    INFO("### nothing detected: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+        shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
     nothingDetected();
   } else if (stateUnknown) {
     if (openDetector->isPressed()) {
+      INFO("### opened-signal detected in unknown state: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+          shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       openDetected();
     } else if (closeDetector->isPressed()) {
+      INFO("### closed-signal detected in unknown state: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+          shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       closeDetected();
     }
   }
   if (sendKeepAlive) {
+    INFO("### Sending keep alive packet: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
+        shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
     sendKeepAlive = false;
     int uptime = systemTime->nowMillis() / 1000;
     sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%s\"}",
@@ -249,17 +264,18 @@ void loop() {
 
 bool open(bool publish) {
   bool result = false;
+  // shutoffExpected mean we wanted the valve to close water.
   if (shutoffExpected || stateUnknown) {
     buzzer->beep();
     openRelay->beep();
-    stateUnknown = true;
-    Serial.println("Open valve");
+    // stateUnknown = true;
+    INFO("### opening valve by request (publish=%d).",publish);
     if (publish) {
       Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "false", PUBLIC);
     }
     result = true;
   } else {
-    Serial.println("Not opening, already open");
+    INFO("### NOT opening valve by request, valve already open (publish=%d).",publish);
   }
   if (shutoffExpected) {
     expectedAt = systemTime->nowMillis();
@@ -274,10 +290,11 @@ bool close(bool publish) {
     buzzer->beep();
     closeRelay->beep();
     stateUnknown = true;
-    Serial.println("Close valve");
+    INFO("### closing valve by request (publish=%d).",publish);
     if (publish) {
       Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "true", PUBLIC);
     } else {
+      INFO("### not closing valve by request, valve already closed (publish=%d).",publish);
       Serial.println("Not closing, already closed");
     }
     result = true;
@@ -292,7 +309,7 @@ bool close(bool publish) {
 void closeDetected() {
   stateUnknown = false;
   if (!shutoffEnabled) {
-    Serial.println("Close detected");
+    INFO("### close detected. shutoffExpected=%d", shutoffExpected);
   }
   shutoffEnabled = true;
   nothingDetectedSince = 0L;
@@ -302,7 +319,7 @@ void closeDetected() {
 }
 void openDetected() {
   if (!shutoffEnabled) {
-    Serial.println("Open detected");
+    INFO("### open detected. shutoffExpected=%d", shutoffExpected);
   }
   stateUnknown = false;
   shutoffEnabled = false;
@@ -316,6 +333,7 @@ void powerChange() {
 void nothingDetected() {
   unsigned long now = systemTime->nowMillis();
   if (nothingDetectedSince == 0L) {
+    INFO("### nothing detected. now=%u", now);
     nothingDetectedSince = now;
     buzzer->beep();
   } else if (now - nothingDetectedSince > ACTUATOR_CYCLE_TIME) {
@@ -324,29 +342,32 @@ void nothingDetected() {
 }
 
 void openPublish() {
+  INFO("### Open+publish from button press");
   open(true);
 }
 void closePublish() {
+  INFO("### Close+publish from button press");
   close(true);
 }
 
 void shutoffValveHandler(const char *event, const char *data)
 {
-  Serial.print("[handler]shutoff changed to: ");
-  Serial.println(data);
+  INFO("[handler]shutoff changed to: %s", data);
   if (strcmp("true", data) == 0) {
-    Serial.println("Closing");
+    INFO("Closing from handler");
     close(false);
   } else if (strcmp("false", data) == 0) {
-    Serial.println("Opening");
+    INFO("Opening from handler");
     open(false);
   }
 }
 
 int openWater(String extra) {
+  INFO("open remote request. extra: %s", extra);
   return open(true) ? 1 : 0;
 }
 int closeWater(String extra) {
+  INFO("close remote request. extra: %s", extra);
   return close(true) ? 1 : 0;
 }
 
@@ -441,7 +462,7 @@ void statusHandler(const char* event, const char* data) {
   thisStatus->mode = stringToInt(mStr, SPN_MODE_UNKNOWN);
   thisStatus->technical = RdJson::getString("technical", "", isValid, objType, objSize, dataCpy) == "1";
   thisStatus->critical = RdJson::getString("critical", "", isValid, objType, objSize, dataCpy) == "1";
-
+  INFO("Receive status: %s", data);
   Serial.println(mStr);
   Serial.print("technical");
   Serial.println(thisStatus->technical);

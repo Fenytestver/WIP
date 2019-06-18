@@ -20,6 +20,9 @@ class RealButton : public Button {
       Button::update();
       if (pin != PIN_NO_PIN) {
         bool pressed = digitalRead(pin) == LOW;
+        if (pressed) {
+          DEBUG("Button %d pressed", pin);
+        }
         setPressed(pressed);
       }
     }
