@@ -60,6 +60,7 @@ bool sirenOn = false;
 bool shutoffAnomaly = false;
 bool sendKeepAlive = false;
 char message[256];
+SerialDebugOutput debugOutput(115200, ALL_LEVEL);
 
 class OnAnyPress : public OnButtonPressListener {
       public:
@@ -100,13 +101,13 @@ void setup() {
   snoozeButton->setup();
   siren->setup();
 
-  Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
+  Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler, MY_DEVICES);
   Particle.function("snooze", snoozeExtra);
   Particle.function("reboot", reboot);
-  Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
-  Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler);
+  Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler, MY_DEVICES);
+  Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler, MY_DEVICES);
   // request immediate update.
-  Particle.publish("spnPing", "anyonethere");
+  Particle.publish("spnPing", "anyonethere", PRIVATE);
   keepAliveTimer.start();
 }
 
@@ -186,7 +187,7 @@ void loop() {
     sendKeepAlive = false;
     int seconds = systemTime->nowMillis() / 1000;
     sprintf(message, "{\"uptime\": \"%d\"}", seconds);
-    Particle.publish("spnAlarm/status", message);
+    Particle.publish("spnAlarm/status", message, PRIVATE);
   }
 }
 
@@ -208,7 +209,7 @@ int snooze() {
   snoozeAt = now;
   char snoozeText[10];
   sprintf(snoozeText, "%d", SPN_SNOOZE_TIME);
-  Particle.publish("snoozeAlarm", snoozeText);
+  Particle.publish("snoozeAlarm", snoozeText, PRIVATE);
   return SPN_SNOOZE_TIME;
 }
 

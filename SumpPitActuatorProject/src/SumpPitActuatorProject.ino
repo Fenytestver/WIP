@@ -141,14 +141,14 @@ void setup() {
   closeButton->setup();
   openRelay->setup();
   closeRelay->setup();
-  Particle.subscribe(SHUTOFF_VALVE_EXPECTED_TOPIC, shutoffValveHandler);
+  Particle.subscribe(SHUTOFF_VALVE_EXPECTED_TOPIC, shutoffValveHandler, MY_DEVICES);
   Particle.function("closeWater", closeWater);
   Particle.function("openWater", openWater);
   Particle.function("reboot", reboot);
-  Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
-  Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
+  Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler, MY_DEVICES);
+  Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PRIVATE);
   // request immediate update.
-  Particle.publish("spnPing", "anyonethere");
+  Particle.publish("spnPing", "anyonethere", PRIVATE);
   keepAliveTimer.start();
 }
 
@@ -199,13 +199,13 @@ void loop() {
       INFO("### power alarm: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
           shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       powerAlarm = true;
-      Particle.publish(POWER_ALARM_TOPIC, "true", PUBLIC);
+      Particle.publish(POWER_ALARM_TOPIC, "true", PRIVATE);
     }
   } else if (powerAlarm) {
     powerAlarm = false;
     INFO("### off power alarm: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
         shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
-    Particle.publish(POWER_ALARM_TOPIC, "false", PUBLIC);
+    Particle.publish(POWER_ALARM_TOPIC, "false", PRIVATE);
   }
   if (stateUnknown || (shutoffEnabled != shutoffExpected)) {
     if (!shutoffAnomaly && !stateUnknown && (expectedAt > 0) && (now - expectedAt > ACTUATOR_CYCLE_TIME)) {
@@ -213,7 +213,7 @@ void loop() {
         shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
       shutoffAnomaly = true;
       Serial.println("ANOMALY!!");
-      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PUBLIC);
+      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "true", PRIVATE);
     }
     INFO("### Blink leds: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
       shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
@@ -224,7 +224,7 @@ void loop() {
       shutoffAnomaly = false;
       INFO("### off anomaly: shutoffExpected=%d, shutoffEnabled=%d, shutoffAnomaly=%d, expectedAt=%u, now=%u",
           shutoffExpected, shutoffEnabled, shutoffAnomaly, expectedAt, now);
-      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PUBLIC);
+      Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PRIVATE);
     }
     openLed->setState(!shutoffEnabled);
     closedLed->setState(shutoffEnabled);
@@ -257,7 +257,7 @@ void loop() {
     sprintf(message, "{\"uptime\": \"%d\", \"pwr\": \"%s\"}",
         uptime,
         powerDetector->isPressed() ? "1" : "0");
-    Particle.publish("spnActuator/status", message);
+    Particle.publish("spnActuator/status", message, PRIVATE);
   }
   delay(100);
 }
@@ -271,7 +271,7 @@ bool open(bool publish) {
     // stateUnknown = true;
     INFO("### opening valve by request (publish=%d).",publish);
     if (publish) {
-      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "false", PUBLIC);
+      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "false", PRIVATE);
     }
     result = true;
   } else {
@@ -292,7 +292,7 @@ bool close(bool publish) {
     stateUnknown = true;
     INFO("### closing valve by request (publish=%d).",publish);
     if (publish) {
-      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "true", PUBLIC);
+      Particle.publish(SHUTOFF_VALVE_EXPECTED_TOPIC, "true", PRIVATE);
     } else {
       INFO("### not closing valve by request, valve already closed (publish=%d).",publish);
       Serial.println("Not closing, already closed");
@@ -314,7 +314,7 @@ void closeDetected() {
   shutoffEnabled = true;
   nothingDetectedSince = 0L;
   if (shutoffExpected) {
-    Particle.publish(SHUTOFF_VALVE_TOPIC, "true", PUBLIC);
+    Particle.publish(SHUTOFF_VALVE_TOPIC, "true", PRIVATE);
   }
 }
 void openDetected() {
@@ -325,7 +325,7 @@ void openDetected() {
   shutoffEnabled = false;
   nothingDetectedSince = 0L;
   if (!shutoffExpected) {
-    Particle.publish(SHUTOFF_VALVE_TOPIC, "false", PUBLIC);
+    Particle.publish(SHUTOFF_VALVE_TOPIC, "false", PRIVATE);
   }
 }
 void powerChange() {

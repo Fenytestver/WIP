@@ -207,6 +207,7 @@ bool shutoffValveState;
 bool floatSwitchState;
 bool lostVoltage = false;
 int lastPumpsOn = 0;
+SerialDebugOutput debugOutput(115200, ALL_LEVEL);
 
 void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_VALUE, (int)waterLow);
@@ -219,6 +220,7 @@ void saveEeprom() {
 
 // setup() runs once, when the device is first turned on.
 void setup() {
+  Serial.begin(115200);
   deviceId = -1;
   int validation;
   EEPROM.get(EEPROM_VALID, validation);
@@ -298,9 +300,9 @@ void setup() {
     success = Particle.function("calibrate", startCalib);
     success = Particle.function("clearCalib", clearCalibration);
     success = Particle.function("snooze", snooze);
-    Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
-    Particle.subscribe("snoozeAlarm", snoozeHandler);
-    Particle.subscribe("spnPing", pingStatusHandler);
+    Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler, MY_DEVICES);
+    Particle.subscribe("snoozeAlarm", snoozeHandler, MY_DEVICES);
+    Particle.subscribe("spnPing", pingStatusHandler, MY_DEVICES);
     Particle.variable("waterLow", waterLow);
     Particle.variable("waterHigh", waterHigh);
     Particle.variable("waterLowIn", waterLowIn);
@@ -323,7 +325,7 @@ void setup() {
     Particle.variable("shutoffValve", shutoffValveState);
     Particle.variable("floatSwitch", floatSwitchState);
   }
-
+  INFO("Started");
   Serial.begin(115200);
 }
 
@@ -382,6 +384,7 @@ void loop() {
   pump2On = state->pump2On;
   int currPumpsOn = (pump1On ? 1 : 0) + (pump2On ? 1 : 0);
   if (lastPumpsOn != currPumpsOn) {
+    INFO("Pums changed, send current state. pump1=%d, pump2=%d", pump1On, pump2On);
     sprintf(publishString, "{"
       "\"id\":\"%d\","
       "\"pumpsOn\":\"%d\","
@@ -392,7 +395,7 @@ void loop() {
       currPumpsOn,
       pump1On,
       pump2On);
-    Particle.publish("pumpStatus", publishString);
+    Particle.publish("pumpStatus", publishString, PRIVATE);
     lastPumpsOn = currPumpsOn;
   }
 
@@ -609,6 +612,7 @@ void snoozeHandler(const char *event, const char *data) {
 
 void sendFullStatus(State* state) {
   statusToString(state->alarmReason, statusString);
+  INFO("Status=%d", statusString);
   int bars = 0;
   int rssi = 0;
   #if Wiring_WiFi == 1
@@ -649,7 +653,8 @@ void sendFullStatus(State* state) {
     rssi, bars,
     floatSwitch->isTriggered() ? "1" : "0"
   );
-  Particle.publish("spnStatus", publishString, PUBLIC);
+  INFO("Publish Status=%d", publishString);
+  Particle.publish("spnStatus", publishString, PRIVATE);
 
   lastStatus = state->alarmReason;
 }

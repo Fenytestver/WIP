@@ -292,6 +292,7 @@ class RealButton : public Button {
       Button::update();
       if (pin != PIN_NO_PIN) {
         Serial.println(pin);
+        INFO("Button pressed pin=%d", pin);
         bool pressed = digitalRead(pin) == LOW;
         setPressed(pressed);
       }
