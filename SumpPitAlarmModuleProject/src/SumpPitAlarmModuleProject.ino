@@ -149,6 +149,8 @@ void loop() {
 
     if (critical && lastCritical == 0L) {
       lastCritical = now;
+    } else if (!isCritical) {
+      lastCritical = 0L;
     }
     long criticalDuration = lastCritical > 0 ?
         now - lastCritical
@@ -162,9 +164,6 @@ void loop() {
       ledRed2->setState(false);
       ledRed3->setState(false);
       sirenOn = false;
-      if (!isCritical) {
-        lastCritical = 0L;
-      }
     }
   } else {
     ledRed->setState(false);

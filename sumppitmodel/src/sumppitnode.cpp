@@ -114,6 +114,7 @@ void SumpPitNode::updateArmed() {
   if (isCritical(state.alarmReason)) {
     if (state.mode != SPN_MAINTENANCE) {
       if (!isSnoozed()
+          && isCriticalShutoff(state.alarmReason)
           && !inputs->maintenanceButton->isPressed()
           && !inputs->armResetButton->isPressed()
           && !inputs->disarmButton->isPressed()) {
@@ -128,7 +129,7 @@ void SumpPitNode::updateArmed() {
         shutoffValve->deactivate();
       }
     }
-  } else if (isTechnical(state.alarmReason)) {    
+  } else if (isTechnical(state.alarmReason)) {
     siren->off();
   } else {
     siren->off();
