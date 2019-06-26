@@ -147,12 +147,13 @@ void loop() {
         || (armed == 0)
         || (technical && ((nowbit % 2) == 0)));
 
-    if (critical && lastCritical == 0L) {
+    if (!snoozed && critical && lastCritical == 0L) {
       lastCritical = now;
-    } else if (!isCritical) {
+    }
+    if (!critical || snoozed) {
       lastCritical = 0L;
     }
-    long criticalDuration = lastCritical > 0 ?
+    unsigned long criticalDuration = (critical && lastCritical > 0L) ?
         now - lastCritical
         : 0L;
     if (maintenance == 0 && critical && isCriticalShutoff(alarmReason) && !snoozed) {
