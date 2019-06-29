@@ -78,6 +78,18 @@ bool shutoffEnabled = false;
 Timer keepAliveTimer(120000, sendKeepAlivePacket);
  //SerialDebugOutput debugOutput(115200);
 
+bool publish(char* topic, char* value) {
+  char topicWithCluster[128];
+  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  return Particle.publish(String(topicWithCluster), String(value), PRIVATE);
+}
+
+bool subscribe(char* topic, void (*handler)(const char*, const char*)) {
+  char topicWithCluster[128];
+  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  return Particle.subscribe(String(topicWithCluster), handler, MY_DEVICES);
+}
+
 void setup() {
   Serial.begin(115200);
   clusterId = getEepromInt(EEPROM_CLUSTER_ID, 0);
@@ -104,15 +116,15 @@ void setup() {
   snoozeButton->setup();
   siren->setup();
 
-  Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler, MY_DEVICES);
+  subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler);
   Particle.function("snooze", snoozeExtra);
   Particle.function("reboot", reboot);
   Particle.function("setClusterId", setClusterId);
   Particle.variable("clusterId", clusterId);
-  Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler, MY_DEVICES);
-  Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler, MY_DEVICES);
+  subscribe(SYSTEM_STATUS_TOPIC, statusHandler);
+  subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler);
   // request immediate update.
-  Particle.publish("spnPing", "anyonethere", PRIVATE);
+  publish("spnPing", "anyonethere");
   keepAliveTimer.start();
 }
 
@@ -192,7 +204,7 @@ void loop() {
     sendKeepAlive = false;
     int seconds = systemTime->nowMillis() / 1000;
     sprintf(message, "{\"uptime\": \"%d\"}", seconds);
-    Particle.publish("spnAlarm/status", message, PRIVATE);
+    publish("spnAlarm/status", message);
   }
 }
 
@@ -214,7 +226,7 @@ int snooze() {
   snoozeAt = now;
   char snoozeText[10];
   sprintf(snoozeText, "%d", SPN_SNOOZE_TIME);
-  Particle.publish("snoozeAlarm", snoozeText, PRIVATE);
+  publish("snoozeAlarm", snoozeText);
   return SPN_SNOOZE_TIME;
 }
 

@@ -219,7 +219,17 @@ void saveEeprom() {
   EEPROM.put(EEPROM_WATER_LOW_HIGH_DIST, (float)waterLowHighDist);
   EEPROM.put(EEPROM_CLUSTER_ID, (int)clusterId);
 }
+bool publish(char* topic, char* value) {
+  char topicWithCluster[128];
+  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  return Particle.publish(String(topicWithCluster), String(value), PRIVATE);
+}
 
+bool subscribe(char* topic, void (*handler)(const char*, const char*)) {
+  char topicWithCluster[128];
+  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  return Particle.subscribe(String(topicWithCluster), handler);
+}
 // setup() runs once, when the device is first turned on.
 void setup() {
   Serial.begin(115200);
@@ -252,7 +262,7 @@ void setup() {
   armButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_1);
   maintenanceButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_2);
   disarmButton = new RealButton(systemTime, SPN_BUTTON_LONG_PRESS_TIME, PIN_BUTTON_3);
-  shutoffValve = new RealShutoffValve();
+  shutoffValve = new RealShutoffValve(clusterId);
   waterLevelSensor = new AnalogWaterLevelSensor(
     PIN_WATERLEVEL, waterLow, waterHigh, waterLowIn, waterHighIn, waterPercentHigh);
   inputs = new SumpPitInputs(disarmButton, maintenanceButton, armButton);
@@ -304,9 +314,9 @@ void setup() {
     success = Particle.function("calibrate", startCalib);
     success = Particle.function("clearCalib", clearCalibration);
     success = Particle.function("snooze", snooze);
-    Particle.subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler, MY_DEVICES);
-    Particle.subscribe("snoozeAlarm", snoozeHandler, MY_DEVICES);
-    Particle.subscribe("spnPing", pingStatusHandler, MY_DEVICES);
+    subscribe(PUB_SHUTOFF_STATE, shutoffValveHandler);
+    subscribe("snoozeAlarm", snoozeHandler);
+    subscribe("spnPing", pingStatusHandler);
     Particle.variable("waterLow", waterLow);
     Particle.variable("waterHigh", waterHigh);
     Particle.variable("waterLowIn", waterLowIn);
@@ -400,7 +410,7 @@ void loop() {
       currPumpsOn,
       pump1On,
       pump2On);
-    Particle.publish("pumpStatus", publishString, PRIVATE);
+    publish("pumpStatus", publishString);
     lastPumpsOn = currPumpsOn;
   }
 
@@ -598,7 +608,7 @@ int sendStatusNow(String extra) {
 }
 
 int sendScreen(String extra) {
-  Particle.publish("lcdtext", display->getBank(), PRIVATE);
+  publish("lcdtext", display->getBank());
   return 0;
 }
 
@@ -668,7 +678,7 @@ void sendFullStatus(State* state) {
     floatSwitch->isTriggered() ? "1" : "0"
   );
   INFO("Publish Status=%d", publishString);
-  Particle.publish("spnStatus", publishString, PRIVATE);
+  publish("spnStatus", publishString);
 
   lastStatus = state->alarmReason;
 }

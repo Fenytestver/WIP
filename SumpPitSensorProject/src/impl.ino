@@ -208,15 +208,18 @@ class RealSiren : public Siren {
 
 class RealShutoffValve : public ShutoffValve {
   public:
-    RealShutoffValve() : ShutoffValve() {
+    RealShutoffValve(int _clusterId) : ShutoffValve() {
       active = false;
+      clusterId = _clusterId;
     }
 
     void setup() {
     }
 
     void activate() {
-      if (!active && Particle.publish(PUB_SHUTOFF_STATE, "true", PRIVATE)) {
+      char topicWithCluster[128];
+      sprintf(topicWithCluster, "%d/%s", clusterId, PUB_SHUTOFF_STATE);
+      if (!active && Particle.publish(String(topicWithCluster), String("true"), PRIVATE)) {
         active = true;
       }
     }
@@ -232,6 +235,7 @@ class RealShutoffValve : public ShutoffValve {
   private:
     int pin;
     bool active;
+    int clusterId;
 };
 
 class RealBuzzer : public Buzzer {
