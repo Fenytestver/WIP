@@ -218,13 +218,15 @@ class RealShutoffValve : public ShutoffValve {
 
     void activate() {
       char topicWithCluster[128];
-      sprintf(topicWithCluster, "%d/%s", clusterId, PUB_SHUTOFF_STATE);
+      sprintf(topicWithCluster, "c%d/%s", clusterId, PUB_SHUTOFF_STATE);
+      INFO("Activating shutoff, topic: %s", topicWithCluster);
       if (!active && Particle.publish(String(topicWithCluster), String("true"), PRIVATE)) {
         active = true;
       }
     }
     void deactivate() {
       if (active) {
+        INFO("Deactivating shutoff.");
         active = false;
       }
     }
@@ -295,9 +297,10 @@ class RealButton : public Button {
     void update() {
       Button::update();
       if (pin != PIN_NO_PIN) {
-        Serial.println(pin);
-        INFO("Button pressed pin=%d", pin);
         bool pressed = digitalRead(pin) == LOW;
+        if (pressed) {
+          INFO("Button pressed pin=%d", pin);
+        }
         setPressed(pressed);
       }
     }

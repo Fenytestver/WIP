@@ -104,13 +104,13 @@ int clusterId = 0;
 
 bool publish(char* topic, char* value) {
   char topicWithCluster[128];
-  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  sprintf(topicWithCluster, "c%d/%s", clusterId, topic);
   return Particle.publish(String(topicWithCluster), String(value), PRIVATE);
 }
 
 bool subscribe(char* topic, void (*handler)(const char*, const char*)) {
   char topicWithCluster[128];
-  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  sprintf(topicWithCluster, "c%d/%s", clusterId, topic);
   return Particle.subscribe(String(topicWithCluster), handler, MY_DEVICES);
 }
 

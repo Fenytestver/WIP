@@ -221,14 +221,15 @@ void saveEeprom() {
 }
 bool publish(char* topic, char* value) {
   char topicWithCluster[128];
-  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
+  sprintf(topicWithCluster, "c%d/%s", clusterId, topic);
   return Particle.publish(String(topicWithCluster), String(value), PRIVATE);
 }
 
 bool subscribe(char* topic, void (*handler)(const char*, const char*)) {
   char topicWithCluster[128];
-  sprintf(topicWithCluster, "%d/%s", clusterId, topic);
-  return Particle.subscribe(String(topicWithCluster), handler);
+  sprintf(topicWithCluster, "c%d/%s", clusterId, topic);
+  INFO("Subscibe to %s", topicWithCluster);
+  return Particle.subscribe(String(topicWithCluster), handler, MY_DEVICES);
 }
 // setup() runs once, when the device is first turned on.
 void setup() {
@@ -618,6 +619,7 @@ void pingStatusHandler(const char *event, const char *data) {
 
 void shutoffValveHandler(const char *event, const char *data)
 {
+  INFO("shutoffValveHandler request: %s, %s", event, data);
   if (strcmp("true", data) == 0) {
     shutoffValve->activate();
   } else if (strcmp("false", data) == 0) {
