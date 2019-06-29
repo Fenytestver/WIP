@@ -182,6 +182,11 @@ void loop() {
     }
   }
 
+  // force critial in case of an anomaly
+  if (shutoffAnomaly) {
+    critical = true;
+  }
+
   if (numDevices > 0) {
     ledGreen->setState(!technical && !critical && armed > 0 && maintenance == 0);
     ledYellow->setState(maintenance > 0
