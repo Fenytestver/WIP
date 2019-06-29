@@ -13,6 +13,7 @@
  * Author:
  * Date:
  */
+ #define EEPROM_CLUSTER_ID (sizeof(int) * 11)
 #define SPN_SNOOZE_TIME (5 * 60000)
 #define BUTTON_LONG_PRESS_TIME 3000
 #define BEEP_TIME 50
@@ -53,6 +54,7 @@ typedef struct DeviceStatus {
 DeviceStatus statusArray[MAX_DEVICE_COUNT];
 int numDevices = 0;
 
+int clusterId = 0;
 char* dataCpy = new char[1024];
 unsigned long snoozeAt = 0L;
 unsigned long lastCritical = 0L;
@@ -78,6 +80,7 @@ Timer keepAliveTimer(120000, sendKeepAlivePacket);
 
 void setup() {
   Serial.begin(115200);
+  clusterId = getEepromInt(EEPROM_CLUSTER_ID, 0);
   systemTime = new RealSystemTime();
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
@@ -104,6 +107,8 @@ void setup() {
   Particle.subscribe(SHUTOFF_VALVE_TOPIC, shutoffValveHandler, MY_DEVICES);
   Particle.function("snooze", snoozeExtra);
   Particle.function("reboot", reboot);
+  Particle.function("setClusterId", setClusterId);
+  Particle.variable("clusterId", clusterId);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler, MY_DEVICES);
   Particle.subscribe(SHUTOFF_ANOMALY_TOPIC, shutoffAnomalyHandler, MY_DEVICES);
   // request immediate update.
@@ -413,4 +418,22 @@ void statusHandler(const char* event, const char* data) {
 
 void sendKeepAlivePacket() {
   sendKeepAlive = true;
+}
+
+int setClusterId(String extra) {
+  int extraInt = stringToInt(extra, -1);
+  if (extraInt > 0) {
+    clusterId = extraInt;
+    EEPROM.put(EEPROM_CLUSTER_ID, clusterId);
+  }
+  return clusterId;
+}
+
+int getEepromInt(int address, int def) {
+  int tmp = -1;
+  EEPROM.get(address, tmp);
+  if (tmp > -1) {
+    return tmp;
+  }
+  return def;
 }

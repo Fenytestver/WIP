@@ -141,7 +141,7 @@ SYSTEM_THREAD(ENABLED);
 #define EEPROM_WATER_HIGH_IN (sizeof(int) * 6)
 #define EEPROM_WATER_HIGH_PERCENT (sizeof(int) * 7)
 #define EEPROM_WATER_LOW_HIGH_DIST (sizeof(int) * 9)
-
+#define EEPROM_CLUSTER_ID (sizeof(int) * 11)
 #define EEPROM_THE_ONLY_VALID_VALUE 115
 
 int deviceId;
@@ -207,6 +207,7 @@ bool shutoffValveState;
 bool floatSwitchState;
 bool lostVoltage = false;
 int lastPumpsOn = 0;
+int clusterId = 0;
 SerialDebugOutput debugOutput(115200, ALL_LEVEL);
 
 void saveEeprom() {
@@ -216,6 +217,7 @@ void saveEeprom() {
   EEPROM.put(EEPROM_WATER_HIGH_IN, (int)waterHighIn);
   EEPROM.put(EEPROM_WATER_HIGH_PERCENT, (int)waterPercentHigh);
   EEPROM.put(EEPROM_WATER_LOW_HIGH_DIST, (float)waterLowHighDist);
+  EEPROM.put(EEPROM_CLUSTER_ID, (int)clusterId);
 }
 
 // setup() runs once, when the device is first turned on.
@@ -290,6 +292,7 @@ void setup() {
     success = Particle.function("update", sendStatusNow);
     success = Particle.function("getLcd", sendScreen);
     success = Particle.function("setDeviceId", setDeviceId);
+    success = Particle.function("setClusterId", setClusterId);
     success = Particle.function("getRawLevel", getRawLevel);
     success = Particle.function("setWaterLow", setWaterLow);
     success = Particle.function("setWaterHigh", setWaterHigh);
@@ -310,6 +313,7 @@ void setup() {
     Particle.variable("waterHighP", waterPercentHigh);
 
     Particle.variable("deviceId", deviceId);
+    Particle.variable("clusterId", clusterId);
     Particle.variable("mode", mode);
     Particle.variable("rpm1", rpm1);
     Particle.variable("rpm2", rpm2);
@@ -508,6 +512,15 @@ int setDeviceId(String extra) {
     EEPROM.put(EEPROM_DEVICE_ID, deviceId);
   }
   return deviceId;
+}
+
+int setClusterId(String extra) {
+  int extraInt = stringToInt(extra);
+  if (extraInt > 0) {
+    clusterId = extraInt;
+    EEPROM.put(EEPROM_CLUSTER_ID, clusterId);
+  }
+  return clusterId;
 }
 
 int setWaterLow(String extra) {

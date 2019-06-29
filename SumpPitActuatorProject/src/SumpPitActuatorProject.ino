@@ -17,6 +17,7 @@ STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
  * Date:
  */
 
+#define EEPROM_CLUSTER_ID (sizeof(int) * 11)
 #define BUTTON_LONG_PRESS_TIME 5000
 #define ACTUATOR_CYCLE_TIME 35000
 #define BEEP_TIME 50
@@ -99,10 +100,12 @@ bool shutoffAnomaly = false;
 char message[256];
 bool sendKeepAlive = false;
 SerialDebugOutput debugOutput(115200, ALL_LEVEL);
+int clusterId = 0;
 
 void setup() {
   Serial.begin(115200);
   INFO("Starting");
+  clusterId = getEepromInt(EEPROM_CLUSTER_ID, 0);
   systemTime = new RealSystemTime();
   ledGreen = new HardwarePinLed(PIN_LED_GREEN);
   ledYellow = new HardwarePinLed(PIN_LED_YELLOW);
@@ -145,6 +148,8 @@ void setup() {
   Particle.function("closeWater", closeWater);
   Particle.function("openWater", openWater);
   Particle.function("reboot", reboot);
+  Particle.function("setClusterId", setClusterId);
+  Particle.variable("clusterId", clusterId);
   Particle.subscribe(SYSTEM_STATUS_TOPIC, statusHandler, MY_DEVICES);
   Particle.publish(SHUTOFF_ANOMALY_TOPIC, "false", PRIVATE);
   // request immediate update.
@@ -477,5 +482,22 @@ void statusHandler(const char* event, const char* data) {
 
 void sendKeepAlivePacket() {
   sendKeepAlive = true;
+}
 
+int getEepromInt(int address, int def) {
+  int tmp = -1;
+  EEPROM.get(address, tmp);
+  if (tmp > -1) {
+    return tmp;
+  }
+  return def;
+}
+
+int setClusterId(String extra) {
+  int extraInt = stringToInt(extra, -1);
+  if (extraInt > 0) {
+    clusterId = extraInt;
+    EEPROM.put(EEPROM_CLUSTER_ID, clusterId);
+  }
+  return clusterId;
 }
