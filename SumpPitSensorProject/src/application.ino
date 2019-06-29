@@ -232,6 +232,7 @@ void setup() {
     }
     EEPROM.put(EEPROM_VALID, (int)EEPROM_THE_ONLY_VALID_VALUE);
   }
+  clusterId = getEepromInt(EEPROM_CLUSTER_ID, 0);
   deviceId = getEepromInt(EEPROM_DEVICE_ID, -1);
   waterLow = getEepromInt(EEPROM_WATER_LOW_VALUE, WATER_DIST_LOW);
   waterHigh = getEepromInt(EEPROM_WATER_HIGH_VALUE, WATER_DIST_HIGH);
