@@ -1,2 +1,4 @@
 *.bin
 src/localsettings.h
+*.der
+*.pem
