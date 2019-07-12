@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Sump Pit Sensor Codeblocks Project" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Sump Pit Sensor Codeblocks Project" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="sumpit/src/main/cpp" />
+					<Add directory="sumpit_test/include" />
+					<Add directory="include" />
+					<Add directory="SumpPitSensorProject/lib/sumppitmodel/src/" />
+					<Add directory="SumpPitSensorProject/test" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../sumppitmodel/src/button.cpp" />
+		<Unit filename="../sumppitmodel/src/button.h" />
+		<Unit filename="../sumppitmodel/src/buzzer.cpp" />
+		<Unit filename="../sumppitmodel/src/buzzer.h" />
+		<Unit filename="../sumppitmodel/src/display.cpp" />
+		<Unit filename="../sumppitmodel/src/display.h" />
+		<Unit filename="../sumppitmodel/src/floatswitch.cpp" />
+		<Unit filename="../sumppitmodel/src/floatswitch.h" />
+		<Unit filename="../sumppitmodel/src/leaksensor.cpp" />
+		<Unit filename="../sumppitmodel/src/leaksensor.h" />
+		<Unit filename="../sumppitmodel/src/led.cpp" />
+		<Unit filename="../sumppitmodel/src/led.h" />
+		<Unit filename="../sumppitmodel/src/localview.cpp" />
+		<Unit filename="../sumppitmodel/src/localview.h" />
+		<Unit filename="../sumppitmodel/src/multipump.cpp" />
+		<Unit filename="../sumppitmodel/src/multipump.h" />
+		<Unit filename="../sumppitmodel/src/onbuttonpresslistener.cpp" />
+		<Unit filename="../sumppitmodel/src/onbuttonpresslistener.h" />
+		<Unit filename="../sumppitmodel/src/pump.cpp" />
+		<Unit filename="../sumppitmodel/src/pump.h" />
+		<Unit filename="../sumppitmodel/src/rpmsensor.cpp" />
+		<Unit filename="../sumppitmodel/src/rpmsensor.h" />
+		<Unit filename="../sumppitmodel/src/shutoffvalve.cpp" />
+		<Unit filename="../sumppitmodel/src/shutoffvalve.h" />
+		<Unit filename="../sumppitmodel/src/siren.cpp" />
+		<Unit filename="../sumppitmodel/src/siren.h" />
+		<Unit filename="../sumppitmodel/src/spn_config.cpp" />
+		<Unit filename="../sumppitmodel/src/spn_config.h" />
+		<Unit filename="../sumppitmodel/src/spnsystem.cpp" />
+		<Unit filename="../sumppitmodel/src/spnsystem.h" />
+		<Unit filename="../sumppitmodel/src/state.h" />
+		<Unit filename="../sumppitmodel/src/sumppitinputs.cpp" />
+		<Unit filename="../sumppitmodel/src/sumppitinputs.h" />
+		<Unit filename="../sumppitmodel/src/sumppitnode.cpp" />
+		<Unit filename="../sumppitmodel/src/sumppitnode.h" />
+		<Unit filename="../sumppitmodel/src/sumppitsensor.cpp" />
+		<Unit filename="../sumppitmodel/src/sumppitsensor.h" />
+		<Unit filename="../sumppitmodel/src/systemtime.cpp" />
+		<Unit filename="../sumppitmodel/src/systemtime.h" />
+		<Unit filename="../sumppitmodel/src/voltagesensor.cpp" />
+		<Unit filename="../sumppitmodel/src/voltagesensor.h" />
+		<Unit filename="../sumppitmodel/src/waterlevelsensor.cpp" />
+		<Unit filename="../sumppitmodel/src/waterlevelsensor.h" />
+		<Unit filename="../sumppitmodel/test/debug_util.cpp" />
+		<Unit filename="../sumppitmodel/test/debug_util.h" />
+		<Unit filename="../sumppitmodel/test/functionaltestbase.cpp" />
+		<Unit filename="../sumppitmodel/test/functionaltestbase.h" />
+		<Unit filename="../sumppitmodel/test/stubs.cpp" />
+		<Unit filename="../sumppitmodel/test/test_buttons.cpp" />
+		<Unit filename="../sumppitmodel/test/test_buttons.h" />
+		<Unit filename="../sumppitmodel/test/test_display_demo.cpp" />
+		<Unit filename="../sumppitmodel/test/test_display_demo.h" />
+		<Unit filename="../sumppitmodel/test/test_multipump_unit.cpp" />
+		<Unit filename="../sumppitmodel/test/test_multipump_unit.h" />
+		<Unit filename="../sumppitmodel/test/test_normaloperation.cpp" />
+		<Unit filename="../sumppitmodel/test/test_normaloperation.h" />
+		<Unit filename="../sumppitmodel/test/test_pump_failure_functional.cpp" />
+		<Unit filename="../sumppitmodel/test/test_pump_failure_functional.h" />
+		<Unit filename="../sumppitmodel/test/test_pump_failure_longoperation.h" />
+		<Unit filename="../sumppitmodel/test/test_pump_unit.cpp" />
+		<Unit filename="../sumppitmodel/test/test_pump_unit.h" />
+		<Unit filename="../sumppitmodel/test/testbase.cpp" />
+		<Unit filename="../sumppitmodel/test/testbase.h" />
+		<Unit filename="../sumppitmodel/test/testmain.cpp" />
+		<Unit filename="../sumppitmodel/test/testmain.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

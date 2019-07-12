@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2019-03-30T01:44:15Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.3.2"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "schematics"
+        },
+        "Owner": "Marcell Kovacs <kovmarci86@gmail.com>",
+        "Size": {
+            "X": 149.8,
+            "Y": 71.38
+        }
+    }
+}

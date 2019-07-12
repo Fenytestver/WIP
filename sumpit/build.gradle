@@ -1,0 +1,50 @@
+apply plugin: "cpp-library"
+//apply plugin: 'cpp-unit-test'
+apply plugin: 'maven-publish'
+
+repositories {
+    maven {
+        url = 'https://repo.gradle.org/gradle/libs-snapshots-local/'
+    }
+}
+
+group = 'com.dallos.iot.sumppit.model'
+version = '0.1'
+
+/*tasks.withType(CppCompile) {
+    // Use C++03 with the old ABIs, as this is what the googletest binaries were built with
+    // Later, Gradle's dependency management will understand ABI
+    macros _GLIBCXX_USE_CXX11_ABI: '0'
+
+    compilerArgs.addAll toolChain.map { NativeToolChain toolChain ->
+        List<String> compilerSpecificArgs = []
+        if (toolChain instanceof Gcc) {
+            compilerSpecificArgs << '-std=c++03'
+        }
+        return compilerSpecificArgs
+    }
+}
+
+tasks.withType(LinkSharedLibrary) {
+    linkerArgs.addAll toolChain.map { NativeToolChain toolChain ->
+        List<String> compilerSpecificArgs = []
+        if (toolChain instanceof Gcc) {
+            compilerSpecificArgs << '-std=c++03'
+        }
+        return compilerSpecificArgs
+    }
+}*/
+
+dependencies {
+    // Currently we have to encode the operating system and architecture in 
+    // the dependency name. This will disappear in later releases
+    //implementation 'org.gradle.cpp-samples:googletest_debug_windows:1.9.0-SNAPSHOT'
+}
+
+publishing {
+    repositories {
+        maven {
+            url = '../repo'
+        }
+    }
+}

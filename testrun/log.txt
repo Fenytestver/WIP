@@ -1,0 +1,240 @@
+
+	Normal operation: create
+		>Set time to 0
+	Normal operation: start test
+		Ok: 'Mode should be initializing'
+		>Siren turned off
+		Ok: 'Mode is armed after startup'
+		Test 'Siren must be off after startup': OK
+		Test 'Shut off valve should be inactive at startup.': OK
+		>Set water level to 20
+		>Stub voltage set to: 12
+		>Stub voltage set to: 0
+		>RPM set to: 400
+		>Siren turned off
+		>Display:
+		>###########################
+		>#### **NORMAL OPERATION**
+		>#### Level: 23" -  14%
+		>#### Pump1: ON rpm:400
+		>#### Pump2: ON rpm:400		>
+		>###########################
+		Test 'Pump must turn on at this water level.': OK
+		>Move time by 9999 to 10000
+		>Siren turned off
+		>Display:
+		>###########################
+		>#### **NORMAL OPERATION**
+		>#### Level: 23" -  14%
+		>#### Pump1: ON rpm:400
+		>#### Pump2: ON rpm:400		>
+		>###########################
+		Ok: 'No alarm should be reported.'
+		>Leak sensor set value to: leaking
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### critical!! #100000000
+		>#### Leak detected!
+		>#### 
+		>#### Water alert! 23" 14%
+		>#### 
+		>#### 		>
+		>###########################
+		Test 'Siren must be on when leaking.': OK
+		Ok: 'Alarm reason should be leak.'
+		>Leak sensor set value to: not leaking
+		>Set water level to 11
+		>Stub voltage set to: 0
+		>Siren turned off
+		>Display:
+		>###########################
+		>#### **NORMAL OPERATION**
+		>#### Level: 15" -   1%
+		>#### Pump1: ON rpm:400
+		>#### Pump2: ON rpm:400		>
+		>###########################
+		Test 'Siren should be off': OK
+		Test 'Pump should turn off at low water.': OK
+		Ok: 'Water not low yet.'
+		>Set water level to 10
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### warning!! #000000010
+		>#### Water too low: 15"
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'Must detect low water.'
+		>Set water level to 20
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### warning!! #000000010
+		>#### Water too low: 23"
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'Must still detect low water, below variance.'
+		>Set water level to 21
+		>Siren turned off
+		>Display:
+		>###########################
+		>#### **NORMAL OPERATION**
+		>#### Level: 24" -  15%
+		>#### Pump1: ON rpm:400
+		>#### Pump2: ON rpm:400		>
+		>###########################
+		Ok: 'Water above minimum + variance.'
+		>Siren turned off
+		Test 'Siren must be off after startup': OK
+		Ok: 'Mode is disarmed'
+		Test 'Shut off valve should be inactive at disarm.': OK
+	Normal operation: cleanup
+	Normal operation: finished
+
+	Pump fails to start scenario: create
+		>Set time to 0
+	Pump fails to start scenario: start test
+		>Siren turned off
+		>Set water level to 80
+		>Stub voltage set to: 12
+		>Stub voltage set to: 12
+		>Siren turned on
+		>Shut off valve activated
+		>Display:
+		>###########################
+		>#### critical!! #000000100
+		>#### Water alert! 75" 100%
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Test 'SubPump1 must be running': OK
+		Test 'SubPump2 must be running': OK
+		Test 'Siren must turn on at this water level.': OK
+		>RPM set to: 330
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### critical!! #000000100
+		>#### Water alert! 75" 100%
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Test 'Shut off valve should be active at critical water level.': OK
+		Test 'High water alarm must be on at critical water level.': OK
+		Test 'Motor just starting up, shouldn't be a problem (yet).': OK
+		>Move time by 20000 to 20001
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### critical!! #001000100
+		>#### Pump1,2 rpm!! 330,330
+		>#### 
+		>#### Water alert! 75" 100%
+		>#### 
+		>#### 		>
+		>###########################
+		Test 'P1 SPN_PUMP_SPINUP_TIME time passed': OK
+		Test 'P2 SPN_PUMP_SPINUP_TIME time passed': OK
+		Ok: 'Motor failed to start with multiple problems.'
+		>Set water level to 79
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### critical!! #001000100
+		>#### Pump1,2 rpm!! 330,330
+		>#### 
+		>#### Water alert! 74" 98%
+		>#### 
+		>#### 		>
+		>###########################
+		Test 'WaterLevel did not drop to forget critical.': OK
+		>Set water level to 60
+		>Siren turned on
+		>Shut off valve deactivated
+		>Display:
+		>###########################
+		>#### critical!! #001000000
+		>#### Pump1,2 rpm!! 330,330
+		>#### 
+		>#### Water alert! 57" 71%
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'WaterLevel below critical-variance.'
+		>RPM set to: 331
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### critical!! #011000000
+		>#### Pump1,2 rpm!! 331,331
+		>#### 
+		>#### Water alert! 57" 71%
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'RPM still critical, did not reach variance margin.'
+		>RPM set to: 336
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### warning!! #010000000
+		>#### Pump1,2 rpm warn!! 336,336
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'RPM not critical anymore, reached variance margin.'
+		>RPM set to: 362
+		>Siren turned on
+		>Display:
+		>###########################
+		>#### warning!! #010000000
+		>#### Pump1,2 rpm warn!! 362,362
+		>#### 
+		>#### 
+		>#### 		>
+		>###########################
+		Ok: 'RPM still technical, did not reach variance margin.'
+		>RPM set to: 366
+		>Siren turned off
+		>Display:
+		>###########################
+		>#### **NORMAL OPERATION**
+		>#### Level: 57" -  71%
+		>#### Pump1: ON rpm:366
+		>#### Pump2: ON rpm:366		>
+		>###########################
+		Ok: 'RPM still technical, reached variance margin.'
+	Pump fails to start scenario: cleanup
+	Pump fails to start scenario: finished
+
+	Display a few samples of the LCD screen: create
+	Display a few samples of the LCD screen: start test
+
+
+++01234567890123456789      Welcome!     
+   Initializing... 
+                   
+     Please wait!  
+
+		>Display:
+		>###########################
+		>####       Welcome!     
+		>####    Initializing... 
+		>####                    
+		>####      Please wait!  		>
+		>###########################
+
+01234567890123456789
+
+	Display a few samples of the LCD screen: cleanup
+	Display a few samples of the LCD screen: finished
+
+# All 3 tests finished successfully.

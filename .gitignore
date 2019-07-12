@@ -1,0 +1,14 @@
+.gradle/
+build/
+obj/
+bin/
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Cache of project
+.gradletasknamecache
+
+# Ignore local dependency copies
+# SumpPitActuatorProject/lib/sumppitmodel
+# SumpPitSensorProject/lib/sumppitmodel
+# SumpPitAlarmModuleProject/lib/sumppitmodel
