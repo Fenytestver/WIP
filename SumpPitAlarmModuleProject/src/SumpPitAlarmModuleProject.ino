@@ -81,7 +81,7 @@ class OnAnyPress : public OnButtonPressListener {
     } *beepPressListener;
 
 bool shutoffEnabled = false;
-Timer keepAliveTimer(240000, sendKeepAlivePacket);
+Timer keepAliveTimer(300000, sendKeepAlivePacket);
  //SerialDebugOutput debugOutput(115200);
 
 bool publish(char* topic, char* value) {

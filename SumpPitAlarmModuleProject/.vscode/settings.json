@@ -1,0 +1,7 @@
+{
+    "C_Cpp.default.configurationProvider": "particle.particle-vscode-core",
+    "particle.targetPlatform": "electron",
+    "cortex-debug.openocdPath": "C:\\Users\\gabor\\.particle\\toolchains\\openocd\\0.10.0-particle.1\\bin\\openocd.exe",
+    "particle.firmwareVersion": "1.1.1",
+    "particle.targetDevice": "C1_alarm"
+}
