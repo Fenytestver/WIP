@@ -81,7 +81,7 @@ class OnAnyPress : public OnButtonPressListener {
     } *beepPressListener;
 
 bool shutoffEnabled = false;
-Timer keepAliveTimer(300000, sendKeepAlivePacket);
+Timer keepAliveTimer(600000, sendKeepAlivePacket);
  //SerialDebugOutput debugOutput(115200);
 
 bool publish(char* topic, char* value) {
@@ -183,7 +183,7 @@ void loop() {
     // EOF Yellow light proc
 
     // out_technical proc begins
-    out_technical->setState(technical);
+    out_technical->setState(technical && !critical && armed > 0 && maintenance == 0);
     // EOF out_technical proc
 
     if (!snoozed && critical && lastCritical == 0L) {

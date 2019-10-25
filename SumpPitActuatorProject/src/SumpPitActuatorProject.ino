@@ -1,5 +1,5 @@
 #include "Particle.h"
-//STARTUP(cellular_credentials_set("h2g2", "", "", NULL));
+// STARTUP(cellular_credentials_set("pwg", "", "", NULL));
 
 #include "spn_config.h"
 #include "button.h"
