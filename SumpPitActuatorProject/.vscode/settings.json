@@ -2,6 +2,6 @@
     "C_Cpp.default.configurationProvider": "particle.particle-vscode-core",
     "particle.targetPlatform": "electron",
     "cortex-debug.openocdPath": "${command:particle.getDebuggerOpenocdPath}",
-    "particle.targetDevice": "WIP_TEST_ShutOff",
+    "particle.targetDevice": "C1_shutoff",
     "particle.firmwareVersion": "1.2.1"
 }

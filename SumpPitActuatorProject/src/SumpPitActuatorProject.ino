@@ -80,7 +80,7 @@ int numDevices = 0;
 char* dataCpy = new char[1024];
 bool stateUnknown = true;
 unsigned long nothingDetectedSince = 0L;
-Timer keepAliveTimer(300000, sendKeepAlivePacket);
+Timer c, sendKeepAlivePacket);
 
 class OnAnyPress : public OnButtonPressListener {
       public:
